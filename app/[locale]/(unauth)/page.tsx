@@ -3,19 +3,24 @@ import { getTranslations } from "next-intl/server";
 // import { Footer } from "@/templates/Footer";
 // import { Hero } from "@/templates/Hero";
 
-export async function generateMetadata(props: { params: { locale: string } }) {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+
   const t = await getTranslations({
-    locale: props.params.locale,
-    namespace: "Index",
+    locale: locale,
+    namespace: "Metadata",
   });
 
   return {
-    title: t("meta_title"),
-    description: t("meta_description"),
+    title: t("title"),
+    description: t("description"),
   };
 }
 
-const IndexPage = (props: { params: { locale: string } }) => {
+const IndexPage = ({ params }: Props) => {
   return (
     <>
       {/* <Hero />

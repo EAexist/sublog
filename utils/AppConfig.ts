@@ -4,7 +4,7 @@ const localePrefix: LocalePrefix<[], "as-needed"> = "as-needed";
 
 // FIXME: Update this configuration file based on your project information
 export const AppConfig = {
-  name: "SaaS Template",
+  name: "Subscription Killer",
   locales: [
     { id: "ko", name: "한국어" },
     {

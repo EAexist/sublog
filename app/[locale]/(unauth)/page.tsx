@@ -1,7 +1,7 @@
+import { Footer } from "@/templates/Footer";
+import { Hero } from "@/templates/Hero";
 import { getTranslations } from "next-intl/server";
-
-// import { Footer } from "@/templates/Footer";
-// import { Hero } from "@/templates/Hero";
+import { cookies } from 'next/headers'
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -20,12 +20,14 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const IndexPage = ({ params }: Props) => {
+const IndexPage = async ({ params }: Props) => {
+  const cookieStore = await cookies();
+  const isAuthenticated = cookieStore.has("JSESSIONID");
   return (
-    <>
-      {/* <Hero />
-      <Footer /> */}
-    </>
+    <div className="h-dvh w-full flex flex-col">
+      <Hero isAuthenticated={isAuthenticated} />
+      <Footer />
+    </div>
   );
 };
 

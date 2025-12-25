@@ -5,6 +5,8 @@ import { AllLocales } from "@/utils/AppConfig";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import {pretendard} from "@/lib/fonts";
+import {cn} from "@/lib/utils";
 
 // export const metadata: Metadata = {
 //   icons: [
@@ -59,13 +61,19 @@ export default async function RootLayout({ children, params }: Props) {
   // The `suppressHydrationWarning` attribute in <body> is used to prevent hydration errors caused by Sentry Overlay,
   // which dynamically adds a `style` attribute to the body tag.
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={cn(`w-full h-full min-w-xs`, pretendard.className)}
+    >
       <body
-        className="bg-background text-foreground antialiased"
+        className="bg-background text-foreground antialiased w-full h-full min-w-xs"
         suppressHydrationWarning
       >
         {/* PRO: Dark mode support for Shadcn UI */}
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <div className="min-h-full flex flex-col">{children}</div>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

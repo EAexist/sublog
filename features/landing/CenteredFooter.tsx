@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import {AppConfig} from "@/utils/AppConfig";
 
 export const CenteredFooter = (props: {
   logo: React.ReactNode;
@@ -24,7 +25,7 @@ export const CenteredFooter = (props: {
 
       <div className="mt-6 flex w-full items-center justify-between gap-y-2 border-t pt-3 text-sm text-muted-foreground max-md:flex-col">
         <div>
-          {`© Copyright ${new Date().getFullYear()} ${props.name}. `}
+            {`© Copyright ${new Date().getFullYear()} ${AppConfig.name}`}
           {t.rich('designed_by', {
             author: () => (
               <a

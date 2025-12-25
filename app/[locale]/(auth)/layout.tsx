@@ -7,6 +7,5 @@ type Props = {
 
 export default async function AuthLayout({ children, params }: Props) {
 
-  return (children
-  );
+  return (children);
 }

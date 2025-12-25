@@ -1,7 +1,3 @@
-import { Footer } from "@/templates/Footer";
-import { Hero } from "@/templates/Hero";
-import { getTranslations } from "next-intl/server";
-import { cookies } from 'next/headers'
 import {Section} from "@/components/ui/section";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";

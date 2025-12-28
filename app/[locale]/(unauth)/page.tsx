@@ -1,12 +1,13 @@
 import {Footer} from "@/components/shared/Footer";
 import {getTranslations} from "next-intl/server";
-import {cookies} from 'next/headers'
 import {CenteredHero} from "@/components/shared/CenteredHero";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {GoogleLoginButton} from "@/components/shared/GoogleLoginButton";
 import {Section} from "@/components/ui/section";
 import {ViewportHeightLayout} from "@/templates/ViewportHeightLayout";
+import {getAppUser} from "@/lib/api";
+import {Suspense} from "react";
 
 type Props = {
     params: Promise<{ locale: string }>;
@@ -26,10 +27,29 @@ export async function generateMetadata({params}: Props) {
     };
 }
 
+
+const DashboardNavigateButton = async () => {
+    const t = await getTranslations("home.DashboardNavigateButton");
+    const response = await getAppUser()
+    if (response.status === 401) {
+        return <GoogleLoginButton/>
+    }
+    return <Button size={"fullW"}><Link href={"/report"}>{t("title")}</Link>
+    </Button>;
+}
+
+
+const MainActionButton = async () => {
+    const response = await getAppUser()
+    if (response.status === 401) {
+        return <GoogleLoginButton/>
+    }
+    return <DashboardNavigateButton/>
+}
+
 const IndexPage = async ({params}: Props) => {
-    const cookieStore = await cookies();
-    const isAuthenticated = cookieStore.has("JSESSIONID");
-    const t = await getTranslations("Hero");
+    const isAuthenticated = await getAppUser();
+    const t = await getTranslations("home");
     return (
         <ViewportHeightLayout>
             <Section className={"grow"}>
@@ -44,9 +64,7 @@ const IndexPage = async ({params}: Props) => {
                             ),
                         })}
                         description={t("description")}
-                        buttons={isAuthenticated ?
-                            <Button size={"fullW"}><Link href={"/dashboard"}>{t("navigate_to_dashboard")}</Link>
-                            </Button> : <GoogleLoginButton/>}
+                        buttons={<Suspense fallback={<DashboardNavigateButton/>}><MainActionButton/></Suspense>}
                     />
                 </div>
             </Section>

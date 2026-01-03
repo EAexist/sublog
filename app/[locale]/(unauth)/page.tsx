@@ -3,10 +3,8 @@ import {getTranslations} from "next-intl/server";
 import {CenteredHero} from "@/components/shared/CenteredHero";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {GoogleLoginButton} from "@/components/shared/GoogleLoginButton";
 import {Section} from "@/components/ui/section";
 import {ViewportHeightLayout} from "@/templates/ViewportHeightLayout";
-import {getAppUser} from "@/lib/api";
 import {Suspense} from "react";
 
 type Props = {
@@ -30,25 +28,21 @@ export async function generateMetadata({params}: Props) {
 
 const ReportNavigateButton = async () => {
     const t = await getTranslations("home.components.ReportNavigateButton");
-    const response = await getAppUser()
-    if (response.status === 401) {
-        return <GoogleLoginButton/>
-    }
     return <Button size={"fullW"}><Link href={"/report"}>{t("title")}</Link>
     </Button>;
 }
 
 
 const MainActionButton = async () => {
-    const response = await getAppUser()
-    if (response.status === 401) {
-        return <GoogleLoginButton/>
-    }
+    // const response = await getAppUser()
+    // if (response.status === 401) {
+    //     return <GoogleLoginButton/>
+    // }
     return <ReportNavigateButton/>
 }
 
 const IndexPage = async ({params}: Props) => {
-    const isAuthenticated = await getAppUser();
+    const isAuthenticated = true;
     const t = await getTranslations("home");
     return (
         <ViewportHeightLayout>

@@ -20,9 +20,8 @@ import {BrandAvatar} from "@/components/shared/BrandAvatar";
 import {Spinner} from "@/components/ui/spinner";
 import {Item} from "@/components/ui/item";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const analysisEventApiPath = '/subscriptions/analysis/event'
-const mockAnalysisEventApiPath = '/mock-api/subscriptions/analysis/event'
+const reportUpdateEventApiPath = `${process.env.NEXT_PUBLIC_API_URL}/reports/updates`
+// const reportUpdateEventApiPath = '/mock-api/reports/updates'
 
 const STATUS_WEIGHTS: Record<string, number> = {
     'COMPLETED': 0,
@@ -55,23 +54,22 @@ const AnalysisTracker = () => {
         let eventSource: EventSource | null = null;
 
         const initConnection = async () => {
-            const response = await fetch(`${mockAnalysisEventApiPath}`)
+            const response = await fetch(`${reportUpdateEventApiPath}`)
 
             if (response.status === 204) {
                 router.push('/report')
                 return;
             }
 
-            console.log(`🚀 [Event Debug] Running UseEffect`)
-            // const eventSource = new EventSource(`${BASE_URL}${analysisEventApiPath}`);
-            eventSource = new EventSource(`${mockAnalysisEventApiPath}`);
+            console.log(`🚀 [EventSource Debug] Running UseEffect`)
+            const eventSource = new EventSource(reportUpdateEventApiPath);
 
             eventSource.addEventListener('progress-update', (event) => {
                 try {
                     const update: {
                         type: ProgressUpdateType,
                     } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
-                    console.log(`🚀 [Event Debug] ${event.type} ${JSON.stringify(update)}`);
+                    console.log(`🚀 [EventSource Debug] ${event.type} ${JSON.stringify(update)}`);
                     if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
                         const data = update as AppUserAnalysisProgressUpdate
                         setCurrentStep(data.status);
@@ -87,7 +85,7 @@ const AnalysisTracker = () => {
                 }
             });
             eventSource.onerror = () => {
-                console.log(`🚀 [Event Debug] EventSource Error`)
+                console.log(`🚀 [EventSource Debug] EventSource Error`)
                 eventSource?.close();
             };
         }

@@ -8,6 +8,7 @@ import {notFound} from "next/navigation";
 import {pretendard} from "@/lib/fonts";
 import {cn} from "@/lib/utils";
 import {Navbar} from "@/app/[locale]/Navbar";
+import {ApiProvisioningTrigger} from "@/app/[locale]/ApiProvisioningTrigger";
 
 // export const metadata: Metadata = {
 //   icons: [
@@ -72,6 +73,7 @@ export default async function RootLayout({children, params}: Props) {
             className="bg-background text-foreground antialiased w-full h-full min-w-xs"
             suppressHydrationWarning
         >
+        <ApiProvisioningTrigger/>
         {/* PRO: Dark mode support for Shadcn UI */}
         <NextIntlClientProvider>
             <Navbar/>

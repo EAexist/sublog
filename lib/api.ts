@@ -76,27 +76,29 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
     }
 }
 
-export const getReport = async () => {
-    const apiPath = '/subscriptions/analysis'
-    return await apiFetch(apiPath)
-};
-
-
-export const getIsAnalysisEnabled = async () => {
-    const apiPath = '/subscriptions/analysis'
+export const triggerProvisioning = async () => {
+    const apiPath = '/provisioning'
     return await apiFetch(apiPath, {
         method: "POST"
     })
+};
+
+export const getReport = async () => {
+    const apiPath = '/reports'
+    return await apiFetch(apiPath)
 };
 
 export const updateAnalysis = async () => {
-    const apiPath = '/subscriptions/analysis'
+    const apiPath = '/reports/updates'
     return await apiFetch(apiPath, {
         method: "POST"
     })
 };
 
-export const getAppUser = async () => {
-    const apiPath = '/appUser'
-    return await apiFetch(apiPath)
+export const getIsAnalysisEnabled = async () => {
+    return Promise.resolve({status: "ok", error: null, data: {isAnalysisEnabled: true}})
+    const apiPath = '/subscriptions/analysis'
+    return await apiFetch(apiPath, {
+        method: "POST"
+    })
 };

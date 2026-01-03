@@ -1,13 +1,11 @@
 export const dynamic = 'force-dynamic'; // Prevents static optimization
 
-const maxRepeats = 3;
 
 export async function GET() {
     const encoder = new TextEncoder();
 
     const stream = new ReadableStream({
         async start(controller) {
-            let count = 0;
 
             const sendEvent = (type: 'appUser' | 'serviceProvider', data: object) => {
                 const dataWithMetadata = {type, ...data};
@@ -51,7 +49,7 @@ export async function GET() {
                 },
                 status: 'STARTED'
             });
-            
+
             sendEvent('serviceProvider', {
                 serviceProvider: {
                     id: 'Netflix',

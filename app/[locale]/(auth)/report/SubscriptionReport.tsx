@@ -101,7 +101,6 @@ const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
                 <div className={"flex justify-between items-end pb-4"}>
                     <div className={"flex items-end gap-2"}>
                         <h1 className={"font-semibold text-xl"}>내 구독</h1>
-                        {/*<p className={"font-light text-xs"}>{`${report.analyzedAt.toLocaleDateString()} 기준`}</p>*/}
                     </div>
                 </div>
                 <div className={"pb-8"}>

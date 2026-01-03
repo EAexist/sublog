@@ -31,9 +31,9 @@ export async function SubscriptionReportError({error, status}: SubscriptionRepor
             </EmptyHeader>
             <EmptyContent>
                 <div className="flex gap-2">
-                    {/*<Button>{t("navigate_to_home")}</Button>*/}
+                    {/*<Button>{t("homeNavigateButton")}</Button>*/}
                     <Button variant="outline">
-                        <Link href={"/"}>{t("navigate_to_home")}</Link></Button>
+                        <Link href={"/"}>{t("homeNavigateButton")}</Link></Button>
                 </div>
             </EmptyContent>
         </Empty>

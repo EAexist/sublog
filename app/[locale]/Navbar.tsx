@@ -7,7 +7,7 @@ import Link from "next/link";
 import {getTranslations} from "next-intl/server";
 
 export const Navbar = async () => {
-    const t = await getTranslations("Navbar");
+    const t = await getTranslations("components.Navbar");
 
     const NAV_LINKS = [
         {name: t("report"), href: "/report"},

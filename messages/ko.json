@@ -3,15 +3,13 @@
     "title": "페이지 제목",
     "description": "페이지 설명"
   },
-  "Navbar": {
-    "home": "서비스 소개",
-    "report": "나의 구독 · 멤버십"
-  },
   "home": {
     "title": "구독/멤버십 정리하기",
     "description": "결제하고 잊고 있던 구독\n너무 많아 관리가 안되는 멤버십\n클릭 한번으로 안전하게 확인하세요.",
-    "DashboardNavigateButton": {
-      "title": "내 구독 리포트 확인"
+    "components": {
+      "ReportNavigateButton": {
+        "title": "내 구독 리포트 보기"
+      }
     }
   },
   "login": {
@@ -21,54 +19,72 @@
   "components": {
     "GoogleLoginButton": {
       "title": "구글 계정으로 계속하기"
-    }
-  },
-  "analysis": {
-    "AnalysisTracker": {
-      "run": "구독 정리 시작",
-      "steps": {
-        "STARTED": {
-          "title": "메일 읽는 중",
-          "description": "메일 목록을 확인하는 중이에요"
-        },
-        "EMAIL_FETCHED": {
-          "title": "구독 분석 중",
-          "description": "구독 내역을 분석하는 중이에요"
-        },
-        "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
-          "title": "결과 정리 중",
-          "description": "결과를 정리하는 중이에요 잠시만 기다려주세요"
-        },
-        "COMPLETED": {
-          "title": "분석 완료",
-          "description": "결과 페이지로 이동할게요"
-        }
-      }
+    },
+    "Navbar": {
+      "home": "서비스 소개",
+      "report": "나의 구독 · 멤버십"
+    },
+    "ErrorEmpty": {
+      "title": "서비스를 사용할 수 없어요",
+      "description": "지금은 서비스를 사용할 수 없어요.\n잠시 후 다시 접속해 주세요.",
+      "homeNavigateButton": "홈으로 돌아가기"
     }
   },
   "report": {
-    "ShowEmailToggle": {
-      "title": "계정 표시"
-    },
-    "ReRunMenuButton": {
-      "enabled": {
-        "title": "내 구독 리포트",
-        "analyzedAt": "생성",
-        "run": "새로 분석하기",
-        "cancel": "닫기"
+    "title": "내 구독",
+    "components": {
+      "ShowEmailToggle": {
+        "title": "계정 표시"
       },
-      "disabled": {
-        "title": "내 구독 리포트",
-        "analyzedAt": "생성",
-        "enabledAfter": "에 다시 정리할 수 있어요",
-        "run": "",
-        "cancel": "확인"
+      "ReRunMenuButton": {
+        "enabled": {
+          "title": "내 구독 리포트",
+          "analyzedAt": "생성",
+          "run": "새로 분석하기",
+          "cancel": "닫기"
+        },
+        "disabled": {
+          "title": "내 구독 리포트",
+          "analyzedAt": "생성",
+          "enabledAfter": "에 다시 정리할 수 있어요",
+          "run": "",
+          "cancel": "확인"
+        }
       }
     },
-    "SubscriptionReportError": {
-      "title": "서비스를 사용할 수 없어요",
-      "description": "지금은 서비스를 사용할 수 없어요.\n잠시 후 다시 접속해 주세요.",
-      "navigate_to_home": "홈으로 돌아가기"
+    "analysis": {
+      "components": {
+        "AnalysisTracker": {
+          "run": "구독 정리 시작",
+          "steps": {
+            "STARTED": {
+              "title": "메일 읽는 중",
+              "description": "메일 목록을 확인하는 중이에요"
+            },
+            "EMAIL_FETCHED": {
+              "title": "구독 분석 중",
+              "description": "구독 내역을 분석하는 중이에요"
+            },
+            "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+              "title": "결과 정리 중",
+              "description": "결과를 정리하는 중이에요 잠시만 기다려주세요"
+            },
+            "COMPLETED": {
+              "title": "분석 완료",
+              "description": "결과 페이지로 이동할게요"
+            }
+          }
+        }
+      }
+    },
+    "new": {
+      "title": "구독/멤버십 정리",
+      "reportNavigateButton": "내 구독 리포트 보기",
+      "components": {
+        "AnalysisUpdateButton": {
+          "run": "정리 시작"
+        }
+      }
     }
   }
 }

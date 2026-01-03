@@ -71,7 +71,7 @@ const ReRunMenuButton = ({analyzedAt}: ReRunMenuButtonProps) => {
                     </DialogClose>{
                     isReRunEnabled ?
                         <Button variant={"outline"} size={"lg"} asChild>
-                            <Link href={"/analysis"} className={"flex gap-2 items-center"}>
+                            <Link href={"/report/new"} className={"flex gap-2 items-center"}>
                                 {t("run")}</Link></Button> :
                         <Button disabled variant={"outline"} size={"lg"}>
                             <Timer/>

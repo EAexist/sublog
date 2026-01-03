@@ -1,14 +1,14 @@
 import {Section} from "@/components/ui/section";
 import {Container} from "@/components/ui/container";
 import {getTranslations} from "next-intl/server";
-import AnalysisTracker from "@/app/[locale]/(auth)/analysis/AnalysisTracker";
+import AnalysisTracker from "@/app/[locale]/(auth)/report/analysis/AnalysisTracker";
 import {DefaultLayout} from "@/templates/DefaultLayout";
 
 type Props = {
     params: Promise<{ locale: string }>;
 };
 
-const AnalysisPage = async ({params}: Props) => {
+const AnalysisProgressPage = async ({params}: Props) => {
 
     // const appUser: Promise<AppUserType> = await getAppUser()
 
@@ -24,6 +24,4 @@ const AnalysisPage = async ({params}: Props) => {
 
     );
 };
-
-
-export default AnalysisPage;
+export default AnalysisProgressPage;

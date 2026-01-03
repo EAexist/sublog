@@ -28,8 +28,8 @@ export async function generateMetadata({params}: Props) {
 }
 
 
-const DashboardNavigateButton = async () => {
-    const t = await getTranslations("home.DashboardNavigateButton");
+const ReportNavigateButton = async () => {
+    const t = await getTranslations("home.components.ReportNavigateButton");
     const response = await getAppUser()
     if (response.status === 401) {
         return <GoogleLoginButton/>
@@ -44,7 +44,7 @@ const MainActionButton = async () => {
     if (response.status === 401) {
         return <GoogleLoginButton/>
     }
-    return <DashboardNavigateButton/>
+    return <ReportNavigateButton/>
 }
 
 const IndexPage = async ({params}: Props) => {
@@ -64,7 +64,7 @@ const IndexPage = async ({params}: Props) => {
                             ),
                         })}
                         description={t("description")}
-                        buttons={<Suspense fallback={<DashboardNavigateButton/>}><MainActionButton/></Suspense>}
+                        buttons={<Suspense fallback={<ReportNavigateButton/>}><MainActionButton/></Suspense>}
                     />
                 </div>
             </Section>

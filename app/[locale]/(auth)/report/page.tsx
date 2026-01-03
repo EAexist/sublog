@@ -1,14 +1,14 @@
 import {getTranslations} from "next-intl/server";
-import SubscriptionReport from "@/app/[locale]/(auth)/report/SubscriptionReport";
 import {Suspense} from "react";
 import {Section} from "@/components/ui/section";
 import {Container} from "@/components/ui/container";
 import {subMonths} from "date-fns";
-import {SubscriptionReportError} from "@/app/[locale]/(auth)/report/SubscriptionReportError";
 import {SubscriptionReportSchema} from "@/lib/dto/dto";
 import {getReport} from "@/lib/api";
 import {redirect} from 'next/navigation'
 import {DefaultLayout} from "@/templates/DefaultLayout";
+import SubscriptionReport from "@/app/[locale]/(auth)/report/SubscriptionReport";
+import {ErrorPage} from "@/components/shared/ErrorPage";
 
 
 type Props = {
@@ -22,24 +22,34 @@ const AnalysisReportPage = async ({params}: Props) => {
     const t = await getTranslations("report");
 
     const response = await getReport()
-    if (response.error) {
-        if (response.status === 401) {
-            redirect(`/login`)
-        }
-        return <SubscriptionReportError error={response.error} status={response.status}/>
+
+    if (response.status === 401) {
+        redirect(`/login`)
     }
+    if (response.status === 204) {
+        redirect(`/report/new`)
+    }
+
+    if (response.error) {
+        return <ErrorPage title={t("title")} apiError={response}/>
+    }
+
     const report = SubscriptionReportSchema.parse(response.data)
-    // const report = sampleReport
 
     return (
         <DefaultLayout>
-            <Suspense>
-                <Section>
-                    <Container>
+            <Section>
+                <Container>
+                    <div className={"flex justify-between items-end pb-4"}>
+                        <div className={"flex items-end gap-2"}>
+                            <h1 className={"font-semibold text-xl"}>내 구독</h1>
+                        </div>
+                    </div>
+                    <Suspense>
                         <SubscriptionReport subscriptionReport={report}/>
-                    </Container>
-                </Section>
-            </Suspense>
+                    </Suspense>
+                </Container>
+            </Section>
         </DefaultLayout>
     );
 };

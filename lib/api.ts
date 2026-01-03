@@ -1,9 +1,16 @@
 import {isServer} from "@/lib/utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-type ApiResponse<T> =
+
+export interface ApiError {
+    data: null;
+    error: string;
+    status: number
+}
+
+export type ApiResponse<T> =
     | { data: T; error: null; status: number }
-    | { data: null; error: string; status: number };
+    | ApiError;
 
 const readBody = async (response: Response) => {
     try {
@@ -74,7 +81,15 @@ export const getReport = async () => {
     return await apiFetch(apiPath)
 };
 
-export const triggerAnalysis = async () => {
+
+export const getIsAnalysisEnabled = async () => {
+    const apiPath = '/subscriptions/analysis'
+    return await apiFetch(apiPath, {
+        method: "POST"
+    })
+};
+
+export const updateAnalysis = async () => {
     const apiPath = '/subscriptions/analysis'
     return await apiFetch(apiPath, {
         method: "POST"

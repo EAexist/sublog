@@ -24,8 +24,27 @@
     }
   },
   "analysis": {
-    "run": "구독 정리 시작",
-    "navigate_to_report": "내 구독 리포트 확인"
+    "AnalysisTracker": {
+      "run": "구독 정리 시작",
+      "steps": {
+        "STARTED": {
+          "title": "메일 읽는 중",
+          "description": "메일 목록을 확인하는 중이에요"
+        },
+        "EMAIL_FETCHED": {
+          "title": "구독 분석 중",
+          "description": "구독 내역을 분석하는 중이에요"
+        },
+        "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+          "title": "결과 정리 중",
+          "description": "결과를 정리하는 중이에요 잠시만 기다려주세요"
+        },
+        "COMPLETED": {
+          "title": "분석 완료",
+          "description": "결과 페이지로 이동할게요"
+        }
+      }
+    }
   },
   "report": {
     "ShowEmailToggle": {

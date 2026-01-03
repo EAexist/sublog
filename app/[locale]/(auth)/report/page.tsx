@@ -8,6 +8,7 @@ import {SubscriptionReportError} from "@/app/[locale]/(auth)/report/Subscription
 import {SubscriptionReportSchema} from "@/lib/dto/dto";
 import {getReport} from "@/lib/api";
 import {redirect} from 'next/navigation'
+import {DefaultLayout} from "@/templates/DefaultLayout";
 
 
 type Props = {
@@ -31,7 +32,7 @@ const AnalysisReportPage = async ({params}: Props) => {
     // const report = sampleReport
 
     return (
-        <div>
+        <DefaultLayout>
             <Suspense>
                 <Section>
                     <Container>
@@ -39,7 +40,7 @@ const AnalysisReportPage = async ({params}: Props) => {
                     </Container>
                 </Section>
             </Suspense>
-        </div>
+        </DefaultLayout>
     );
 };
 

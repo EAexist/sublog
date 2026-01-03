@@ -1,4 +1,4 @@
-import {cookies} from "next/headers";
+import {isServer} from "@/lib/utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 type ApiResponse<T> =
@@ -13,20 +13,24 @@ const readBody = async (response: Response) => {
     }
 }
 
-export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
+export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
 
-    const url = `${BASE_URL}${endpoint}`;
+    const url = `${BASE_URL}${path}`;
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');
     headers.set('Accept', 'application/json');
 
     // Session Cookie
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('SESSION');
-
-    if (sessionCookie) {
-        headers.set('Cookie', `SESSION=${sessionCookie.value}`);
+    if (isServer) {
+        const {cookies} = await import('next/headers');
+        const cookieStore = await cookies();
+        const sessionCookie = cookieStore.get('SESSION');
+        if (sessionCookie) {
+            headers.set('Cookie', `SESSION=${sessionCookie.value}`);
+        }
+    } else {
+        options.credentials = options.credentials || 'include';
     }
 
     try {
@@ -68,6 +72,13 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
 export const getReport = async () => {
     const apiPath = '/subscriptions/analysis'
     return await apiFetch(apiPath)
+};
+
+export const triggerAnalysis = async () => {
+    const apiPath = '/subscriptions/analysis'
+    return await apiFetch(apiPath, {
+        method: "POST"
+    })
 };
 
 export const getAppUser = async () => {

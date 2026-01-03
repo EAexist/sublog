@@ -3,7 +3,7 @@
 import {createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState} from 'react';
 
 import {Section} from "@/components/ui/section";
-import {SubscriptionReportType, SubscriptionType} from "@/lib/dto/dto";
+import {Subscription, SubscriptionReport} from "@/lib/dto/dto";
 import {differenceInDays} from 'date-fns';
 import {Item, ItemActions, ItemContent, ItemTitle} from "@/components/ui/item";
 import ReRunMenuButton from "@/app/[locale]/(auth)/report/ReReunMenuButton";
@@ -68,7 +68,7 @@ const ShowEmailToggle = () => {
 }
 
 interface SubscriptionReportProps {
-    subscriptionReport: SubscriptionReportType
+    subscriptionReport: SubscriptionReport
 }
 
 const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
@@ -98,7 +98,6 @@ const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
     return (
         <>
             <UIProvider>
-                <div className={"h-14"}/>
                 <div className={"flex justify-between items-end pb-4"}>
                     <div className={"flex items-end gap-2"}>
                         <h1 className={"font-semibold text-xl"}>내 구독</h1>
@@ -174,7 +173,7 @@ const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
     );
 };
 
-interface SubscriptionItemProps extends SubscriptionType {
+interface SubscriptionItemProps extends Subscription {
     email: string
 }
 
@@ -243,7 +242,7 @@ const SubscriptionItem = ({serviceProvider, paidSince, email}: SubscriptionItemP
 // subscription.serviceProvider.websiteUrl ?? "#"
 
 const NotSureSubscriptionItem = ({subscription}: {
-    subscription: SubscriptionType,
+    subscription: Subscription,
 }) => {
 
     return <SubscriptionItem subscription={subscription}
@@ -251,7 +250,7 @@ const NotSureSubscriptionItem = ({subscription}: {
 }
 
 const CannotAnalyzeSubscriptionItem = ({subscription}: {
-    subscription: SubscriptionType,
+    subscription: Subscription,
 }) => {
 
     return <SubscriptionItem subscription={subscription}
@@ -262,7 +261,7 @@ const CannotAnalyzeSubscriptionItem = ({subscription}: {
 }
 
 const NotPaidSubscriptionItem = ({subscription,}: {
-    subscription: SubscriptionType,
+    subscription: Subscription,
 }) => {
 
     return <SubscriptionItem subscription={subscription}

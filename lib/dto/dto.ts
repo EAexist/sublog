@@ -12,13 +12,15 @@ export const AppUserSchema = z.object(
     })
 
 export const ServiceProviderSchema = z.object({
-    displayName: z.string(),
+    id: z.string(),
     canAnalyzePayment: z.boolean(),
     websiteUrl: z.string().optional(),
+    displayName: z.string(),
     logoDevSuffix: z.string().optional()
 })
 
 export const SubscriptionSchema = z.object({
+    id: z.string().nullish(),
     serviceProvider: ServiceProviderSchema,
     registeredSince: z.coerce.date().nullish(),
     hasSubscribedNewsletterOrAd: z.boolean(),
@@ -36,13 +38,13 @@ export const SubscriptionReportSchema = z.object({
     analyzedAt: z.coerce.date().nullish()
 });
 
-export type AppUserType = z.infer<typeof AppUserSchema>;
-export type AccountReportSchemaType = z.infer<typeof AccountReportSchema>;
+export type AppUser = z.infer<typeof AppUserSchema>;
+export type AccountReportSchema = z.infer<typeof AccountReportSchema>;
 
-export type SubscriptionReportType = z.infer<typeof SubscriptionReportSchema>;
-export type ServiceProviderType = z.infer<typeof ServiceProviderSchema>;
-export type SubscriptionType = z.infer<typeof SubscriptionSchema>;
-export type GoogleAccountType = z.infer<typeof GoogleAccountSchema>;
+export type SubscriptionReport = z.infer<typeof SubscriptionReportSchema>;
+export type ServiceProvider = z.infer<typeof ServiceProviderSchema>;
+export type Subscription = z.infer<typeof SubscriptionSchema>;
+export type GoogleAccount = z.infer<typeof GoogleAccountSchema>;
 
 // // Helper to map to UI-friendly format
 // export function mapToReport(data: ReportDTO) {

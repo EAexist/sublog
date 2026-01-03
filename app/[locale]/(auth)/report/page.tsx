@@ -8,7 +8,7 @@ import {getReport} from "@/lib/api";
 import {redirect} from 'next/navigation'
 import {DefaultLayout} from "@/templates/DefaultLayout";
 import SubscriptionReport from "@/app/[locale]/(auth)/report/SubscriptionReport";
-import {ErrorPage} from "@/components/shared/ErrorPage";
+import ErrorPage from "@/components/shared/ErrorPage";
 
 
 type Props = {
@@ -31,7 +31,7 @@ const AnalysisReportPage = async ({params}: Props) => {
     }
 
     if (response.error) {
-        return <ErrorPage title={t("title")} apiError={response}/>
+        return <ErrorPage status={response.status} pageTitle={t("title")}/>
     }
 
     const report = SubscriptionReportSchema.parse(response.data)
@@ -42,7 +42,7 @@ const AnalysisReportPage = async ({params}: Props) => {
                 <Container>
                     <div className={"flex justify-between items-end pb-4"}>
                         <div className={"flex items-end gap-2"}>
-                            <h1 className={"font-semibold text-xl"}>내 구독</h1>
+                            <h1 className={"font-semibold text-xl"}>{t("title")}</h1>
                         </div>
                     </div>
                     <Suspense>

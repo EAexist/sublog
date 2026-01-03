@@ -62,7 +62,7 @@ const AnalysisTracker = () => {
             }
 
             console.log(`🚀 [EventSource Debug] Running UseEffect`)
-            const eventSource = new EventSource(reportUpdateEventApiPath);
+            eventSource = new EventSource(reportUpdateEventApiPath);
 
             eventSource.addEventListener('progress-update', (event) => {
                 try {

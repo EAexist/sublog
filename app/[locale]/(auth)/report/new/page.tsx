@@ -8,7 +8,7 @@ import {redirect} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import {Timer} from "lucide-react";
 import Link from "next/link";
-import {ErrorPage} from "@/components/shared/ErrorPage";
+import ErrorPage from "@/components/shared/ErrorPage";
 
 type Props = {
     params: Promise<{ locale: string }>;
@@ -27,7 +27,7 @@ const AnalysisUpdatePage = async ({params}: Props) => {
     }
 
     if (response.error) {
-        return <ErrorPage title={t("title")} apiError={response}/>
+        return <ErrorPage status={response.status} pageTitle={t("title")}/>
     }
 
     const isAnalysisEnabled = (response.data as { isAnalysisEnabled: boolean })?.isAnalysisEnabled ?? false

@@ -27,7 +27,7 @@
     "ErrorEmpty": {
       "title": "서비스를 사용할 수 없어요",
       "description": "지금은 서비스를 사용할 수 없어요.\n잠시 후 다시 접속해 주세요.",
-      "homeNavigateButton": "홈으로 돌아가기"
+      "homeNavigateButton": "확인"
     }
   },
   "report": {

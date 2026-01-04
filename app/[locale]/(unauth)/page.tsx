@@ -6,6 +6,8 @@ import Link from "next/link";
 import {Section} from "@/components/ui/section";
 import {ViewportHeightLayout} from "@/templates/ViewportHeightLayout";
 import {Suspense} from "react";
+import {getSessionCookie} from "@/lib/api";
+import {GoogleLoginButton} from "@/components/shared/GoogleLoginButton";
 
 type Props = {
     params: Promise<{ locale: string }>;
@@ -25,20 +27,15 @@ export async function generateMetadata({params}: Props) {
     };
 }
 
-
 const ReportNavigateButton = async () => {
     const t = await getTranslations("home.components.ReportNavigateButton");
     return <Button size={"fullW"}><Link href={"/report"}>{t("title")}</Link>
     </Button>;
 }
 
-
 const MainActionButton = async () => {
-    // const response = await getAppUser()
-    // if (response.status === 401) {
-    //     return <GoogleLoginButton/>
-    // }
-    return <ReportNavigateButton/>
+    const sessionCookie = await getSessionCookie()
+    return (sessionCookie !== undefined) ? <ReportNavigateButton/> : <GoogleLoginButton/>
 }
 
 const IndexPage = async ({params}: Props) => {

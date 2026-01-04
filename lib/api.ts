@@ -20,6 +20,12 @@ const readBody = async (response: Response) => {
     }
 }
 
+export const getSessionCookie = async () => {
+    const {cookies} = await import('next/headers');
+    const cookieStore = await cookies();
+    return cookieStore.get('SESSION');
+}
+
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
 
     const url = `${BASE_URL}${path}`;
@@ -30,9 +36,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
 
     // Session Cookie
     if (isServer) {
-        const {cookies} = await import('next/headers');
-        const cookieStore = await cookies();
-        const sessionCookie = cookieStore.get('SESSION');
+        const sessionCookie = await getSessionCookie()
         if (sessionCookie) {
             headers.set('Cookie', `SESSION=${sessionCookie.value}`);
         }

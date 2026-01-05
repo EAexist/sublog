@@ -62,7 +62,18 @@ const AnalysisTracker = () => {
             }
 
             console.log(`🚀 [EventSource Debug] Running UseEffect`)
-            eventSource = new EventSource(reportUpdateEventApiPath);
+
+            // fetchEventSource(reportUpdateEventApiPath, {
+            //     method: 'GET',
+            //     headers: {
+            //         'Authorization': `Bearer YOUR_AUTH_TOKEN`, // 커스텀 헤더 추가
+            //         'Content-Type': 'text/event-stream',
+            //     },
+            // })
+
+            eventSource = new EventSource(reportUpdateEventApiPath, {
+                withCredentials: true
+            });
 
             eventSource.addEventListener('progress-update', (event) => {
                 try {

@@ -31,31 +31,37 @@
     }
   },
   "report": {
-    "title": "내 구독",
+    "title": "나의 구독 · 멤버십",
     "components": {
       "ShowEmailToggle": {
         "title": "계정 표시"
       },
-      "ReRunMenuButton": {
-        "enabled": {
-          "title": "내 구독 리포트",
-          "analyzedAt": "생성",
-          "run": "새로 분석하기",
-          "cancel": "닫기"
-        },
-        "disabled": {
-          "title": "내 구독 리포트",
-          "analyzedAt": "생성",
-          "enabledAfter": "에 다시 정리할 수 있어요",
-          "run": "",
-          "cancel": "확인"
+      "AnalyzedAtAlert": {
+        "title": "최근 조회"
+      },
+      "AvailableSinceAlert": {
+        "title": "다음 조회 가능 시간"
+      },
+      "ReportUpdateButton": {
+        "title": "새로운 구독 찾기",
+        "dialog": {
+          "title": "새로운 구독 찾기",
+          "analyzedAtTitle": "최근 조회",
+          "availableSinceTitle": "다음 조회 가능 시간",
+          "enabled": {
+            "run": "찾기",
+            "cancel": "닫기"
+          },
+          "disabled": {
+            "run": "찾기",
+            "cancel": "확인"
+          }
         }
       }
     },
     "analysis": {
       "components": {
         "AnalysisTracker": {
-          "run": "구독 정리 시작",
           "steps": {
             "STARTED": {
               "title": "메일 읽는 중",
@@ -78,11 +84,39 @@
       }
     },
     "new": {
-      "title": "구독/멤버십 정리",
-      "reportNavigateButton": "내 구독 리포트 보기",
+      "title": "숨은 구독 찾기",
+      "new": {
+        "title": "숨은 구독 찾기",
+        "components": {
+          "UpdateStartButton": {
+            "run": "시작"
+          }
+        }
+      },
+      "update": {
+        "title": "새로운 구독 찾기",
+        "components": {
+          "UpdateStartButton": {
+            "run": "시작"
+          }
+        },
+        "lastReportTitle": "최근 조회"
+      }
+    },
+    "update": {
+      "title": "숨은 구독 찾기",
+      "waitQuotaTitle": "후에 시도해주세요",
+      "waitQuotaDescription": "이후에 다시 분석 할 수 있어요",
+      "reportNavigateButton": "확인",
+      "lastReport_title": "최근 정리 결과",
+      "analyzedAt_title": "정리 날짜",
+      "googleAccounts_title": "Gmail 목록",
+      "subscriptions_title": "결과 요약",
+      "updateButton": "시작",
       "components": {
         "AnalysisUpdateButton": {
-          "run": "정리 시작"
+          "run": "정리 시작",
+          "runAgain": "업데이트"
         }
       }
     }

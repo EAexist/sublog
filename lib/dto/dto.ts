@@ -38,6 +38,12 @@ export const SubscriptionReportSchema = z.object({
     analyzedAt: z.coerce.date().nullish()
 });
 
+export const ReportUpdateEligibilitySchema = z.object({
+    canUpdate: z.coerce.boolean(),
+    analyzedAt: z.coerce.date().nullish(),
+    availableSince: z.coerce.date().nullish()
+});
+
 export type AppUser = z.infer<typeof AppUserSchema>;
 export type AccountReportSchema = z.infer<typeof AccountReportSchema>;
 
@@ -45,6 +51,7 @@ export type SubscriptionReport = z.infer<typeof SubscriptionReportSchema>;
 export type ServiceProvider = z.infer<typeof ServiceProviderSchema>;
 export type Subscription = z.infer<typeof SubscriptionSchema>;
 export type GoogleAccount = z.infer<typeof GoogleAccountSchema>;
+export type ReportUpdateEligibility = z.infer<typeof ReportUpdateEligibilitySchema>;
 
 // // Helper to map to UI-friendly format
 // export function mapToReport(data: ReportDTO) {

@@ -3,8 +3,8 @@ import {Suspense} from "react";
 import {Section} from "@/components/ui/section";
 import {Container} from "@/components/ui/container";
 import {subMonths} from "date-fns";
-import {SubscriptionReportSchema} from "@/lib/dto/dto";
-import {getReport} from "@/lib/api";
+import {ReportUpdateEligibilitySchema, SubscriptionReportSchema} from "@/lib/dto/dto";
+import {getReport, getUpdateEligibility} from "@/lib/api";
 import {redirect} from 'next/navigation'
 import {DefaultLayout} from "@/templates/DefaultLayout";
 import SubscriptionReport from "@/app/[locale]/(auth)/report/SubscriptionReport";
@@ -29,12 +29,22 @@ const AnalysisReportPage = async ({params}: Props) => {
     if (response.status === 204) {
         redirect(`/report/new`)
     }
-
     if (response.error) {
         return <ErrorPage status={response.status} pageTitle={t("title")}/>
     }
 
     const report = SubscriptionReportSchema.parse(response.data)
+
+    const updateEligibilityResponse = await getUpdateEligibility()
+
+    if (updateEligibilityResponse.status === 401) {
+        redirect(`/login`)
+    }
+    if (updateEligibilityResponse.error) {
+        return <ErrorPage status={updateEligibilityResponse.status} pageTitle={t("title")}/>
+    }
+
+    const reportUpdateEligibility = ReportUpdateEligibilitySchema.parse(updateEligibilityResponse.data)
 
     return (
         <DefaultLayout>
@@ -46,7 +56,8 @@ const AnalysisReportPage = async ({params}: Props) => {
                         </div>
                     </div>
                     <Suspense>
-                        <SubscriptionReport subscriptionReport={report}/>
+                        <SubscriptionReport subscriptionReport={report}
+                                            reportUpdateEligibility={reportUpdateEligibility}/>
                     </Suspense>
                 </Container>
             </Section>

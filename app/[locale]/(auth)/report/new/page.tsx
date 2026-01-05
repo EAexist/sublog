@@ -2,35 +2,41 @@ import {Section} from "@/components/ui/section";
 import {Container} from "@/components/ui/container";
 import {getTranslations} from "next-intl/server";
 import {DefaultLayout} from "@/templates/DefaultLayout";
-import AnalysisUpdateButton from "@/app/[locale]/(auth)/report/new/AnalysisUpdateButton";
-import {getIsAnalysisEnabled} from "@/lib/api";
+import UpdateStartButton from "@/app/[locale]/(auth)/report/new/UpdateStartButton";
+import {getUpdateEligibility} from "@/lib/api";
 import {redirect} from "next/navigation";
-import {Button} from "@/components/ui/button";
-import {Timer} from "lucide-react";
-import Link from "next/link";
 import ErrorPage from "@/components/shared/ErrorPage";
+import {ReportUpdateEligibility, ReportUpdateEligibilitySchema} from "@/lib/dto/dto";
+import {Separator} from "@/components/ui/separator";
+import {Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle} from "@/components/ui/item";
+import {ChevronRight, SearchCheckIcon, Timer} from "lucide-react";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
+import {AvailableSinceAlert} from "@/app/[locale]/(auth)/report/UpdateEligiblityAlert";
 
 type Props = {
     params: Promise<{ locale: string }>;
 };
 
-const AnalysisUpdatePage = async ({params}: Props) => {
+const AnalysisStartPage = async ({params}: Props) => {
 
-    // const appUser: Promise<AppUserType> = await getAppUser()
+    const t_base = await getTranslations("report.new");
 
-    const t = await getTranslations("report.new");
-
-    const response = await getIsAnalysisEnabled()
+    const response = await getUpdateEligibility()
 
     if (response.status === 401) {
         redirect(`/login`)
     }
 
     if (response.error) {
-        return <ErrorPage status={response.status} pageTitle={t("title")}/>
+        return <ErrorPage status={response.status} pageTitle={t_base("title")}/>
     }
 
-    const isAnalysisEnabled = (response.data as { isAnalysisEnabled: boolean })?.isAnalysisEnabled ?? false
+    const reportUpdateEligibility: ReportUpdateEligibility = ReportUpdateEligibilitySchema.parse(response.data)
+
+    const isFirst = reportUpdateEligibility.analyzedAt === null
+
+    const t = await getTranslations(`report.new.${(isFirst) ? "new" : "update"}`);
 
     return (
         <DefaultLayout>
@@ -40,22 +46,59 @@ const AnalysisUpdatePage = async ({params}: Props) => {
                         <h1 className={"font-semibold text-xl"}>{t("title")}</h1>
                     </div>
                     {
-                        isAnalysisEnabled ?
-                            <AnalysisUpdateButton/> :
+                        reportUpdateEligibility.canUpdate ?
                             <div>
-                                <Button disabled variant={"outline"}
-                                        size={"fullW"}><Timer/>{t("components.AnalysisUpdateButton.run")}
-                                </Button>
-                                <Button size={"fullW"} asChild><Link
-                                    href={"/report"}>{t("reportNavigateButton")}</Link></Button>
+                                <UpdateStartButton isFirst={isFirst}/>
+                            </div>
+                            :
+                            <div className={"flex flex-col gap-8"}>{
+                                reportUpdateEligibility.availableSince &&
+                                <AvailableSinceAlert availableSince={reportUpdateEligibility.availableSince}
+                                                     variant={"muted"}/>
+                            }
+                                <Button disabled size={"fullW"}><Timer/>{t("components.UpdateStartButton.run")}</Button>
                             </div>
                     }
                 </Container>
             </Section>
+            {
+                !isFirst &&
+                <>
+                    <div className={"px-4"}>
+                        <Separator/>
+                    </div>
+                    <Section>
+                        <Container><Item asChild variant={"outline"}><Link
+                            href={"/report"}><ItemMedia>
+                            <SearchCheckIcon className={"size-6"} strokeWidth={1.5}/>
+                        </ItemMedia>
+                            <ItemContent className={"min-w-0"}>
+                                <ItemTitle className={"w-full"}>
+                                    <h2 className={""}>{t("lastReportTitle")}</h2>
+                                </ItemTitle>
+                                <ItemDescription
+                                    className={""}>{reportUpdateEligibility.analyzedAt?.toLocaleString('ko-KR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    hour12: true
+                                })}
+                                </ItemDescription>
+                            </ItemContent>
+                            <ItemActions>
+                                <ChevronRight className={"size-5"}/>
+                            </ItemActions>
+                        </Link>
+                        </Item>
+                        </Container>
+                    </Section>
+                </>
+            }
         </DefaultLayout>
 
     );
 };
 
 
-export default AnalysisUpdatePage;
+export default AnalysisStartPage;

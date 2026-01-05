@@ -1,12 +1,10 @@
 "use client"
 
-import {createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState} from 'react';
-
 import {Section} from "@/components/ui/section";
-import {Subscription, SubscriptionReport} from "@/lib/dto/dto";
+import {ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType} from "@/lib/dto/dto";
 import {differenceInDays} from 'date-fns';
 import {Item, ItemActions, ItemContent, ItemTitle} from "@/components/ui/item";
-import ReRunMenuButton from "@/app/[locale]/(auth)/report/ReReunMenuButton";
+import ReportUpdateButton from "@/app/[locale]/(auth)/report/ReportUpdateButton";
 import Link from "next/link";
 import {Badge} from "@/components/ui/badge";
 import {AtSign, Calendar, ChevronRight, CircleUserRound} from "lucide-react";
@@ -15,28 +13,7 @@ import {ButtonGroup} from "@/components/ui/button-group";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {BrandAvatar} from "@/components/shared/BrandAvatar";
-
-interface UIContextType {
-    showEmail: boolean;
-    setShowEmail: Dispatch<SetStateAction<boolean>>;
-}
-
-const UIContext = createContext<UIContextType>({
-    showEmail: false, setShowEmail: () => {
-    }
-})
-
-const UIProvider = ({children}: PropsWithChildren) => {
-    const [showEmail, setShowEmail] = useState(false)
-    return <UIContext.Provider value={{showEmail, setShowEmail}}>{children}</UIContext.Provider>
-}
-const useUI: () => UIContextType = () => {
-    const context = useContext(UIContext);
-    if (context === undefined) {
-        throw new Error('useUI must be used within a UIProvider');
-    }
-    return context;
-};
+import {UIProvider, useUI} from "@/app/[locale]/(auth)/report/UIContext";
 
 const EmailBadge = ({email}: { email: string }) => {
 
@@ -49,7 +26,7 @@ const EmailBadge = ({email}: { email: string }) => {
             </Badge> : null)
 }
 
-const ShowEmailToggle = () => {
+export const ShowEmailToggle = () => {
     const t = useTranslations("report.ShowEmailToggle")
 
     const {showEmail, setShowEmail} = useUI()
@@ -68,15 +45,16 @@ const ShowEmailToggle = () => {
 }
 
 interface SubscriptionReportProps {
-    subscriptionReport: SubscriptionReport
+    subscriptionReport: SubscriptionReportType
+    reportUpdateEligibility: ReportUpdateEligibility
 }
 
-const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
+const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: SubscriptionReportProps) => {
 
     const t = useTranslations("report")
 
     const report = subscriptionReport
-    const hasMultipleGooleAccounts = report.accountReports.length > 1
+    const hasMultipleGoogleAccounts = report.accountReports.length > 1
 
     const googleAccounts = report.accountReports.map(it => it.googleAccount)
     // const googleAccountToClassname = Object.fromEntries(googleAccounts.map((acc, idx) => [acc.email, `bg-chart-${(idx % 5) + 1}`]));
@@ -90,7 +68,7 @@ const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
             // }
         })))
 
-    const paidSubscriptions = subscriptions.filter(it => (it.paidSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.paidSince.getTime() - b.paidSince.getTime())
+    const paidSubscriptions = subscriptions.filter(it => (it.paidSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.paidSince?.getTime() - b.paidSince?.getTime())
     const notSureSubscriptions = subscriptions.filter(it => (it.paidSince !== null) && it.isNotSureIfPaymentIsOngoing)
     const cannotAnalyzeSubscriptions = subscriptions.filter(it => !it.serviceProvider.canAnalyzePayment)
     const notPaidSubscriptions = subscriptions.filter(it => (it.paidSince == null) && it.serviceProvider.canAnalyzePayment)
@@ -98,20 +76,15 @@ const SubscriptionReport = ({subscriptionReport}: SubscriptionReportProps) => {
     return (
         <>
             <UIProvider>
-                <div className={"flex justify-between items-end pb-4"}>
-                    <div className={"flex items-end gap-2"}>
-                        <h1 className={"font-semibold text-xl"}>내 구독</h1>
-                    </div>
-                </div>
                 <div className={"pb-8"}>
                     <ButtonGroup>{
-                        hasMultipleGooleAccounts &&
+                        hasMultipleGoogleAccounts &&
                         <ButtonGroup>
                             <ShowEmailToggle/>
                         </ButtonGroup>
                     }
                         <ButtonGroup>
-                            <ReRunMenuButton analyzedAt={report.analyzedAt}/>
+                            <ReportUpdateButton reportUpdateEligibility={reportUpdateEligibility}/>
                         </ButtonGroup>
                     </ButtonGroup>
                 </div>
@@ -195,7 +168,7 @@ const PaidSubscriptionItem = ({paidSince, serviceProvider, email}: SubscriptionI
                 </Badge>
                 <Badge variant="secondary">
                     <Calendar strokeWidth={1.5}/>
-                    {paidSince.toLocaleDateString()}
+                    {paidSince?.toLocaleDateString()}
                 </Badge>
             </div>
             <EmailBadge email={email}/>
@@ -223,7 +196,7 @@ const SubscriptionItem = ({serviceProvider, paidSince, email}: SubscriptionItemP
                 paidSince &&
                 <Badge variant="secondary">
                     <Calendar strokeWidth={1.5}/>
-                    {paidSince.toLocaleDateString()}
+                    {paidSince?.toLocaleDateString()}
                 </Badge>
             }
             <EmailBadge email={email}/>
@@ -236,9 +209,6 @@ const SubscriptionItem = ({serviceProvider, paidSince, email}: SubscriptionItemP
         </ItemActions></Link>
     </Item>
 }
-
-// 구독 시작: {subscription.paidSince?.toLocaleDateString()}
-// subscription.serviceProvider.websiteUrl ?? "#"
 
 const NotSureSubscriptionItem = ({subscription}: {
     subscription: Subscription,
@@ -274,6 +244,5 @@ const getMonthsPassed = (start: Date): number => {
     const days = differenceInDays(Date.now(), start);
     return Math.ceil(days / 30); // Using 30 as the standard month divisor
 };
-
 
 export default SubscriptionReport;

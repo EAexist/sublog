@@ -99,10 +99,7 @@ export const updateAnalysis = async () => {
     })
 };
 
-export const getIsAnalysisEnabled = async () => {
-    return Promise.resolve({status: "ok", error: null, data: {isAnalysisEnabled: true}})
-    const apiPath = '/subscriptions/analysis'
-    return await apiFetch(apiPath, {
-        method: "POST"
-    })
+export const getUpdateEligibility = async () => {
+    const apiPath = '/reports/updates/eligibility'
+    return await apiFetch(apiPath)
 };

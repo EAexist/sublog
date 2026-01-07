@@ -7,7 +7,18 @@ import {Item, ItemActions, ItemContent, ItemTitle} from "@/components/ui/item";
 import ReportUpdateButton from "@/app/[locale]/(auth)/report/ReportUpdateButton";
 import Link from "next/link";
 import {Badge} from "@/components/ui/badge";
-import {AtSign, Calendar, ChevronRight, CircleUserRound} from "lucide-react";
+import {
+    AtSign,
+    BadgeCheck,
+    BadgeDollarSign,
+    BadgeQuestionMark,
+    BadgeX,
+    Calendar,
+    ChevronRight,
+    CircleDollarSign,
+    CircleUserRound,
+    UserCheck
+} from "lucide-react";
 import {Toggle} from "@/components/ui/toggle"
 import {ButtonGroup} from "@/components/ui/button-group";
 import {Button} from "@/components/ui/button";
@@ -27,7 +38,7 @@ const EmailBadge = ({email}: { email: string }) => {
 }
 
 export const ShowEmailToggle = () => {
-    const t = useTranslations("report.ShowEmailToggle")
+    const t = useTranslations("report.components.ShowEmailToggle")
 
     const {showEmail, setShowEmail} = useUI()
     return (
@@ -76,7 +87,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
     return (
         <>
             <UIProvider>
-                <div className={"pb-8"}>
+                <div className={"pb-10"}>
                     <ButtonGroup>{
                         hasMultipleGoogleAccounts &&
                         <ButtonGroup>
@@ -88,8 +99,11 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                         </ButtonGroup>
                     </ButtonGroup>
                 </div>
-                <Section className={"pb-8"}>
-                    <h2 className={"font-regular text-base pb-4 px-1"}>구독 중</h2>
+                <Section className={"pb-10"}>
+                    <div className="flex items-center gap-2 pb-4">
+                        <BadgeDollarSign strokeWidth={1.5} className="size-5"/>
+                        <h2 className="font-regular text-base">구독 중</h2>
+                    </div>
                     <ul className={"flex flex-col gap-2"}>
                         {
                             paidSubscriptions.map((subscriptionProps, index) =>
@@ -102,13 +116,16 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                 </Section>
                 {
                     notSureSubscriptions.length > 0 &&
-                    <Section className={"pb-8"}>
-                        <h2 className={"font-regular text-base pb-4 px-1"}>구독을 유지 중인지 확실하지 않아요</h2>
-                        <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <Section className={"pb-10"}>
+                        <div className="flex items-center gap-2 pb-4">
+                            <BadgeQuestionMark strokeWidth={1.5} className="size-5"/>
+                            <h2 className="font-regular text-base">구독을 유지 중인지 확실하지 않아요</h2>
+                        </div>
+                        <ul className="flex flex-col gap-2">
                             {
                                 notSureSubscriptions.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <SubscriptionItem
+                                        <PaidSubscriptionItem
                                             {...subscriptionProps}/>
                                     </li>)
                             }
@@ -117,8 +134,11 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                 }
                 {
                     notSureSubscriptions.length > 0 &&
-                    <Section className={"pb-8"}>
-                        <h2 className={"font-regular text-base pb-4 px-1"}>구독 여부를 확인할 수 없어요</h2>
+                    <Section className={"pb-10"}>
+                        <div className="flex items-center gap-2 pb-4">
+                            <BadgeX strokeWidth={1.5} className="size-5"/>
+                            <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
+                        </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
                                 cannotAnalyzeSubscriptions.map((subscriptionProps, index) =>
@@ -131,8 +151,11 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                 }
                 {
                     notPaidSubscriptions.length > 0 &&
-                    <Section className={"pb-8"}>
-                        <h2 className={"font-regular text-base pb-4 px-1"}>가입만 한 서비스</h2>
+                    <Section className={"pb-10"}>
+                        <div className="flex items-center gap-2 pb-4">
+                            <BadgeCheck strokeWidth={1.5} className="size-5"/>
+                            <h2 className="font-regular text-base">가입만 한 서비스</h2>
+                        </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
                                 notPaidSubscriptions.map((subscriptionProps, index) =>
@@ -150,7 +173,13 @@ interface SubscriptionItemProps extends Subscription {
 }
 
 
-const PaidSubscriptionItem = ({paidSince, serviceProvider, email}: SubscriptionItemProps) => {
+const PaidSubscriptionItem = ({
+                                  paidSince,
+                                  isNotSureIfPaymentIsOngoing,
+                                  registeredSince,
+                                  serviceProvider,
+                                  email
+                              }: SubscriptionItemProps) => {
 
     const paidMonths = getMonthsPassed(paidSince)
 
@@ -163,12 +192,19 @@ const PaidSubscriptionItem = ({paidSince, serviceProvider, email}: SubscriptionI
                 <h2 className={"text-lg font-semibold truncate"}>{serviceProvider.displayName}</h2>
             </ItemTitle>
             <div className={"flex gap-2 mt-1"}>
-                <Badge>
-                    {`${paidMonths}개월`}
-                </Badge>
-                <Badge variant="secondary">
-                    <Calendar strokeWidth={1.5}/>
+                {
+                    !isNotSureIfPaymentIsOngoing &&
+                    <Badge>
+                        {`${paidMonths}개월`}
+                    </Badge>
+                }
+                <Badge variant="outline">
+                    <CircleDollarSign strokeWidth={1.5}/>
                     {paidSince?.toLocaleDateString()}
+                </Badge>
+                <Badge variant="outline">
+                    <UserCheck strokeWidth={1.5}/>
+                    {registeredSince?.toLocaleDateString()}
                 </Badge>
             </div>
             <EmailBadge email={email}/>
@@ -182,7 +218,7 @@ const PaidSubscriptionItem = ({paidSince, serviceProvider, email}: SubscriptionI
     </Link>
     </Item>
 }
-const SubscriptionItem = ({serviceProvider, paidSince, email}: SubscriptionItemProps) => {
+const SubscriptionItem = ({serviceProvider, registeredSince, paidSince, email}: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
         href={serviceProvider.websiteUrl ?? "#"} target="_blank"
@@ -192,13 +228,22 @@ const SubscriptionItem = ({serviceProvider, paidSince, email}: SubscriptionItemP
                 <BrandAvatar serviceProvider={serviceProvider}/>
                 <h3 className={"text-base font-medium truncate"}>{serviceProvider.displayName}</h3>
             </ItemTitle>
-            {
-                paidSince &&
-                <Badge variant="secondary">
-                    <Calendar strokeWidth={1.5}/>
-                    {paidSince?.toLocaleDateString()}
-                </Badge>
-            }
+            <div className={"flex gap-2 mt-1"}>
+                {
+                    paidSince &&
+                    <Badge variant="outline">
+                        <Calendar strokeWidth={1.5}/>
+                        {paidSince?.toLocaleDateString()}
+                    </Badge>
+                }
+                {
+                    registeredSince &&
+                    <Badge variant="outline">
+                        <UserCheck strokeWidth={1.5}/>
+                        {registeredSince.toLocaleDateString()}
+                    </Badge>
+                }
+            </div>
             <EmailBadge email={email}/>
         </ItemContent>
         <ItemActions>

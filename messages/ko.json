@@ -49,11 +49,11 @@
           "analyzedAtTitle": "최근 조회",
           "availableSinceTitle": "다음 조회 가능 시간",
           "enabled": {
-            "run": "찾기",
+            "run": "다시 조회하기",
             "cancel": "닫기"
           },
           "disabled": {
-            "run": "찾기",
+            "run": "다시 조회하기",
             "cancel": "확인"
           }
         }

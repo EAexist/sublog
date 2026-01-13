@@ -79,10 +79,10 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
             // }
         })))
 
-    const paidSubscriptions = subscriptions.filter(it => (it.paidSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.paidSince?.getTime() - b.paidSince?.getTime())
-    const notSureSubscriptions = subscriptions.filter(it => (it.paidSince !== null) && it.isNotSureIfPaymentIsOngoing)
+    const paidSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.subscribedSince?.getTime() - b.subscribedSince?.getTime())
+    const notSureSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfPaymentIsOngoing)
     const cannotAnalyzeSubscriptions = subscriptions.filter(it => !it.serviceProvider.canAnalyzePayment)
-    const notPaidSubscriptions = subscriptions.filter(it => (it.paidSince == null) && it.serviceProvider.canAnalyzePayment)
+    const notPaidSubscriptions = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzePayment)
 
     return (
         <>
@@ -174,14 +174,14 @@ interface SubscriptionItemProps extends Subscription {
 
 
 const PaidSubscriptionItem = ({
-                                  paidSince,
+                                  subscribedSince,
                                   isNotSureIfPaymentIsOngoing,
                                   registeredSince,
                                   serviceProvider,
                                   email
                               }: SubscriptionItemProps) => {
 
-    const paidMonths = getMonthsPassed(paidSince)
+    const paidMonths = getMonthsPassed(subscribedSince)
 
     return <Item asChild variant={"outline"}><Link
         href={serviceProvider.websiteUrl ?? "#"} target="_blank"
@@ -200,7 +200,7 @@ const PaidSubscriptionItem = ({
                 }
                 <Badge variant="outline">
                     <CircleDollarSign strokeWidth={1.5}/>
-                    {paidSince?.toLocaleDateString()}
+                    {subscribedSince?.toLocaleDateString()}
                 </Badge>
                 <Badge variant="outline">
                     <UserCheck strokeWidth={1.5}/>
@@ -218,7 +218,7 @@ const PaidSubscriptionItem = ({
     </Link>
     </Item>
 }
-const SubscriptionItem = ({serviceProvider, registeredSince, paidSince, email}: SubscriptionItemProps) => {
+const SubscriptionItem = ({serviceProvider, registeredSince, subscribedSince, email}: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
         href={serviceProvider.websiteUrl ?? "#"} target="_blank"
@@ -230,10 +230,10 @@ const SubscriptionItem = ({serviceProvider, registeredSince, paidSince, email}: 
             </ItemTitle>
             <div className={"flex gap-2 mt-1"}>
                 {
-                    paidSince &&
+                    subscribedSince &&
                     <Badge variant="outline">
                         <Calendar strokeWidth={1.5}/>
-                        {paidSince?.toLocaleDateString()}
+                        {subscribedSince?.toLocaleDateString()}
                     </Badge>
                 }
                 {

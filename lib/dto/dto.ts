@@ -24,7 +24,7 @@ export const SubscriptionSchema = z.object({
     serviceProvider: ServiceProviderSchema,
     registeredSince: z.coerce.date().nullish(),
     hasSubscribedNewsletterOrAd: z.boolean(),
-    paidSince: z.coerce.date().nullish(),
+    subscribedSince: z.coerce.date().nullish(),
     isNotSureIfPaymentIsOngoing: z.boolean(),
 })
 

@@ -81,7 +81,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: subMonths(Date.now(), 7),
+                subscribedSince: subMonths(Date.now(), 7),
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -93,7 +93,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: subMonths(Date.now(), 8),
+                subscribedSince: subMonths(Date.now(), 8),
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -105,7 +105,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: subMonths(Date.now(), 8),
+                subscribedSince: subMonths(Date.now(), 8),
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -117,7 +117,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: subMonths(Date.now(), 8),
+                subscribedSince: subMonths(Date.now(), 8),
                 isNotSureIfPaymentIsOngoing: true
             }, {
                 serviceProvider: {
@@ -130,7 +130,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: null,
+                subscribedSince: null,
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -142,7 +142,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: subMonths(Date.now(), 8),
+                subscribedSince: subMonths(Date.now(), 8),
                 isNotSureIfPaymentIsOngoing: true
             }, {
                 serviceProvider: {
@@ -154,7 +154,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: null,
+                subscribedSince: null,
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -166,7 +166,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: null,
+                subscribedSince: null,
                 isNotSureIfPaymentIsOngoing: false
             }, {
                 serviceProvider: {
@@ -178,7 +178,7 @@ const sampleReport = {
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
-                paidSince: null,
+                subscribedSince: null,
                 isNotSureIfPaymentIsOngoing: false
             },],
             googleAccount: {
@@ -197,7 +197,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: subMonths(Date.now(), 8),
+                    subscribedSince: subMonths(Date.now(), 8),
                     isNotSureIfPaymentIsOngoing: false
                 }, {
                     serviceProvider: {
@@ -209,7 +209,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: subMonths(Date.now(), 8),
+                    subscribedSince: subMonths(Date.now(), 8),
                     isNotSureIfPaymentIsOngoing: true
                 }, {
                     serviceProvider: {
@@ -221,7 +221,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: null,
+                    subscribedSince: null,
                     isNotSureIfPaymentIsOngoing: false
                 }, {
                     serviceProvider: {
@@ -233,7 +233,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: subMonths(Date.now(), 8),
+                    subscribedSince: subMonths(Date.now(), 8),
                     isNotSureIfPaymentIsOngoing: true
                 }, {
                     serviceProvider: {
@@ -245,7 +245,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: null,
+                    subscribedSince: null,
                     isNotSureIfPaymentIsOngoing: false
                 }, {
                     serviceProvider: {
@@ -257,7 +257,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: null,
+                    subscribedSince: null,
                     isNotSureIfPaymentIsOngoing: false
                 }, {
                     serviceProvider: {
@@ -269,7 +269,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: null,
+                    subscribedSince: null,
                     isNotSureIfPaymentIsOngoing: false
                 }, {
                     serviceProvider: {
@@ -281,7 +281,7 @@ const sampleReport = {
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
-                    paidSince: subMonths(Date.now(), 7),
+                    subscribedSince: subMonths(Date.now(), 7),
                     isNotSureIfPaymentIsOngoing: false
                 }],
                 googleAccount: {

@@ -82,7 +82,10 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
     const paidSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.subscribedSince?.getTime() - b.subscribedSince?.getTime())
     const notSureSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfPaymentIsOngoing)
     const cannotAnalyzeSubscriptions = subscriptions.filter(it => !it.serviceProvider.canAnalyzePayment)
-    const notPaidSubscriptions = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzePayment)
+    const notSubscribedSubscriptions = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzePayment)
+
+    console.log(`paidSubscriptions: ${paidSubscriptions.length}`)
+    console.log(`notSubscribedSubscriptions: ${notSubscribedSubscriptions.length}`)
 
     return (
         <>
@@ -150,7 +153,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     </Section>
                 }
                 {
-                    notPaidSubscriptions.length > 0 &&
+                    notSubscribedSubscriptions.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
                             <BadgeCheck strokeWidth={1.5} className="size-5"/>
@@ -158,7 +161,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                         </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
-                                notPaidSubscriptions.map((subscriptionProps, index) =>
+                                notSubscribedSubscriptions.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
                                         <SubscriptionItem {...subscriptionProps}/></li>)
                             }

@@ -24,7 +24,7 @@ import {ButtonGroup} from "@/components/ui/button-group";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {BrandAvatar} from "@/components/shared/BrandAvatar";
-import {UIProvider, useUI} from "@/app/[locale]/(auth)/report/UIContext";
+import {UIProvider, useUI} from "@/app/[locale]/(auth)/report/UIContext"
 
 const EmailBadge = ({email}: { email: string }) => {
 
@@ -79,13 +79,14 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
             // }
         })))
 
-    const paidSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfPaymentIsOngoing).sort((a, b) => a.subscribedSince?.getTime() - b.subscribedSince?.getTime())
-    const notSureSubscriptions = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfPaymentIsOngoing)
-    const cannotAnalyzeSubscriptions = subscriptions.filter(it => !it.serviceProvider.canAnalyzePayment)
-    const notSubscribedSubscriptions = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzePayment)
+    const subscribedServices = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfSubscriptionIsOngoing).sort((a, b) => a.subscribedSince?.getTime() - b.subscribedSince?.getTime())
+    const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
+    const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
+    const notSubscribedServices = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzeSubscription)
 
-    console.log(`paidSubscriptions: ${paidSubscriptions.length}`)
-    console.log(`notSubscribedSubscriptions: ${notSubscribedSubscriptions.length}`)
+    console.log(`subscriptions: ${subscriptions.length}`)
+    console.log(`subscribedServices: ${subscribedServices.length}`)
+    console.log(`notSubscribedServices: ${notSubscribedServices.length}`)
 
     return (
         <>
@@ -109,16 +110,16 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     </div>
                     <ul className={"flex flex-col gap-2"}>
                         {
-                            paidSubscriptions.map((subscriptionProps, index) =>
+                            subscribedServices.map((subscriptionProps, index) =>
                                 <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                    <PaidSubscriptionItem
+                                    <SubscribedServiceProviderItem
                                         {...subscriptionProps}/>
                                 </li>)
                         }
                     </ul>
                 </Section>
                 {
-                    notSureSubscriptions.length > 0 &&
+                    notSureServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
                             <BadgeQuestionMark strokeWidth={1.5} className="size-5"/>
@@ -126,9 +127,9 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                         </div>
                         <ul className="flex flex-col gap-2">
                             {
-                                notSureSubscriptions.map((subscriptionProps, index) =>
+                                notSureServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <PaidSubscriptionItem
+                                        <SubscribedServiceProviderItem
                                             {...subscriptionProps}/>
                                     </li>)
                             }
@@ -136,7 +137,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     </Section>
                 }
                 {
-                    notSureSubscriptions.length > 0 &&
+                    cannotAnalyzeServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
                             <BadgeX strokeWidth={1.5} className="size-5"/>
@@ -144,16 +145,16 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                         </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
-                                cannotAnalyzeSubscriptions.map((subscriptionProps, index) =>
+                                cannotAnalyzeServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <SubscriptionItem {...subscriptionProps}/>
+                                        <ServiceProviderItem {...subscriptionProps}/>
                                     </li>)
                             }
                         </ul>
                     </Section>
                 }
                 {
-                    notSubscribedSubscriptions.length > 0 &&
+                    notSubscribedServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
                             <BadgeCheck strokeWidth={1.5} className="size-5"/>
@@ -161,9 +162,9 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                         </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
-                                notSubscribedSubscriptions.map((subscriptionProps, index) =>
+                                notSubscribedServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <SubscriptionItem {...subscriptionProps}/></li>)
+                                        <ServiceProviderItem {...subscriptionProps}/></li>)
                             }
                         </ul>
                     </Section>
@@ -175,14 +176,13 @@ interface SubscriptionItemProps extends Subscription {
     email: string
 }
 
-
-const PaidSubscriptionItem = ({
-                                  subscribedSince,
-                                  isNotSureIfPaymentIsOngoing,
-                                  registeredSince,
-                                  serviceProvider,
-                                  email
-                              }: SubscriptionItemProps) => {
+const SubscribedServiceProviderItem = ({
+                                           subscribedSince,
+                                           isNotSureIfSubscriptionIsOngoing,
+                                           registeredSince,
+                                           serviceProvider,
+                                           email
+                                       }: SubscriptionItemProps) => {
 
     const paidMonths = getMonthsPassed(subscribedSince)
 
@@ -196,7 +196,7 @@ const PaidSubscriptionItem = ({
             </ItemTitle>
             <div className={"flex gap-2 mt-1"}>
                 {
-                    !isNotSureIfPaymentIsOngoing &&
+                    !isNotSureIfSubscriptionIsOngoing &&
                     <Badge>
                         {`${paidMonths}개월`}
                     </Badge>
@@ -221,7 +221,7 @@ const PaidSubscriptionItem = ({
     </Link>
     </Item>
 }
-const SubscriptionItem = ({serviceProvider, registeredSince, subscribedSince, email}: SubscriptionItemProps) => {
+const ServiceProviderItem = ({serviceProvider, registeredSince, subscribedSince, email}: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
         href={serviceProvider.websiteUrl ?? "#"} target="_blank"
@@ -256,36 +256,6 @@ const SubscriptionItem = ({serviceProvider, registeredSince, subscribedSince, em
             {/*</Badge>*/}
         </ItemActions></Link>
     </Item>
-}
-
-const NotSureSubscriptionItem = ({subscription}: {
-    subscription: Subscription,
-}) => {
-
-    return <SubscriptionItem subscription={subscription}
-    />
-}
-
-const CannotAnalyzeSubscriptionItem = ({subscription}: {
-    subscription: Subscription,
-}) => {
-
-    return <SubscriptionItem subscription={subscription}
-        // description={
-        //     subscription.registeredSince && `가입: ${subscription.registeredSince.toLocaleDateString()}`
-        // }
-    />
-}
-
-const NotPaidSubscriptionItem = ({subscription,}: {
-    subscription: Subscription,
-}) => {
-
-    return <SubscriptionItem subscription={subscription}
-        // description={
-        //     subscription.registeredSince && `가입: ${subscription.registeredSince.toLocaleDateString()}`
-        // }
-    />
 }
 
 const getMonthsPassed = (start: Date): number => {

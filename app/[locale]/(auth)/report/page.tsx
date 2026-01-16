@@ -76,110 +76,110 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "Netflix",
                     websiteUrl: "https://www.netflix.com/browse",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "netflix.com"
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 7),
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "네이버플러스 멤버십",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "navercorp.vn"
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "Disney+",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "disneyplus.com"
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "왓챠",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "watcha.com"
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfPaymentIsOngoing: true
+                isNotSureIfSubscriptionIsOngoing: true
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "티빙",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: false,
+                    canAnalyzeSubscription: false,
                     logoDevSuffix: "tving.com"
 
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: null,
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "ChatGPT Pro",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "chatgpt.com"
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfPaymentIsOngoing: true
+                isNotSureIfSubscriptionIsOngoing: true
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "Sketchfab",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "sketchfab.com"
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: null,
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "Figma",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "figma.com"
                 },
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: null,
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             }, {
                 serviceProvider: {
                     id: "fakeId",
                     displayName: "쿠팡",
                     websiteUrl: "https://nid.naver.com/membership/join",
-                    canAnalyzePayment: true,
+                    canAnalyzeSubscription: true,
                     logoDevSuffix: "coupang.com"
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: null,
-                isNotSureIfPaymentIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false
             },],
             googleAccount: {
                 name: "현",
@@ -192,97 +192,97 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "Disney+",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "disneyplus.com"
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: subMonths(Date.now(), 8),
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "왓챠",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "watcha.com"
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: subMonths(Date.now(), 8),
-                    isNotSureIfPaymentIsOngoing: true
+                    isNotSureIfSubscriptionIsOngoing: true
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "티빙",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: false,
+                        canAnalyzeSubscription: false,
                         logoDevSuffix: "tving.com"
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: null,
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "ChatGPT Pro",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "chatgpt.com"
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: subMonths(Date.now(), 8),
-                    isNotSureIfPaymentIsOngoing: true
+                    isNotSureIfSubscriptionIsOngoing: true
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "Figma",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "figma.com"
                     },
                     registeredSince: subMonths(Date.now(), 12),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: null,
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "쿠팡",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "coupang.com"
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: null,
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "매우 긴 서비스 이름 가나다라마바사아자차카타파하",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "navercorp.vn"
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: null,
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }, {
                     serviceProvider: {
                         id: "fakeId",
                         displayName: "매우 긴 서비스 이름 가나다라마바사아자차카타파하",
                         websiteUrl: "https://nid.naver.com/membership/join",
-                        canAnalyzePayment: true,
+                        canAnalyzeSubscription: true,
                         logoDevSuffix: "navercorp.vn"
                     },
                     registeredSince: subMonths(Date.now(), 8),
                     hasSubscribedNewsletterOrAd: false,
                     subscribedSince: subMonths(Date.now(), 7),
-                    isNotSureIfPaymentIsOngoing: false
+                    isNotSureIfSubscriptionIsOngoing: false
                 }],
                 googleAccount: {
                     name: "HYEON",

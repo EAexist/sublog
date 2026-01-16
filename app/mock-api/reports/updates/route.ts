@@ -25,7 +25,7 @@ export async function GET() {
                     id: 'ChatGPT Pro',
                     displayName: 'ChatGPT Pro',
                     logoDevSuffix: 'chatgpt.com',
-                    canAnalyzePayment: false
+                    canAnalyzeSubscription: false
                 },
                 status: 'STARTED'
             });
@@ -35,7 +35,7 @@ export async function GET() {
                     id: '네이버플러스 멤버십',
                     displayName: '네이버플러스 멤버십',
                     logoDevSuffix: 'navercorp.vn',
-                    canAnalyzePayment: true
+                    canAnalyzeSubscription: true
                 },
                 status: 'STARTED'
             });
@@ -45,7 +45,7 @@ export async function GET() {
                     id: 'Sketchfab',
                     displayName: 'Sketchfab',
                     logoDevSuffix: 'sketchfab.com',
-                    canAnalyzePayment: false
+                    canAnalyzeSubscription: false
                 },
                 status: 'STARTED'
             });
@@ -55,7 +55,7 @@ export async function GET() {
                     id: 'Netflix',
                     displayName: 'Netflix',
                     logoDevSuffix: 'netflix.com',
-                    canAnalyzePayment: true
+                    canAnalyzeSubscription: true
                 },
                 status: 'STARTED'
             });
@@ -67,7 +67,7 @@ export async function GET() {
                     id: 'Netflix',
                     displayName: 'Netflix',
                     logoDevSuffix: 'netflix.com',
-                    canAnalyzePayment: true
+                    canAnalyzeSubscription: true
                 },
                 status: 'COMPLETED'
             });
@@ -78,7 +78,7 @@ export async function GET() {
                     id: 'Sketchfab',
                     displayName: 'Sketchfab',
                     logoDevSuffix: 'sketchfab.com',
-                    canAnalyzePayment: false
+                    canAnalyzeSubscription: false
                 },
                 status: 'COMPLETED'
             });
@@ -89,7 +89,7 @@ export async function GET() {
                     id: '네이버플러스 멤버십',
                     displayName: '네이버플러스 멤버십',
                     logoDevSuffix: 'navercorp.vn',
-                    canAnalyzePayment: true
+                    canAnalyzeSubscription: true
                 },
                 status: 'COMPLETED'
             });
@@ -100,7 +100,7 @@ export async function GET() {
                     id: 'ChatGPT Pro',
                     displayName: 'ChatGPT Pro',
                     logoDevSuffix: 'chatgpt.com',
-                    canAnalyzePayment: false
+                    canAnalyzeSubscription: false
                 },
                 status: 'COMPLETED'
             });

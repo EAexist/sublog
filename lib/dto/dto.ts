@@ -13,7 +13,7 @@ export const AppUserSchema = z.object(
 
 export const ServiceProviderSchema = z.object({
     id: z.string(),
-    canAnalyzePayment: z.boolean(),
+    canAnalyzeSubscription: z.boolean(),
     websiteUrl: z.string().optional(),
     displayName: z.string(),
     logoDevSuffix: z.string().optional()
@@ -25,7 +25,7 @@ export const SubscriptionSchema = z.object({
     registeredSince: z.coerce.date().nullish(),
     hasSubscribedNewsletterOrAd: z.boolean(),
     subscribedSince: z.coerce.date().nullish(),
-    isNotSureIfPaymentIsOngoing: z.boolean(),
+    isNotSureIfSubscriptionIsOngoing: z.boolean(),
 })
 
 export const AccountReportSchema = z.object({

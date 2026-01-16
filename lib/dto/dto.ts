@@ -15,6 +15,7 @@ export const ServiceProviderSchema = z.object({
     id: z.string(),
     canAnalyzeSubscription: z.boolean(),
     websiteUrl: z.string().optional(),
+    subscriptionPageUrl: z.string().optional(),
     displayName: z.string(),
     logoDevSuffix: z.string().optional()
 })

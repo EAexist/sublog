@@ -187,7 +187,7 @@ const SubscribedServiceProviderItem = ({
     const paidMonths = getMonthsPassed(subscribedSince)
 
     return <Item asChild variant={"outline"}><Link
-        href={serviceProvider.websiteUrl ?? "#"} target="_blank"
+        href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>
@@ -224,7 +224,7 @@ const SubscribedServiceProviderItem = ({
 const ServiceProviderItem = ({serviceProvider, registeredSince, subscribedSince, email}: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
-        href={serviceProvider.websiteUrl ?? "#"} target="_blank"
+        href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>
@@ -250,10 +250,7 @@ const ServiceProviderItem = ({serviceProvider, registeredSince, subscribedSince,
             <EmailBadge email={email}/>
         </ItemContent>
         <ItemActions>
-            {/*<ChevronRight className={"size-4"}/>*/}
-            {/*<Badge variant="outline" size="sm">*/}
-            {/*    구독 중*/}
-            {/*</Badge>*/}
+            {/*<ChevronRight className={"size-5"}/>*/}
         </ItemActions></Link>
     </Item>
 }

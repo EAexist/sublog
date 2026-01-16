@@ -3,8 +3,8 @@ import {Suspense} from "react";
 import {Section} from "@/components/ui/section";
 import {Container} from "@/components/ui/container";
 import {subMonths} from "date-fns";
-import {ReportUpdateEligibilitySchema, SubscriptionReportSchema} from "@/lib/dto/dto";
-import {getReport, getUpdateEligibility} from "@/lib/api";
+import {ReportUpdateEligibilitySchema} from "@/lib/dto/dto";
+import {getUpdateEligibility} from "@/lib/api";
 import {redirect} from 'next/navigation'
 import {DefaultLayout} from "@/templates/DefaultLayout";
 import SubscriptionReport from "@/app/[locale]/(auth)/report/SubscriptionReport";
@@ -21,19 +21,21 @@ const AnalysisReportPage = async ({params}: Props) => {
 
     const t = await getTranslations("report");
 
-    const response = await getReport()
+    // const response = await getReport()
+    //
+    // if (response.status === 401) {
+    //     redirect(`/login`)
+    // }
+    // if (response.status === 204) {
+    //     redirect(`/report/new`)
+    // }
+    // if (response.error) {
+    //     return <ErrorPage status={response.status} pageTitle={t("title")}/>
+    // }
+    //
+    // const report = SubscriptionReportSchema.parse(response.data)
 
-    if (response.status === 401) {
-        redirect(`/login`)
-    }
-    if (response.status === 204) {
-        redirect(`/report/new`)
-    }
-    if (response.error) {
-        return <ErrorPage status={response.status} pageTitle={t("title")}/>
-    }
-
-    const report = SubscriptionReportSchema.parse(response.data)
+    const report = sampleReport
 
     const updateEligibilityResponse = await getUpdateEligibility()
 
@@ -76,6 +78,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "Netflix",
                     websiteUrl: "https://www.netflix.com/browse",
+                    subscriptionPageUrl: "https://www.netflix.com/browse",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "netflix.com"
                 },
@@ -88,6 +91,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "네이버플러스 멤버십",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "navercorp.vn"
                 },
@@ -100,6 +104,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "Disney+",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "disneyplus.com"
                 },
@@ -112,6 +117,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "왓챠",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "watcha.com"
                 },
@@ -124,6 +130,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "티빙",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: false,
                     logoDevSuffix: "tving.com"
 
@@ -137,6 +144,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "ChatGPT Pro",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "chatgpt.com"
                 },
@@ -149,6 +157,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "Sketchfab",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "sketchfab.com"
                 },
@@ -161,6 +170,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "Figma",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "figma.com"
                 },
@@ -173,6 +183,7 @@ const sampleReport = {
                     id: "fakeId",
                     displayName: "쿠팡",
                     websiteUrl: "https://nid.naver.com/membership/join",
+                    subscriptionPageUrl: "https://nid.naver.com/membership/join",
                     canAnalyzeSubscription: true,
                     logoDevSuffix: "coupang.com"
                 },
@@ -192,6 +203,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "Disney+",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "disneyplus.com"
                     },
@@ -204,6 +216,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "왓챠",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "watcha.com"
                     },
@@ -216,6 +229,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "티빙",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: false,
                         logoDevSuffix: "tving.com"
                     },
@@ -228,6 +242,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "ChatGPT Pro",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "chatgpt.com"
                     },
@@ -240,6 +255,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "Figma",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "figma.com"
                     },
@@ -252,6 +268,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "쿠팡",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "coupang.com"
                     },
@@ -264,6 +281,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "매우 긴 서비스 이름 가나다라마바사아자차카타파하",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "navercorp.vn"
                     },
@@ -276,6 +294,7 @@ const sampleReport = {
                         id: "fakeId",
                         displayName: "매우 긴 서비스 이름 가나다라마바사아자차카타파하",
                         websiteUrl: "https://nid.naver.com/membership/join",
+                        subscriptionPageUrl: "https://nid.naver.com/membership/join",
                         canAnalyzeSubscription: true,
                         logoDevSuffix: "navercorp.vn"
                     },

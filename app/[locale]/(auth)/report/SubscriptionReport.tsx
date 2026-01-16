@@ -79,7 +79,11 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
             // }
         })))
 
-    const subscribedServices = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfSubscriptionIsOngoing).sort((a, b) => a.subscribedSince?.getTime() - b.subscribedSince?.getTime())
+    const subscribedServices = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfSubscriptionIsOngoing).sort((a, b) => {
+        const timeA = a.subscribedSince?.getTime() ?? 0
+        const timeB = b.subscribedSince?.getTime() ?? 0
+        return timeA - timeB
+    })
     const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
     const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
     const notSubscribedServices = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzeSubscription)
@@ -184,7 +188,7 @@ const SubscribedServiceProviderItem = ({
                                            email
                                        }: SubscriptionItemProps) => {
 
-    const paidMonths = getMonthsPassed(subscribedSince)
+    const paidMonths = subscribedSince ? getMonthsPassed(subscribedSince) : null
 
     return <Item asChild variant={"outline"}><Link
         href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"

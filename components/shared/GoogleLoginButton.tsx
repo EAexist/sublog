@@ -8,7 +8,7 @@ export const GoogleLoginButton = () => {
     const t = useTranslations("components.GoogleLoginButton");
 
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+        window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
     }
 
     return (

@@ -1,4 +1,4 @@
-import {isServer} from "@/lib/utils";
+import { isServer } from "@/lib/utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -21,7 +21,7 @@ const readBody = async (response: Response) => {
 }
 
 export const getSessionCookie = async () => {
-    const {cookies} = await import('next/headers');
+    const { cookies } = await import('next/headers');
     const cookieStore = await cookies();
     return cookieStore.get('SESSION');
 }
@@ -59,7 +59,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
         if (process.env.NODE_ENV === 'development') {
             console.log(`🚀 [API DEBUG] ${url}`);
             console.log(`🚀 [Status] ${response.status} ${response.statusText}`);
-            console.dir(data, {depth: null});
+            console.dir(data, { depth: null });
         }
 
         if (!response.ok) {
@@ -70,7 +70,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
             };
         }
 
-        return {data: data, error: null, status: response.status};
+        return { data: data, error: null, status: response.status };
 
     } catch (e: unknown) {
         const err = e as Error & { code?: string; cause?: { code?: string } };
@@ -105,5 +105,11 @@ export const updateAnalysis = async () => {
 
 export const getUpdateEligibility = async () => {
     const apiPath = '/reports/updates/eligibility'
+    return await apiFetch(apiPath)
+};
+
+
+export const guestLogin = async () => {
+    const apiPath = '/guest'
     return await apiFetch(apiPath)
 };

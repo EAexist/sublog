@@ -1,4 +1,4 @@
-import {createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState} from "react";
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from "react";
 
 export interface UIContextType {
     showEmail: boolean;
@@ -10,9 +10,9 @@ export const UIContext = createContext<UIContextType>({
     }
 })
 
-export const UIProvider = ({children}: PropsWithChildren) => {
-    const [showEmail, setShowEmail] = useState(false)
-    return <UIContext.Provider value={{showEmail, setShowEmail}}>{children}</UIContext.Provider>
+export const UIProvider = ({ showEmail, children }: PropsWithChildren & Partial<UIContextType>) => {
+    const [showEmailState, setShowEmail] = useState(showEmail || false)
+    return <UIContext.Provider value={{ showEmail: showEmailState, setShowEmail }}>{children}</UIContext.Provider>
 }
 export const useUI: () => UIContextType = () => {
     const context = useContext(UIContext);

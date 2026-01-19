@@ -1,14 +1,14 @@
 "use client"
 
-import {Section} from "@/components/ui/section";
-import {ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType} from "@/lib/dto/dto";
-import {differenceInDays} from 'date-fns';
-import {Item, ItemActions, ItemContent, ItemTitle} from "@/components/ui/item";
-import ReportUpdateButton from "@/app/[locale]/(auth)/report/ReportUpdateButton";
-import Link from "next/link";
-import {Badge} from "@/components/ui/badge";
+import { UIProvider, useUI } from "@/app/[locale]/(auth)/report/UIContext";
+import { BrandAvatar } from "@/components/shared/BrandAvatar";
+import { Badge } from "@/components/ui/badge";
+import { Item, ItemActions, ItemContent, ItemTitle } from "@/components/ui/item";
+import { Section } from "@/components/ui/section";
+import { Toggle } from "@/components/ui/toggle";
+import { ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType } from "@/lib/dto/dto";
+import { differenceInDays } from 'date-fns';
 import {
-    AtSign,
     BadgeCheck,
     BadgeDollarSign,
     BadgeQuestionMark,
@@ -17,42 +17,56 @@ import {
     ChevronRight,
     CircleDollarSign,
     CircleUserRound,
+    Eye,
+    EyeOff,
     UserCheck
 } from "lucide-react";
-import {Toggle} from "@/components/ui/toggle"
-import {ButtonGroup} from "@/components/ui/button-group";
-import {Button} from "@/components/ui/button";
-import {useTranslations} from "next-intl";
-import {BrandAvatar} from "@/components/shared/BrandAvatar";
-import {UIProvider, useUI} from "@/app/[locale]/(auth)/report/UIContext"
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
-const EmailBadge = ({email}: { email: string }) => {
+const EmailBadge = ({ email }: { email: string }) => {
 
-    const {showEmail} = useUI()
+    return (
+        <Badge variant="secondary" className={"mt-1"}><CircleUserRound
+            className={"shrink-0"} /><span className="truncate">{email}</span>
+        </Badge>)
+}
+
+const ServiceProviderItemEmailBadge = ({ email }: { email: string }) => {
+
+    const { showEmail } = useUI()
 
     return (
         showEmail ?
             <Badge variant="secondary" className={"mt-1"}><CircleUserRound
-                className={"shrink-0"}/><span className="truncate">{email}</span>
+                className={"shrink-0"} /><span className="truncate">{email}</span>
             </Badge> : null)
 }
 
 export const ShowEmailToggle = () => {
     const t = useTranslations("report.components.ShowEmailToggle")
 
-    const {showEmail, setShowEmail} = useUI()
+    const { showEmail, setShowEmail } = useUI()
     return (
-        <Button asChild size={"sm"} variant={"outline"}
-                className={"font-light text-sm items-center"}><Toggle
-            aria-label="Toggle"
-            size="sm"
-            variant="outline"
-            pressed={showEmail}
-            onPressedChange={() => setShowEmail(prev => !prev)}
-        >
-            <AtSign className={"size-4"} strokeWidth={1.5}/>
-            {t('title')}
-        </Toggle></Button>)
+        <Badge variant={showEmail ? "outline" : "secondary"} asChild
+            className={"font-light text-sm items-center mt-1"}>
+            <Toggle
+                aria-label="Toggle"
+                size="sm"
+                pressed={showEmail}
+                onPressedChange={() => setShowEmail(prev => !prev)}
+            >{
+                    showEmail ?
+                        <>
+                            <Eye className={"w-10 h-10"} strokeWidth={1.5} />
+                            {t('hide')}</>
+                        :
+                        <>
+                            <EyeOff className={"w-10 h-10"} strokeWidth={1.5} />
+                            {t('show')}
+                        </>
+                }
+            </Toggle></Badge>)
 }
 
 interface SubscriptionReportProps {
@@ -60,7 +74,7 @@ interface SubscriptionReportProps {
     reportUpdateEligibility: ReportUpdateEligibility
 }
 
-const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: SubscriptionReportProps) => {
+const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: SubscriptionReportProps) => {
 
     const t = useTranslations("report")
 
@@ -94,22 +108,23 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
 
     return (
         <>
-            <UIProvider>
+            <UIProvider showEmail={false}>
                 <div className={"pb-10"}>
-                    <ButtonGroup>{
-                        hasMultipleGoogleAccounts &&
-                        <ButtonGroup>
-                            <ShowEmailToggle/>
-                        </ButtonGroup>
-                    }
-                        <ButtonGroup>
-                            <ReportUpdateButton reportUpdateEligibility={reportUpdateEligibility}/>
-                        </ButtonGroup>
-                    </ButtonGroup>
+                    <div className="flex flex-wrap gap-1">
+                        {
+                            // hasMultipleGoogleAccounts &&
+                            // <ButtonGroup>
+                            <ShowEmailToggle />
+                            // </ButtonGroup>
+                        }
+                        {
+                            googleAccounts.map(it => <EmailBadge key={it.email} email={it.email} />)
+                        }
+                    </div>
                 </div>
                 <Section className={"pb-10"}>
                     <div className="flex items-center gap-2 pb-4">
-                        <BadgeDollarSign strokeWidth={1.5} className="size-5"/>
+                        <BadgeDollarSign strokeWidth={1.5} className="size-5" />
                         <h2 className="font-regular text-base">구독 중</h2>
                     </div>
                     <ul className={"flex flex-col gap-2"}>
@@ -117,7 +132,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                             subscribedServices.map((subscriptionProps, index) =>
                                 <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
                                     <SubscribedServiceProviderItem
-                                        {...subscriptionProps}/>
+                                        {...subscriptionProps} />
                                 </li>)
                         }
                     </ul>
@@ -126,7 +141,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     notSureServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
-                            <BadgeQuestionMark strokeWidth={1.5} className="size-5"/>
+                            <BadgeQuestionMark strokeWidth={1.5} className="size-5" />
                             <h2 className="font-regular text-base">구독을 유지 중인지 확실하지 않아요</h2>
                         </div>
                         <ul className="flex flex-col gap-2">
@@ -134,7 +149,7 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                                 notSureServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
                                         <SubscribedServiceProviderItem
-                                            {...subscriptionProps}/>
+                                            {...subscriptionProps} />
                                     </li>)
                             }
                         </ul>
@@ -144,14 +159,14 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     cannotAnalyzeServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
-                            <BadgeX strokeWidth={1.5} className="size-5"/>
+                            <BadgeX strokeWidth={1.5} className="size-5" />
                             <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
                         </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
                                 cannotAnalyzeServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <ServiceProviderItem {...subscriptionProps}/>
+                                        <ServiceProviderItem {...subscriptionProps} />
                                     </li>)
                             }
                         </ul>
@@ -161,14 +176,14 @@ const SubscriptionReport = ({subscriptionReport, reportUpdateEligibility}: Subsc
                     notSubscribedServices.length > 0 &&
                     <Section className={"pb-10"}>
                         <div className="flex items-center gap-2 pb-4">
-                            <BadgeCheck strokeWidth={1.5} className="size-5"/>
+                            <BadgeCheck strokeWidth={1.5} className="size-5" />
                             <h2 className="font-regular text-base">가입만 한 서비스</h2>
                         </div>
                         <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {
                                 notSubscribedServices.map((subscriptionProps, index) =>
                                     <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <ServiceProviderItem {...subscriptionProps}/></li>)
+                                        <ServiceProviderItem {...subscriptionProps} /></li>)
                             }
                         </ul>
                     </Section>
@@ -181,12 +196,12 @@ interface SubscriptionItemProps extends Subscription {
 }
 
 const SubscribedServiceProviderItem = ({
-                                           subscribedSince,
-                                           isNotSureIfSubscriptionIsOngoing,
-                                           registeredSince,
-                                           serviceProvider,
-                                           email
-                                       }: SubscriptionItemProps) => {
+    subscribedSince,
+    isNotSureIfSubscriptionIsOngoing,
+    registeredSince,
+    serviceProvider,
+    email
+}: SubscriptionItemProps) => {
 
     const paidMonths = subscribedSince ? getMonthsPassed(subscribedSince) : null
 
@@ -195,7 +210,7 @@ const SubscribedServiceProviderItem = ({
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>
-                <BrandAvatar serviceProvider={serviceProvider}/>
+                <BrandAvatar serviceProvider={serviceProvider} />
                 <h2 className={"text-lg font-semibold truncate"}>{serviceProvider.displayName}</h2>
             </ItemTitle>
             <div className={"flex gap-2 mt-1"}>
@@ -206,18 +221,18 @@ const SubscribedServiceProviderItem = ({
                     </Badge>
                 }
                 <Badge variant="outline">
-                    <CircleDollarSign strokeWidth={1.5}/>
+                    <CircleDollarSign strokeWidth={1.5} />
                     {subscribedSince?.toLocaleDateString()}
                 </Badge>
                 <Badge variant="outline">
-                    <UserCheck strokeWidth={1.5}/>
+                    <UserCheck strokeWidth={1.5} />
                     {registeredSince?.toLocaleDateString()}
                 </Badge>
             </div>
-            <EmailBadge email={email}/>
+            <ServiceProviderItemEmailBadge email={email} />
         </ItemContent>
         <ItemActions>
-            <ChevronRight className={"size-5"}/>
+            <ChevronRight className={"size-5"} />
             {/*<Badge variant="outline" size="sm">*/}
             {/*    구독 중*/}
             {/*</Badge>*/}
@@ -225,33 +240,33 @@ const SubscribedServiceProviderItem = ({
     </Link>
     </Item>
 }
-const ServiceProviderItem = ({serviceProvider, registeredSince, subscribedSince, email}: SubscriptionItemProps) => {
+const ServiceProviderItem = ({ serviceProvider, registeredSince, subscribedSince, email }: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
         href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>
-                <BrandAvatar serviceProvider={serviceProvider}/>
+                <BrandAvatar serviceProvider={serviceProvider} />
                 <h3 className={"text-base font-medium truncate"}>{serviceProvider.displayName}</h3>
             </ItemTitle>
             <div className={"flex gap-2 mt-1"}>
                 {
                     subscribedSince &&
                     <Badge variant="outline">
-                        <Calendar strokeWidth={1.5}/>
+                        <Calendar strokeWidth={1.5} />
                         {subscribedSince?.toLocaleDateString()}
                     </Badge>
                 }
                 {
                     registeredSince &&
                     <Badge variant="outline">
-                        <UserCheck strokeWidth={1.5}/>
+                        <UserCheck strokeWidth={1.5} />
                         {registeredSince.toLocaleDateString()}
                     </Badge>
                 }
             </div>
-            <EmailBadge email={email}/>
+            <ServiceProviderItemEmailBadge email={email} />
         </ItemContent>
         <ItemActions>
             {/*<ChevronRight className={"size-5"}/>*/}

@@ -9,6 +9,7 @@ import { subMonths } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { redirect } from 'next/navigation';
 import { Suspense } from "react";
+import ReportUpdateButton from "./ReportUpdateButton";
 
 
 type Props = {
@@ -54,6 +55,7 @@ const AnalysisReportPage = async ({ params }: Props) => {
                         <div className={"flex items-end gap-2"}>
                             <h1 className={"font-semibold text-xl"}>{t("title")}</h1>
                         </div>
+                        <ReportUpdateButton reportUpdateEligibility={reportUpdateEligibility} />
                     </div>
                     <Suspense>
                         <SubscriptionReport subscriptionReport={report}

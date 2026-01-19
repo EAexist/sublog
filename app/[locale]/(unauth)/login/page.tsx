@@ -1,15 +1,15 @@
-import {getTranslations} from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 // import * as http from "node:http";
-import {ViewportHeightLayout} from "@/templates/ViewportHeightLayout";
-import {Section} from "@/components/ui/section";
-import {CenteredHero} from "@/components/shared/CenteredHero";
-import {GoogleLoginButton} from "@/components/shared/GoogleLoginButton";
-import {Footer} from "@/components/shared/Footer";
+import { CenteredHero } from "@/components/shared/CenteredHero";
+import { Footer } from "@/components/shared/Footer";
+import { LoginButtonGroup } from "@/components/shared/LoginButtonGroup";
+import { Section } from "@/components/ui/section";
+import { ViewportHeightLayout } from "@/templates/ViewportHeightLayout";
 
 interface LoginPageProps {
 }
 
-const LoginPage = async ({}: LoginPageProps) => {
+const LoginPage = async ({ }: LoginPageProps) => {
     const t = await getTranslations("login")
 
     return (
@@ -21,16 +21,16 @@ const LoginPage = async ({}: LoginPageProps) => {
                             important: (chunks) => (
                                 <span
                                     className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              {chunks}
-            </span>
+                                    {chunks}
+                                </span>
                             ),
                         })}
                         description={t("description")}
-                        buttons={<GoogleLoginButton/>}
+                        buttons={<LoginButtonGroup />}
                     />
                 </div>
             </Section>
-            <Footer/>
+            <Footer />
         </ViewportHeightLayout>
     )
 }

@@ -1,0 +1,71 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
+import { Button } from "@/components/ui/button";
+import {
+    DialogClose,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import { Spinner } from "@/components/ui/spinner";
+import { guestLogin } from "@/lib/api";
+import { CustomError } from "@/lib/error";
+import { PlayCircle } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { Dialog } from "../ui/dialog";
+
+export const GuestLoginButton = () => {
+    const t = useTranslations("components.GuestLoginButton");
+    const router = useRouter();
+
+    const [isPending, startTransition] = useTransition()
+    const handleGuestLogin = () => {
+        startTransition(async () => {
+            const response = await guestLogin()
+
+            if (response.status === 200) {
+                router.push('/report');
+            } else {
+                if (response.error) {
+                    if (response.status === 401) {
+                        redirect(`/login`)
+                    }
+                    throw new CustomError("API ERROR", response.status, t("title"))
+                } else {
+                    throw new CustomError("API ERROR", undefined, t("title"))
+                }
+            }
+        });
+    }
+
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button size={"fullW"} variant={"outline"}>
+                    <PlayCircle />
+                    {t("title")}
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="z-100 [&>button]:hidden">
+                <DialogHeader className={"text-start"}>
+                    <DialogTitle>{t("dialog.title")}</DialogTitle>
+                </DialogHeader>
+                <div className="whitespace-pre-line flex flex-col gap-4">
+                    <p>{t("dialog.description")}</p>
+                </div>
+                <DialogFooter className="flex-row-reverse">
+                    <Button onClick={handleGuestLogin}>{isPending ?
+                        <Spinner /> : t("dialog.confirm")}</Button>
+                    <DialogClose asChild>
+                        <Button variant={"outline"}>{t("dialog.cancel")}</Button>
+                    </DialogClose>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+};

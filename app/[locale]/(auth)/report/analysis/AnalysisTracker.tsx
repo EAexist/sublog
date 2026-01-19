@@ -1,9 +1,5 @@
 "use client"
 
-import {useEffect, useState} from 'react';
-import {useRouter} from "next/navigation";
-import {useTranslations} from "next-intl";
-import {Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle,} from "@/components/ui/empty"
 import {
     ANALYSIS_PROGRESS_STATUS_CONFIG,
     APP_USER_ANALYSIS_PROGRESS_STATUS,
@@ -14,13 +10,17 @@ import {
     SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS,
     ServiceProviderAnalysisProgressUpdate
 } from "@/app/[locale]/(auth)/report/analysis/analysisStatus";
+import { BrandAvatar } from "@/components/shared/BrandAvatar";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, } from "@/components/ui/empty";
+import { Item } from "@/components/ui/item";
+import { Progress } from "@/components/ui/progress";
+import { Spinner } from "@/components/ui/spinner";
+import { useTranslations } from "next-intl";
 import Image from 'next/image';
-import {Progress} from "@/components/ui/progress";
-import {BrandAvatar} from "@/components/shared/BrandAvatar";
-import {Spinner} from "@/components/ui/spinner";
-import {Item} from "@/components/ui/item";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
 
-const reportUpdateEventApiPath = `api/reports/updates`
+const reportUpdateEventApiPath = `/api/reports/updates`
 // const reportUpdateEventApiPath = '/mock-api/reports/updates'
 
 const STATUS_WEIGHTS: Record<string, number> = {
@@ -126,13 +126,13 @@ const AnalysisTracker = () => {
                     </EmptyMedia>
                     <EmptyTitle>
                         {t(`steps.${currentStep}.title`)}</EmptyTitle>
-                    <Progress value={progress} className="w-72 m-2"/>
+                    <Progress value={progress} className="w-72 m-2" />
                     <EmptyDescription>
                         <div className="flex items-center gap-1">
-                                <span>
+                            <span>
                                 {t(`steps.${currentStep}.description`)}
-                                    {(currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.EMAIL_FETCHED) && (serviceProviderCount > 0) && ` [${completedServiceProviderAnalysisCount}/${serviceProviderCount}]`}
-                                </span>
+                                {(currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.EMAIL_FETCHED) && (serviceProviderCount > 0) && ` [${completedServiceProviderAnalysisCount}/${serviceProviderCount}]`}
+                            </span>
                             {/*                                    {*/}
                             {/*                                        // (currentStep !== ANALYSIS_PROGRESS_STATUS.COMPLETED)&&*/}
                             {/*                                        <span*/}
@@ -149,26 +149,26 @@ const AnalysisTracker = () => {
                 </EmptyHeader>
                 <ul className={"grid grid-cols-10 gap-5 justify-center w-fit mx-auto"}>
                     {displayedServiceProviders.map(({
-                                                        serviceProvider,
-                                                        status
-                                                    }, i) => {
-                            const indexInCycle = i % 9;
-                            const isRowOfFour = indexInCycle >= 5;
+                        serviceProvider,
+                        status
+                    }, i) => {
+                        const indexInCycle = i % 9;
+                        const isRowOfFour = indexInCycle >= 5;
 
-                            return <li key={serviceProvider.id}
-                                       className={`col-span-2 w-10 h-10 ${isRowOfFour && indexInCycle === 5 ? "col-start-2" : ""}`}>
-                                <div className="relative w-fit">
-                                    <BrandAvatar className={"h-10 w-10"} serviceProvider={serviceProvider}/>
-                                    {
-                                        status !== SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS.COMPLETED &&
-                                        <div
-                                            className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full">
-                                            <Spinner className="h-6 w-6 text-white"/>
-                                        </div>
-                                    }
-                                </div>
-                            </li>
-                        }
+                        return <li key={serviceProvider.id}
+                            className={`col-span-2 w-10 h-10 ${isRowOfFour && indexInCycle === 5 ? "col-start-2" : ""}`}>
+                            <div className="relative w-fit">
+                                <BrandAvatar className={"h-10 w-10"} serviceProvider={serviceProvider} />
+                                {
+                                    status !== SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS.COMPLETED &&
+                                    <div
+                                        className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full">
+                                        <Spinner className="h-6 w-6 text-white" />
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
                     )}
                 </ul>
             </Empty>

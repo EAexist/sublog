@@ -31,7 +31,8 @@
         },
         "Navbar": {
             "home": "서비스 소개",
-            "report": "나의 구독 · 멤버십"
+            "report": "나의 구독 · 멤버십",
+            "logout": "로그아웃"
         },
         "ErrorEmpty": {
             "title": "서비스를 사용할 수 없어요",

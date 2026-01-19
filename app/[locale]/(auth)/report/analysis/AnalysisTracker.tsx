@@ -20,7 +20,7 @@ import {BrandAvatar} from "@/components/shared/BrandAvatar";
 import {Spinner} from "@/components/ui/spinner";
 import {Item} from "@/components/ui/item";
 
-const reportUpdateEventApiPath = `${process.env.NEXT_PUBLIC_API_URL}/reports/updates`
+const reportUpdateEventApiPath = `api/reports/updates`
 // const reportUpdateEventApiPath = '/mock-api/reports/updates'
 
 const STATUS_WEIGHTS: Record<string, number> = {

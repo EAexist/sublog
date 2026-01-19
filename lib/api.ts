@@ -28,7 +28,7 @@ export const getSessionCookie = async () => {
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
 
-    const url = `${BASE_URL}${path}`;
+    const url = `api/${path}`;
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');

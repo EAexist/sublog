@@ -17,25 +17,23 @@ type Props = {
 
 const AnalysisReportPage = async ({params}: Props) => {
 
-    // const appUser : Promise<SubscriptionReport> = await getAppUser()
-
     const t = await getTranslations("report");
 
-    // const response = await getReport()
-    //
-    // if (response.status === 401) {
-    //     redirect(`/login`)
-    // }
-    // if (response.status === 204) {
-    //     redirect(`/report/new`)
-    // }
-    // if (response.error) {
-    //     return <ErrorPage status={response.status} pageTitle={t("title")}/>
-    // }
-    //
-    // const report = SubscriptionReportSchema.parse(response.data)
+    const response = await getReport()
 
-    const report = sampleReport
+    if (response.status === 401) {
+        redirect(`/login`)
+    }
+    if (response.status === 204) {
+        redirect(`/report/new`)
+    }
+    if (response.error) {
+        return <ErrorPage status={response.status} pageTitle={t("title")}/>
+    }
+
+    const report = SubscriptionReportSchema.parse(response.data)
+
+//     const report = sampleReport
 
     const updateEligibilityResponse = await getUpdateEligibility()
 

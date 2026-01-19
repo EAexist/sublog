@@ -8,21 +8,29 @@ import {routing} from "@/il8n/routing";
 const nextIntlMiddleware = createMiddleware(routing);
 
 export default function proxy(request: NextRequest) {
-    const sessionCookie = request.cookies.get('SESSION')
     const {pathname} = request.nextUrl
+
+    if (pathname.startsWith('/api')) {
+            return NextResponse.next()
+        }
+
+    const sessionCookie = request.cookies.get('SESSION')
 
     type Locale = (typeof routing.locales)[number];
 
     const isLocale = (value: string): value is Locale =>
         routing.locales.includes(value as Locale);
 
-    const segment = pathname.split('/')[1];
-    const locale = isLocale(segment) ? segment : routing.defaultLocale;
-    const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
+    const localePattern = `^/(${routing.locales.join('|')})`;
+    const pathWithoutLocale = pathname.replace(new RegExp(localePattern), '') || '/';
 
+    const segment = pathname.split('/')[1];
+    const locale = routing.locales.includes(segment as any) ? segment : routing.defaultLocale;
+//     const locale = isLocale(segment) ? segment : routing.defaultLocale;
+//     const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
 
     // 1. If user IS authenticated and trying to access (unauth) routes
-    if (sessionCookie && (pathWithoutLocale.startsWith('/login'))) {
+    if (sessionCookie && (pathWithoutLocale === '/login')) {
         return NextResponse.redirect(new URL(`/${locale}/report`, request.url))
     }
 

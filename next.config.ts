@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
                       source: '/api/oauth2/:path*',
           destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/:path*`,
                     },
+          {
+                      source: '/api/login/oauth2/:path*',
+          destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/login/oauth2/:path*`,
+                    },
         {
           source: '/api/:path*',
           destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,

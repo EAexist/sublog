@@ -1,5 +1,5 @@
-import {Button} from "@/components/ui/button";
-import {RefreshCcw, Timer} from "lucide-react";
+import { AnalyzedAtAlert, AvailableSinceAlert } from "@/app/[locale]/(auth)/report/UpdateEligiblityAlert";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
@@ -8,18 +8,18 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { ReportUpdateEligibility } from "@/lib/dto/dto";
+import { RefreshCcw, Timer } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import {useTranslations} from "next-intl";
-import {ReportUpdateEligibility} from "@/lib/dto/dto";
-import {AnalyzedAtAlert, AvailableSinceAlert} from "@/app/[locale]/(auth)/report/UpdateEligiblityAlert";
 
 
 interface ReportUpdateButtonProps {
     reportUpdateEligibility: ReportUpdateEligibility
 }
 
-const ReportUpdateButton = ({reportUpdateEligibility}: ReportUpdateButtonProps) => {
+const ReportUpdateButton = ({ reportUpdateEligibility }: ReportUpdateButtonProps) => {
 
     const t = useTranslations(`report.components.ReportUpdateButton`);
     const state_t = useTranslations(`report.components.ReportUpdateButton.dialog.${reportUpdateEligibility.canUpdate ? "enabled" : "disabled"}`);
@@ -30,12 +30,12 @@ const ReportUpdateButton = ({reportUpdateEligibility}: ReportUpdateButtonProps) 
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant={"outline"}
-                        size={"sm"}
-                        className={"font-light text-sm items-center"}>
+                    size={"sm"}
+                    className={"font-light text-sm items-center"}>
                     {
                         reportUpdateEligibility.canUpdate ?
-                            <RefreshCcw className={"size-4"} strokeWidth={1.5}/> :
-                            <Timer className={"size-4"} strokeWidth={1.5}/>
+                            <RefreshCcw className={"size-4"} strokeWidth={1.5} /> :
+                            <Timer className={"size-4"} strokeWidth={1.5} />
                     }{`${reportUpdateEligibility.analyzedAt?.toLocaleDateString()} 기준`}
                 </Button>
             </DialogTrigger>
@@ -46,13 +46,14 @@ const ReportUpdateButton = ({reportUpdateEligibility}: ReportUpdateButtonProps) 
                 <div>
                     {
                         reportUpdateEligibility.analyzedAt &&
-                        <AnalyzedAtAlert analyzedAt={reportUpdateEligibility.analyzedAt} className={"px-0"}/>
+                        <AnalyzedAtAlert analyzedAt={reportUpdateEligibility.analyzedAt} className={"px-0"} />
                     }
                     {
                         (!reportUpdateEligibility.canUpdate) && reportUpdateEligibility.availableSince &&
                         <AvailableSinceAlert availableSince={reportUpdateEligibility.availableSince}
-                                             className={"px-0"}/>
-                    }</div>
+                            className={"px-0"} />
+                    }
+                </div>
                 {/*<div className="grid gap-6 py-4">*/}
                 {/*    <div className="grid gap-1">*/}
                 {/*        <h3>{t("dialog.analyzedAtTitle")}</h3>*/}
@@ -81,12 +82,12 @@ const ReportUpdateButton = ({reportUpdateEligibility}: ReportUpdateButtonProps) 
                     <DialogClose asChild>
                         <Button>{state_t("cancel")}</Button>
                     </DialogClose>{
-                    reportUpdateEligibility.canUpdate ?
-                        <Button variant={"outline"} size={"lg"} asChild>
-                            <Link href={"/report/new"} className={"flex gap-2 items-center"}>
-                                {state_t("run")}</Link></Button> :
-                        <Button disabled variant={"outline"}><Timer/>{state_t("run")}</Button>
-                }
+                        reportUpdateEligibility.canUpdate ?
+                            <Button variant={"outline"} size={"lg"} asChild>
+                                <Link href={"/report/new"} className={"flex gap-2 items-center"}>
+                                    {state_t("run")}</Link></Button> :
+                            <Button disabled variant={"outline"}><Timer />{state_t("run")}</Button>
+                    }
                 </DialogFooter>
             </DialogContent>
         </Dialog>

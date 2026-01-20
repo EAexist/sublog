@@ -3,26 +3,28 @@
 import { UIProvider, useUI } from "@/app/[locale]/(auth)/report/UIContext";
 import { BrandAvatar } from "@/components/shared/BrandAvatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/components/ui/item";
 import { Section } from "@/components/ui/section";
 import { Toggle } from "@/components/ui/toggle";
 import { ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType } from "@/lib/dto/dto";
 import { differenceInDays } from 'date-fns';
 import {
-    BadgeCheck,
-    BadgeDollarSign,
-    BadgeQuestionMark,
-    BadgeX,
     Calendar,
     ChevronRight,
+    CircleCheck,
     CircleDollarSign,
+    CircleQuestionMark,
     CircleUserRound,
+    CircleX,
     Eye,
     EyeOff,
     UserCheck
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import ReportUpdateButton from "./ReportUpdateButton";
 
 const EmailBadge = ({ email }: { email: string }) => {
 
@@ -48,8 +50,8 @@ export const ShowEmailToggle = () => {
 
     const { showEmail, setShowEmail } = useUI()
     return (
-        <Badge variant={showEmail ? "outline" : "secondary"} asChild
-            className={"font-light text-sm items-center mt-1"}>
+        <Button variant={"outline"} asChild
+            className={"font-light text-sm"} size={"sm"}>
             <Toggle
                 aria-label="Toggle"
                 size="sm"
@@ -66,7 +68,9 @@ export const ShowEmailToggle = () => {
                             {t('show')}
                         </>
                 }
-            </Toggle></Badge>)
+            </Toggle>
+        </Button>
+    )
 }
 
 interface SubscriptionReportProps {
@@ -107,29 +111,43 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
     console.log(`notSubscribedServices: ${notSubscribedServices.length}`)
 
     return (
-        <>
-            <UIProvider showEmail={false}>
-                <div className={"pb-10"}>
-                    <div className="flex flex-wrap gap-1">
-                        {
-                            // hasMultipleGoogleAccounts &&
-                            // <ButtonGroup>
-                            <ShowEmailToggle />
-                            // </ButtonGroup>
-                        }
-                        {
-                            googleAccounts.map(it => <EmailBadge key={it.email} email={it.email} />)
-                        }
-                    </div>
+        <UIProvider showEmail={false}>
+            <div className={"pb-8"}>
+                <ButtonGroup>
+                    <ReportUpdateButton reportUpdateEligibility={reportUpdateEligibility} />
+                    <ShowEmailToggle />
+                </ButtonGroup>
+                {/* <div className="flex flex-wrap gap-1 py-4">
+                    {
+                        googleAccounts.map(it => <EmailBadge key={it.email} email={it.email} />)
+                    }
+                </div> */}
+            </div>
+            <Section className={"pb-10"}>
+                <div className="flex items-center gap-2 pb-4">
+                    <h2 className="font-regular text-base">구독 중</h2>
+                    <CircleDollarSign strokeWidth={1} className="size-5" />
                 </div>
+                <ul className={"flex flex-col gap-2"}>
+                    {
+                        subscribedServices.map((subscriptionProps, index) =>
+                            <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
+                                <SubscribedServiceProviderItem
+                                    {...subscriptionProps} />
+                            </li>)
+                    }
+                </ul>
+            </Section>
+            {
+                notSureServices.length > 0 &&
                 <Section className={"pb-10"}>
                     <div className="flex items-center gap-2 pb-4">
-                        <BadgeDollarSign strokeWidth={1.5} className="size-5" />
-                        <h2 className="font-regular text-base">구독 중</h2>
+                        <h2 className="font-regular text-base">구독을 유지 중인지 확실하지 않아요</h2>
+                        <CircleQuestionMark strokeWidth={1.5} className="size-5" />
                     </div>
-                    <ul className={"flex flex-col gap-2"}>
+                    <ul className="flex flex-col gap-2">
                         {
-                            subscribedServices.map((subscriptionProps, index) =>
+                            notSureServices.map((subscriptionProps, index) =>
                                 <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
                                     <SubscribedServiceProviderItem
                                         {...subscriptionProps} />
@@ -137,57 +155,40 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
                         }
                     </ul>
                 </Section>
-                {
-                    notSureServices.length > 0 &&
-                    <Section className={"pb-10"}>
-                        <div className="flex items-center gap-2 pb-4">
-                            <BadgeQuestionMark strokeWidth={1.5} className="size-5" />
-                            <h2 className="font-regular text-base">구독을 유지 중인지 확실하지 않아요</h2>
-                        </div>
-                        <ul className="flex flex-col gap-2">
-                            {
-                                notSureServices.map((subscriptionProps, index) =>
-                                    <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <SubscribedServiceProviderItem
-                                            {...subscriptionProps} />
-                                    </li>)
-                            }
-                        </ul>
-                    </Section>
-                }
-                {
-                    cannotAnalyzeServices.length > 0 &&
-                    <Section className={"pb-10"}>
-                        <div className="flex items-center gap-2 pb-4">
-                            <BadgeX strokeWidth={1.5} className="size-5" />
-                            <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
-                        </div>
-                        <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                            {
-                                cannotAnalyzeServices.map((subscriptionProps, index) =>
-                                    <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <ServiceProviderItem {...subscriptionProps} />
-                                    </li>)
-                            }
-                        </ul>
-                    </Section>
-                }
-                {
-                    notSubscribedServices.length > 0 &&
-                    <Section className={"pb-10"}>
-                        <div className="flex items-center gap-2 pb-4">
-                            <BadgeCheck strokeWidth={1.5} className="size-5" />
-                            <h2 className="font-regular text-base">가입만 한 서비스</h2>
-                        </div>
-                        <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                            {
-                                notSubscribedServices.map((subscriptionProps, index) =>
-                                    <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
-                                        <ServiceProviderItem {...subscriptionProps} /></li>)
-                            }
-                        </ul>
-                    </Section>
-                }</UIProvider></>
+            }
+            {
+                cannotAnalyzeServices.length > 0 &&
+                <Section className={"pb-10"}>
+                    <div className="flex items-center gap-2 pb-4">
+                        <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
+                        <CircleX strokeWidth={1} className="size-5" />
+                    </div>
+                    <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        {
+                            cannotAnalyzeServices.map((subscriptionProps, index) =>
+                                <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
+                                    <ServiceProviderItem {...subscriptionProps} />
+                                </li>)
+                        }
+                    </ul>
+                </Section>
+            }
+            {
+                notSubscribedServices.length > 0 &&
+                <Section className={"pb-10"}>
+                    <div className="flex items-center gap-2 pb-4">
+                        <h2 className="font-regular text-base">가입만 한 서비스</h2>
+                        <CircleCheck strokeWidth={1} className="size-5" />
+                    </div>
+                    <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        {
+                            notSubscribedServices.map((subscriptionProps, index) =>
+                                <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
+                                    <ServiceProviderItem {...subscriptionProps} /></li>)
+                        }
+                    </ul>
+                </Section>
+            }</UIProvider>
     );
 };
 

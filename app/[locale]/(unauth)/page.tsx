@@ -1,10 +1,8 @@
 import { CenteredHero } from "@/components/shared/CenteredHero";
-import { Footer } from "@/components/shared/Footer";
 import { LoginButtonGroup } from "@/components/shared/LoginButtonGroup";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { getSessionCookie } from "@/lib/api";
-import { ViewportHeightLayout } from "@/templates/ViewportHeightLayout";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -42,25 +40,22 @@ const IndexPage = async ({ params }: Props) => {
     const isAuthenticated = true;
     const t = await getTranslations("home");
     return (
-        <ViewportHeightLayout>
-            <Section className={"grow"}>
-                <div className={"py-36"}>
-                    <CenteredHero
-                        title={t.rich("title", {
-                            important: (chunks) => (
-                                <span
-                                    className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                                    {chunks}
-                                </span>
-                            ),
-                        })}
-                        description={t("description")}
-                        buttons={<Suspense fallback={<ReportNavigateButton />}><MainActionButton /></Suspense>}
-                    />
-                </div>
-            </Section>
-            <Footer />
-        </ViewportHeightLayout>
+        <Section className={"grow"}>
+            <div className={"py-20"}>
+                <CenteredHero
+                    title={t.rich("title", {
+                        important: (chunks) => (
+                            <span
+                                className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                                {chunks}
+                            </span>
+                        ),
+                    })}
+                    description={t("description")}
+                    buttons={<Suspense fallback={<ReportNavigateButton />}><MainActionButton /></Suspense>}
+                />
+            </div>
+        </Section>
     );
 };
 

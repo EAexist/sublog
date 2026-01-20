@@ -10,7 +10,7 @@ import { AllLocales } from "@/utils/AppConfig";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-
+export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: Props) {
     const { locale } = await params;
 

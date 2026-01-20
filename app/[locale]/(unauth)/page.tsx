@@ -11,20 +11,6 @@ type Props = {
     params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props) {
-    const { locale } = await params;
-
-    const t = await getTranslations({
-        locale: locale,
-        namespace: "Metadata",
-    });
-
-    return {
-        title: t("title"),
-        description: t("description"),
-    };
-}
-
 const ReportNavigateButton = async () => {
     const t = await getTranslations("home.components.ReportNavigateButton");
     return <Button size={"fullW"}><Link href={"/report"}>{t("title")}</Link>

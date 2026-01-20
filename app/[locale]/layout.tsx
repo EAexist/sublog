@@ -8,34 +8,22 @@ import { pretendard } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { AllLocales } from "@/utils/AppConfig";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-// export const metadata: Metadata = {
-//   icons: [
-//     {
-//       rel: "apple-touch-icon",
-//       url: "/apple-touch-icon.png",
-//     },
-//     {
-//       rel: "icon",
-//       type: "image/png",
-//       sizes: "32x32",
-//       url: "/favicon-32x32.png",
-//     },
-//     {
-//       rel: "icon",
-//       type: "image/png",
-//       sizes: "16x16",
-//       url: "/favicon-16x16.png",
-//     },
-//     {
-//       rel: "icon",
-//       url: "/favicon.ico",
-//     },
-//   ],
-// };
+export async function generateMetadata({ params }: Props) {
+    const { locale } = await params;
 
+    const t = await getTranslations({
+        locale: locale,
+        namespace: "Metadata",
+    });
+
+    return {
+        title: t("title"),
+        description: t("description"),
+    };
+}
 export function generateStaticParams() {
     return AllLocales.map((locale) => ({ locale }));
 }

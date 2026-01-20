@@ -1,35 +1,30 @@
-import {Section} from "@/components/ui/section";
-import {Container} from "@/components/ui/container";
-import {getTranslations} from "next-intl/server";
-import {DefaultLayout} from "@/templates/DefaultLayout";
 import UpdateStartButton from "@/app/[locale]/(auth)/report/new/UpdateStartButton";
-import {getUpdateEligibility} from "@/lib/api";
-import {redirect} from "next/navigation";
+import { AvailableSinceAlert } from "@/app/[locale]/(auth)/report/UpdateEligiblityAlert";
 import ErrorPage from "@/components/shared/ErrorPage";
-import {ReportUpdateEligibility, ReportUpdateEligibilitySchema} from "@/lib/dto/dto";
-import {Separator} from "@/components/ui/separator";
-import {Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle} from "@/components/ui/item";
-import {ChevronRight, SearchCheckIcon, Timer} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
+import { Section } from "@/components/ui/section";
+import { Separator } from "@/components/ui/separator";
+import { getUpdateEligibility } from "@/lib/api";
+import { ReportUpdateEligibility, ReportUpdateEligibilitySchema } from "@/lib/dto/dto";
+import { DefaultLayout } from "@/templates/DefaultLayout";
+import { ChevronRight, SearchCheckIcon, Timer } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {AvailableSinceAlert} from "@/app/[locale]/(auth)/report/UpdateEligiblityAlert";
 
 type Props = {
     params: Promise<{ locale: string }>;
 };
 
-const AnalysisStartPage = async ({params}: Props) => {
+const AnalysisStartPage = async ({ params }: Props) => {
 
     const t_base = await getTranslations("report.new");
 
     const response = await getUpdateEligibility()
 
-    if (response.status === 401) {
-        redirect(`/login`)
-    }
-
     if (response.error) {
-        return <ErrorPage status={response.status} pageTitle={t_base("title")}/>
+        return <ErrorPage status={response.status} pageTitle={t_base("title")} />
     }
 
     const reportUpdateEligibility: ReportUpdateEligibility = ReportUpdateEligibilitySchema.parse(response.data)
@@ -48,15 +43,15 @@ const AnalysisStartPage = async ({params}: Props) => {
                     {
                         reportUpdateEligibility.canUpdate ?
                             <div>
-                                <UpdateStartButton isFirst={isFirst}/>
+                                <UpdateStartButton isFirst={isFirst} />
                             </div>
                             :
                             <div className={"flex flex-col gap-8"}>{
                                 reportUpdateEligibility.availableSince &&
                                 <AvailableSinceAlert availableSince={reportUpdateEligibility.availableSince}
-                                                     variant={"muted"}/>
+                                    variant={"muted"} />
                             }
-                                <Button disabled size={"fullW"}><Timer/>{t("components.UpdateStartButton.run")}</Button>
+                                <Button disabled size={"fullW"}><Timer />{t("components.UpdateStartButton.run")}</Button>
                             </div>
                     }
                 </Container>
@@ -65,29 +60,29 @@ const AnalysisStartPage = async ({params}: Props) => {
                 !isFirst &&
                 <>
                     <div className={"px-4"}>
-                        <Separator/>
+                        <Separator />
                     </div>
                     <Section>
                         <Container><Item asChild variant={"outline"}><Link
                             href={"/report"}><ItemMedia>
-                            <SearchCheckIcon className={"size-6"} strokeWidth={1.5}/>
-                        </ItemMedia>
+                                <SearchCheckIcon className={"size-6"} strokeWidth={1.5} />
+                            </ItemMedia>
                             <ItemContent className={"min-w-0"}>
                                 <ItemTitle className={"w-full"}>
                                     <h2 className={""}>{t("lastReportTitle")}</h2>
                                 </ItemTitle>
                                 <ItemDescription
                                     className={""}>{reportUpdateEligibility.analyzedAt?.toLocaleString('ko-KR', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                    hour: 'numeric',
-                                    hour12: true
-                                })}
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        hour12: true
+                                    })}
                                 </ItemDescription>
                             </ItemContent>
                             <ItemActions>
-                                <ChevronRight className={"size-5"}/>
+                                <ChevronRight className={"size-5"} />
                             </ItemActions>
                         </Link>
                         </Item>

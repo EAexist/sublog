@@ -1,42 +1,42 @@
 // https://next-intl.dev/docs/routing/setup#proxy
 
-import {NextResponse} from "next/dist/server/web/spec-extension/response";
-import {NextRequest} from "next/dist/server/web/spec-extension/request";
+import { routing } from "@/il8n/routing";
 import createMiddleware from "next-intl/middleware";
-import {routing} from "@/il8n/routing";
+import { NextRequest } from "next/dist/server/web/spec-extension/request";
+import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 const nextIntlMiddleware = createMiddleware(routing);
 
 export default function proxy(request: NextRequest) {
-    const {pathname} = request.nextUrl
+    const { pathname } = request.nextUrl
 
-    if (pathname.startsWith('/api')) {
-            return NextResponse.next()
-        }
+    if (pathname.startsWith('/api') || pathname.startsWith('/_next')) {
+        return NextResponse.next();
+    }
 
-    const sessionCookie = request.cookies.get('SESSION')
+    const sessionCookie = request.cookies.get('SESSION');
+    const segments = pathname.split('/');
+    const firstSegment = segments[1];
 
-    type Locale = (typeof routing.locales)[number];
+    const isLocalePresent = routing.locales.includes(firstSegment as any);
+    const locale = isLocalePresent ? firstSegment : routing.defaultLocale;
 
-    const isLocale = (value: string): value is Locale =>
-        routing.locales.includes(value as Locale);
-
-    const localePattern = `^/(${routing.locales.join('|')})`;
-    const pathWithoutLocale = pathname.replace(new RegExp(localePattern), '') || '/';
-
-    const segment = pathname.split('/')[1];
-    const locale = routing.locales.includes(segment as any) ? segment : routing.defaultLocale;
-//     const locale = isLocale(segment) ? segment : routing.defaultLocale;
-//     const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
+    // Normalize path for comparison (e.g., /ko/login -> /login)
+    const pathWithoutLocale = isLocalePresent
+        ? `/${segments.slice(2).join('/')}`
+        : pathname;
 
     // 1. If user IS authenticated and trying to access (unauth) routes
-    if (sessionCookie && (pathWithoutLocale === '/login')) {
+    if (sessionCookie && (pathWithoutLocale === '/login' || pathWithoutLocale === '/login/')) {
         return NextResponse.redirect(new URL(`/${locale}/report`, request.url))
     }
 
     // 2. If user is NOT authenticated and trying to access (auth) routes
     if (!sessionCookie && pathWithoutLocale.startsWith('/report')) {
-        return NextResponse.redirect(new URL(`/${locale}/login`, request.url))
+        const loginUrl = new URL(`/${locale}/login`, request.url);
+        // Optional: remove search params to break RSC loops
+        loginUrl.search = '';
+        return NextResponse.redirect(loginUrl);
     }
 
     return nextIntlMiddleware(request)

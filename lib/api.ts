@@ -1,4 +1,5 @@
 import { isServer } from "@/lib/utils";
+import { logout } from "./auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -63,6 +64,9 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
         }
 
         if (!response.ok) {
+            if (response.status === 401) {
+                logout()
+            }
             return {
                 data: null,
                 error: data?.error || 'API_ERROR',

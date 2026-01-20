@@ -1,17 +1,16 @@
 'use client'
 
-import {useEffect, useRef} from 'react'
-import {triggerProvisioning} from '@/lib/api'
+import { triggerProvisioning } from '@/lib/api'
+import { useEffect, useRef } from 'react'
 
 export function ApiProvisioningTrigger() {
     const hasTriggered = useRef(false)
 
     useEffect(() => {
         if (!hasTriggered.current) {
-            triggerProvisioning().catch(console.error)
+            triggerProvisioning().catch(error => console.error(error))
             hasTriggered.current = true
         }
     }, [])
-
     return null
 }

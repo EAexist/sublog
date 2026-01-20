@@ -15,7 +15,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { guestLogin } from "@/lib/api";
 import { CustomError } from "@/lib/error";
 import { PlayCircle } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Dialog } from "../ui/dialog";
 
@@ -32,9 +32,6 @@ export const GuestLoginButton = () => {
                 router.push('/report');
             } else {
                 if (response.error) {
-                    if (response.status === 401) {
-                        redirect(`/login`)
-                    }
                     throw new CustomError("API ERROR", response.status, t("title"))
                 } else {
                     throw new CustomError("API ERROR", undefined, t("title"))

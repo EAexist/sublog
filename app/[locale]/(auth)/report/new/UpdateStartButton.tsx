@@ -1,14 +1,14 @@
 "use client"
 
-import {Button} from "@/components/ui/button";
-import {updateAnalysis} from "@/lib/api";
-import {redirect, useRouter} from "next/navigation";
-import {useTranslations} from "next-intl";
-import {useTransition} from "react";
-import {CustomError} from "@/lib/error";
-import {Spinner} from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { updateAnalysis } from "@/lib/api";
+import { CustomError } from "@/lib/error";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
-const UpdateStartButton = ({isFirst}: { isFirst: boolean }) => {
+const UpdateStartButton = ({ isFirst }: { isFirst: boolean }) => {
     const t = useTranslations(`report.new.${isFirst ? "new" : "update"}`);
     const router = useRouter();
 
@@ -22,9 +22,6 @@ const UpdateStartButton = ({isFirst}: { isFirst: boolean }) => {
                 router.push('/report/analysis');
             } else {
                 if (response.error) {
-                    if (response.status === 401) {
-                        redirect(`/login`)
-                    }
                     throw new CustomError("API ERROR", response.status, t("title"))
                 } else {
                     throw new CustomError("API ERROR", undefined, t("title"))
@@ -34,7 +31,7 @@ const UpdateStartButton = ({isFirst}: { isFirst: boolean }) => {
     }
 
     return (<Button onClick={handleTriggerAnalysis} size={"fullW"}>{isPending ?
-            <Spinner/> : t("components.UpdateStartButton.run")}</Button>
+        <Spinner /> : t("components.UpdateStartButton.run")}</Button>
     );
 };
 

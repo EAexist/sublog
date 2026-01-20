@@ -21,9 +21,6 @@ const AnalysisReportPage = async ({ params }: Props) => {
 
     const response = await getReport()
 
-    if (response.status === 401) {
-        redirect(`/login`)
-    }
     if (response.status === 204) {
         redirect(`/report/new`)
     }
@@ -36,10 +33,6 @@ const AnalysisReportPage = async ({ params }: Props) => {
     //     const report = sampleReport
 
     const updateEligibilityResponse = await getUpdateEligibility()
-
-    if (updateEligibilityResponse.status === 401) {
-        redirect(`/login`)
-    }
     if (updateEligibilityResponse.error) {
         return <ErrorPage status={updateEligibilityResponse.status} pageTitle={t("title")} />
     }

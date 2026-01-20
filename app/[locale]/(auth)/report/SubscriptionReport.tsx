@@ -29,7 +29,7 @@ import ReportUpdateButton from "./ReportUpdateButton";
 const EmailBadge = ({ email }: { email: string }) => {
 
     return (
-        <Badge variant="secondary" className={"mt-1"}><CircleUserRound
+        <Badge variant="secondary"><CircleUserRound
             className={"shrink-0"} /><span className="truncate">{email}</span>
         </Badge>)
 }
@@ -40,7 +40,7 @@ const ServiceProviderItemEmailBadge = ({ email }: { email: string }) => {
 
     return (
         showEmail ?
-            <Badge variant="secondary" className={"mt-1"}><CircleUserRound
+            <Badge variant="secondary"><CircleUserRound
                 className={"shrink-0"} /><span className="truncate">{email}</span>
             </Badge> : null)
 }
@@ -163,7 +163,7 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
                         <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
                         <CircleX strokeWidth={1} className="size-5" />
                     </div>
-                    <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <ul className="flex flex-col gap-2">
                         {
                             cannotAnalyzeServices.map((subscriptionProps, index) =>
                                 <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
@@ -180,7 +180,7 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
                         <h2 className="font-regular text-base">가입만 한 서비스</h2>
                         <CircleCheck strokeWidth={1} className="size-5" />
                     </div>
-                    <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <ul className="flex flex-col gap-2">
                         {
                             notSubscribedServices.map((subscriptionProps, index) =>
                                 <li key={`${subscriptionProps.serviceProvider.displayName}-${index}`}>
@@ -214,23 +214,25 @@ const SubscribedServiceProviderItem = ({
                 <BrandAvatar serviceProvider={serviceProvider} />
                 <h2 className={"text-lg font-semibold truncate"}>{serviceProvider.displayName}</h2>
             </ItemTitle>
-            <div className={"flex gap-2 mt-1"}>
-                {
-                    !isNotSureIfSubscriptionIsOngoing &&
-                    <Badge>
-                        {`${paidMonths}개월`}
+            <div className={"flex flex-col gap-2 mt-1"}>
+                <div className={"flex gap-2"}>
+                    {
+                        !isNotSureIfSubscriptionIsOngoing &&
+                        <Badge>
+                            {`${paidMonths}개월`}
+                        </Badge>
+                    }
+                    <Badge variant="outline">
+                        <CircleDollarSign strokeWidth={1.5} />
+                        {subscribedSince?.toLocaleDateString()}
                     </Badge>
-                }
-                <Badge variant="outline">
-                    <CircleDollarSign strokeWidth={1.5} />
-                    {subscribedSince?.toLocaleDateString()}
-                </Badge>
-                <Badge variant="outline">
-                    <UserCheck strokeWidth={1.5} />
-                    {registeredSince?.toLocaleDateString()}
-                </Badge>
+                    <Badge variant="outline">
+                        <UserCheck strokeWidth={1.5} />
+                        {registeredSince?.toLocaleDateString()}
+                    </Badge>
+                </div>
+                <ServiceProviderItemEmailBadge email={email} />
             </div>
-            <ServiceProviderItemEmailBadge email={email} />
         </ItemContent>
         <ItemActions>
             <ChevronRight className={"size-5"} />
@@ -251,7 +253,7 @@ const ServiceProviderItem = ({ serviceProvider, registeredSince, subscribedSince
                 <BrandAvatar serviceProvider={serviceProvider} />
                 <h3 className={"text-base font-medium truncate"}>{serviceProvider.displayName}</h3>
             </ItemTitle>
-            <div className={"flex gap-2 mt-1"}>
+            <div className={"flex flex-wrap gap-2 mt-1"}>
                 {
                     subscribedSince &&
                     <Badge variant="outline">
@@ -266,8 +268,8 @@ const ServiceProviderItem = ({ serviceProvider, registeredSince, subscribedSince
                         {registeredSince.toLocaleDateString()}
                     </Badge>
                 }
+                <ServiceProviderItemEmailBadge email={email} />
             </div>
-            <ServiceProviderItemEmailBadge email={email} />
         </ItemContent>
         <ItemActions>
             {/*<ChevronRight className={"size-5"}/>*/}

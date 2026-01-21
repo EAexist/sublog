@@ -112,10 +112,6 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
     // const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
     // const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
 
-    console.log(`subscriptions: ${subscriptions.length}`)
-    console.log(`subscribedServices: ${subscribedServices.length}`)
-    console.log(`notSubscribedServices: ${notSubscribedServices.length}`)
-
     return (
         <UIProvider showEmail={false}>
             <div className={"pb-8"}>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
     DialogClose,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -51,6 +52,9 @@ export const GuestLoginButton = () => {
             <DialogContent className="z-100 [&>button]:hidden">
                 <DialogHeader className={"text-start"}>
                     <DialogTitle>{t("dialog.title")}</DialogTitle>
+                    <DialogDescription className="sr-only">
+                        {t("dialog.description")}
+                    </DialogDescription>
                 </DialogHeader>
                 <div className="whitespace-pre-line flex flex-col gap-4">
                     <p>{t("dialog.description")}</p>

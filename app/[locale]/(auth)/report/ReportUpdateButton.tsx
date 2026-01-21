@@ -4,6 +4,7 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -24,8 +25,6 @@ const ReportUpdateButton = ({ reportUpdateEligibility }: ReportUpdateButtonProps
     const t = useTranslations(`report.components.ReportUpdateButton`);
     const state_t = useTranslations(`report.components.ReportUpdateButton.dialog.${reportUpdateEligibility.canUpdate ? "enabled" : "disabled"}`);
 
-    console.log(reportUpdateEligibility)
-
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -42,6 +41,9 @@ const ReportUpdateButton = ({ reportUpdateEligibility }: ReportUpdateButtonProps
             <DialogContent className="z-100 [&>button]:hidden">
                 <DialogHeader className={"text-start"}>
                     <DialogTitle>{t("dialog.title")}</DialogTitle>
+                    <DialogDescription className="sr-only">
+                        Check last analysis record and confirm to create new analysis
+                    </DialogDescription>
                 </DialogHeader>
                 <div>
                     {

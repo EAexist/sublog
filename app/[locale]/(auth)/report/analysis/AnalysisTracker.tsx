@@ -50,8 +50,10 @@ const AnalysisTracker = () => {
     const stepConfig = ANALYSIS_PROGRESS_STATUS_CONFIG[currentStep]
 
     const [progress, setProgress] = useState(30)
+
     useEffect(() => {
         let eventSource: EventSource | null = null;
+        let timerId: NodeJS.Timeout;
 
         const initConnection = async () => {
             const response = await fetch(`${reportUpdateEventApiPath}`)
@@ -61,48 +63,45 @@ const AnalysisTracker = () => {
                 return;
             }
 
-            console.log(`🚀 [EventSource Debug] Running UseEffect`)
+            timerId = setTimeout(() => {
+                eventSource = new EventSource(reportUpdateEventApiPath, {
+                    withCredentials: true
+                });
 
-            // fetchEventSource(reportUpdateEventApiPath, {
-            //     method: 'GET',
-            //     headers: {
-            //         'Authorization': `Bearer YOUR_AUTH_TOKEN`, // 커스텀 헤더 추가
-            //         'Content-Type': 'text/event-stream',
-            //     },
-            // })
-
-            eventSource = new EventSource(reportUpdateEventApiPath, {
-                withCredentials: true
-            });
-
-            eventSource.addEventListener('progress-update', (event) => {
-                try {
-                    const update: {
-                        type: ProgressUpdateType,
-                    } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
-                    console.log(`🚀 [EventSource Debug] ${event.type} ${JSON.stringify(update)}`);
-                    if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
-                        const data = update as AppUserAnalysisProgressUpdate
-                        setCurrentStep(data.status);
-                    } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
-                        const data = update as ServiceProviderAnalysisProgressUpdate
-                        setServiceProviders(prev => ({
-                            ...prev,
-                            [data.serviceProvider.id]: data
-                        }));
+                eventSource.addEventListener('progress-update', (event) => {
+                    try {
+                        const update: {
+                            type: ProgressUpdateType,
+                        } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
+                        console.log(`🚀 [EventSource] ${event.type} ${JSON.stringify(update)}`);
+                        if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
+                            const data = update as AppUserAnalysisProgressUpdate
+                            setCurrentStep(data.status);
+                        } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
+                            const data = update as ServiceProviderAnalysisProgressUpdate
+                            setServiceProviders(prev => ({
+                                ...prev,
+                                [data.serviceProvider.id]: data
+                            }));
+                        }
+                    } catch (err) {
+                        console.error("Parsing error", err);
                     }
-                } catch (err) {
-                    console.error("Parsing error", err);
-                }
-            });
-            eventSource.onerror = () => {
-                console.log(`🚀 [EventSource Debug] EventSource Error`)
-                eventSource?.close();
-            };
+                });
+                eventSource.onerror = (error) => {
+                    console.error(`🚀 [EventSource] Error. ReadyState: ${eventSource?.readyState}`);
+                    console.error("🚀 Error details:", error);
+                    eventSource?.close();
+                };
+            }, 2000);
         }
         initConnection();
 
-        return () => eventSource?.close();
+        return () => {
+            clearTimeout(timerId);
+            eventSource?.close();
+        };
+
     }, [router]);
 
     useEffect(() => {

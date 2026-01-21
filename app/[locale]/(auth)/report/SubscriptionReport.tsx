@@ -10,14 +10,13 @@ import { Section } from "@/components/ui/section";
 import { Toggle } from "@/components/ui/toggle";
 import { ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType } from "@/lib/dto/dto";
 import { differenceInDays } from 'date-fns';
+import { partition } from 'lodash';
 import {
     Calendar,
     ChevronRight,
     CircleCheck,
     CircleDollarSign,
-    CircleQuestionMark,
     CircleUserRound,
-    CircleX,
     Eye,
     EyeOff,
     UserCheck
@@ -88,7 +87,7 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
     const googleAccounts = report.accountReports.map(it => it.googleAccount)
     // const googleAccountToClassname = Object.fromEntries(googleAccounts.map((acc, idx) => [acc.email, `bg-chart-${(idx % 5) + 1}`]));
     const subscriptions: SubscriptionItemProps[] = report.accountReports.flatMap((report) =>
-        report.subscriptions.map((sub) => ({
+        report.subscriptions.filter(sub => sub.registeredSince != null).map((sub) => ({
             ...sub,
             email: report.googleAccount.email
             // accountAvatarProps: {
@@ -97,14 +96,20 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
             // }
         })))
 
-    const subscribedServices = subscriptions.filter(it => (it.subscribedSince !== null) && !it.isNotSureIfSubscriptionIsOngoing).sort((a, b) => {
+    const [subscribed, unsubscribed] = partition(
+        subscriptions,
+        it => it.subscribedSince !== null && !it.isNotSureIfSubscriptionIsOngoing
+    );
+
+    const subscribedServices = subscribed.sort((a, b) => {
         const timeA = a.subscribedSince?.getTime() ?? 0
         const timeB = b.subscribedSince?.getTime() ?? 0
         return timeA - timeB
     })
-    const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
-    const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
-    const notSubscribedServices = subscriptions.filter(it => (it.subscribedSince == null) && it.serviceProvider.canAnalyzeSubscription)
+    const notSubscribedServices = unsubscribed
+
+    // const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
+    // const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
 
     console.log(`subscriptions: ${subscriptions.length}`)
     console.log(`subscribedServices: ${subscribedServices.length}`)
@@ -138,7 +143,7 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
                     }
                 </ul>
             </Section>
-            {
+            {/* {
                 notSureServices.length > 0 &&
                 <Section className={"pb-10"}>
                     <div className="flex items-center gap-2 pb-4">
@@ -172,7 +177,7 @@ const SubscriptionReport = ({ subscriptionReport, reportUpdateEligibility }: Sub
                         }
                     </ul>
                 </Section>
-            }
+            } */}
             {
                 notSubscribedServices.length > 0 &&
                 <Section className={"pb-10"}>

@@ -15,6 +15,7 @@ import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, } from "@
 import { Item } from "@/components/ui/item";
 import { Progress } from "@/components/ui/progress";
 import { Spinner } from "@/components/ui/spinner";
+import { CustomError } from "@/lib/error";
 import { useTranslations } from "next-intl";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
@@ -49,18 +50,31 @@ const AnalysisTracker = () => {
     const completedServiceProviderAnalysisCount = Object.values(serviceProviders).filter(it => it.status === SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS.COMPLETED).length
     const stepConfig = ANALYSIS_PROGRESS_STATUS_CONFIG[currentStep]
 
-    const [progress, setProgress] = useState(30)
+    const [progress, setProgress] = useState(0)
+    const STATUS_PROGRESS_MAP: Record<string, number> = {
+        [APP_USER_ANALYSIS_PROGRESS_STATUS.STARTED]: 0,
+        [APP_USER_ANALYSIS_PROGRESS_STATUS.EMAIL_FETCHED]: 25,
+        [APP_USER_ANALYSIS_PROGRESS_STATUS.EMAIL_ACCOUNT_ANALYSIS_COMPLETED]: 75,
+        [APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED]: 100,
+    };
+
+    const [error, setError] = useState<Error | null>(null);
+
+    if (error) throw error;
 
     useEffect(() => {
         let eventSource: EventSource | null = null;
-        let timerId: NodeJS.Timeout;
+
+        let isMounted = true;
 
         const initConnection = async () => {
+
             const response = await fetch(`${reportUpdateEventApiPath}`)
 
-            if (response.status === 204) {
-                router.push('/report')
-                return;
+            if (!isMounted) return;
+
+            if (response.status != 200) {
+                setError(new CustomError("API ERROR", response.status));
             }
 
             timerId = setTimeout(() => {
@@ -76,7 +90,11 @@ const AnalysisTracker = () => {
                         console.log(`🚀 [EventSource] ${event.type} ${JSON.stringify(update)}`);
                         if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
                             const data = update as AppUserAnalysisProgressUpdate
-                            setCurrentStep(data.status);
+                            setCurrentStep(data.status)
+                            if (data.status === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
+                                console.log("🚀 [EventSource] Closing EventSource: Task Completed");
+                                eventSource?.close();
+                            }
                         } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
                             const data = update as ServiceProviderAnalysisProgressUpdate
                             setServiceProviders(prev => ({
@@ -85,26 +103,30 @@ const AnalysisTracker = () => {
                             }));
                         }
                     } catch (err) {
-                        console.error("Parsing error", err);
+                        setError(new CustomError("API ERROR", response.status));
                     }
                 });
                 eventSource.onerror = (error) => {
+                    if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
+                        eventSource?.close();
+                        return;
+                    }
                     console.error(`🚀 [EventSource] Error. ReadyState: ${eventSource?.readyState}`);
                     console.error("🚀 Error details:", error);
-                    eventSource?.close();
+                    setError(new CustomError("API ERROR"));
                 };
-            }, 2000);
-        }
+            }
         initConnection();
 
-        return () => {
-            clearTimeout(timerId);
-            eventSource?.close();
-        };
+            return () => {
+                eventSource?.close();
+                isMounted = false
+            };
 
-    }, [router]);
+        }, [router]);
 
     useEffect(() => {
+        setProgress(STATUS_PROGRESS_MAP[currentStep])
         if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
             router.push('/report');
         }

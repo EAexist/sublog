@@ -9,6 +9,7 @@ import { Item, ItemActions, ItemContent, ItemTitle } from "@/components/ui/item"
 import { Section } from "@/components/ui/section";
 import { Toggle } from "@/components/ui/toggle";
 import { ReportUpdateEligibility, Subscription, SubscriptionReport as SubscriptionReportType } from "@/lib/dto/dto";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 import { differenceInDays } from 'date-fns';
 import { partition } from 'lodash';
 import {
@@ -212,7 +213,7 @@ const SubscribedServiceProviderItem = ({
     const paidMonths = subscribedSince ? getMonthsPassed(subscribedSince) : null
 
     return <Item asChild variant={"outline"}><Link
-        href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"
+        href={(serviceProvider.subscriptionPageUrl || serviceProvider.websiteUrl) ? ensureAbsoluteUrl(serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl) : "#"} target="_blank"
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>
@@ -251,7 +252,7 @@ const SubscribedServiceProviderItem = ({
 const ServiceProviderItem = ({ serviceProvider, registeredSince, subscribedSince, email }: SubscriptionItemProps) => {
 
     return <Item variant={"outline"} className={"p-3"} asChild><Link
-        href={serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl ?? "#"} target="_blank"
+        href={(serviceProvider.subscriptionPageUrl || serviceProvider.websiteUrl) ? ensureAbsoluteUrl(serviceProvider.subscriptionPageUrl ?? serviceProvider.websiteUrl) : "#"} target="_blank"
         rel="noopener noreferrer">
         <ItemContent className={"min-w-0"}>
             <ItemTitle className={"w-full"}>

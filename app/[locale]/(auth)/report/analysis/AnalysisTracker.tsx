@@ -77,53 +77,52 @@ const AnalysisTracker = () => {
                 setError(new CustomError("API ERROR", response.status));
             }
 
-            timerId = setTimeout(() => {
-                eventSource = new EventSource(reportUpdateEventApiPath, {
-                    withCredentials: true
-                });
+            eventSource = new EventSource(reportUpdateEventApiPath, {
+                withCredentials: true
+            });
 
-                eventSource.addEventListener('progress-update', (event) => {
-                    try {
-                        const update: {
-                            type: ProgressUpdateType,
-                        } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
-                        console.log(`🚀 [EventSource] ${event.type} ${JSON.stringify(update)}`);
-                        if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
-                            const data = update as AppUserAnalysisProgressUpdate
-                            setCurrentStep(data.status)
-                            if (data.status === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
-                                console.log("🚀 [EventSource] Closing EventSource: Task Completed");
-                                eventSource?.close();
-                            }
-                        } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
-                            const data = update as ServiceProviderAnalysisProgressUpdate
-                            setServiceProviders(prev => ({
-                                ...prev,
-                                [data.serviceProvider.id]: data
-                            }));
+            eventSource.addEventListener('progress-update', (event) => {
+                try {
+                    const update: {
+                        type: ProgressUpdateType,
+                    } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
+                    console.log(`🚀 [EventSource] ${event.type} ${JSON.stringify(update)}`);
+                    if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
+                        const data = update as AppUserAnalysisProgressUpdate
+                        setCurrentStep(data.status)
+                        if (data.status === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
+                            console.log("🚀 [EventSource] Closing EventSource: Task Completed");
+                            eventSource?.close();
                         }
-                    } catch (err) {
-                        setError(new CustomError("API ERROR", response.status));
+                    } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
+                        const data = update as ServiceProviderAnalysisProgressUpdate
+                        setServiceProviders(prev => ({
+                            ...prev,
+                            [data.serviceProvider.id]: data
+                        }));
                     }
-                });
-                eventSource.onerror = (error) => {
-                    if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
-                        eventSource?.close();
-                        return;
-                    }
-                    console.error(`🚀 [EventSource] Error. ReadyState: ${eventSource?.readyState}`);
-                    console.error("🚀 Error details:", error);
-                    setError(new CustomError("API ERROR"));
-                };
-            }
+                } catch (err) {
+                    setError(new CustomError("API ERROR", response.status));
+                }
+            });
+            eventSource.onerror = (error) => {
+                if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
+                    eventSource?.close();
+                    return;
+                }
+                console.error(`🚀 [EventSource] Error. ReadyState: ${eventSource?.readyState}`);
+                console.error("🚀 Error details:", error);
+                setError(new CustomError("API ERROR"));
+            };
+        }
         initConnection();
 
-            return () => {
-                eventSource?.close();
-                isMounted = false
-            };
+        return () => {
+            eventSource?.close();
+            isMounted = false
+        };
 
-        }, [router]);
+    }, [router]);
 
     useEffect(() => {
         setProgress(STATUS_PROGRESS_MAP[currentStep])

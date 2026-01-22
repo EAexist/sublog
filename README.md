@@ -45,7 +45,7 @@ Distributed under the **MIT License**. See `LICENSE` for more information
 
 Pyohyeon: hyeon.expression@gmail.com
 
-Project Link: [https://github.com/EAexist/subscription-killer-api](https://github.com/EAexist/subscription-killer-api)
+Project Link: [https://github.com/EAexist/subscription-killer](https://github.com/EAexist/subscription-killer)
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments

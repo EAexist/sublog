@@ -37,8 +37,10 @@ For introduction of the app, please refer to following repo of the API server.
 
 <!-- LICENSE -->
 ## License
+Copyright (c) 2026 Hyeon Pyo. All rights reserved.
 
-Distributed under the **MIT License**. See `LICENSE` for more information
+No permission is granted for commercial use, distribution, or modification without explicit consent.
+
 
 <!-- CONTACT -->
 ## Contact

@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/EAexist/subscription-killer">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
+  <h3 align="center">Subscription Killer</h3>
+
+  <p align="center">
+    Next.js Web App
+    <br />
+    <br />
+    <a href="https://subscription-killer-git-staging-matchalab-project.vercel.app">View Demo</a>
+  </p>
+</div>
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+This is Web app of Subscription Killer. 
+
+For introduction of the app, please refer to following repo of the API server.
+
+<a href="https://github.com/EAexist/subscription-killer-api">Subscription Killer API</a>
+
+### Built With
+
+* [![React][React]][React-url]
+* [![Next.js][Next.js]][Next.js-url]
+* [![shadcn/ui][shadcn/ui]][shadcn/ui-url]
+  
+<!-- GETTING STARTED -->
 ## Getting Started
 
-First, run the development server:
+<a href="https://subscription-killer-git-staging-matchalab-project.vercel.app">View Demo</a>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!-- LICENSE -->
+## License
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Distributed under the **MIT License**. See `LICENSE` for more information
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<!-- CONTACT -->
+## Contact
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Pyohyeon: hyeon.expression@gmail.com
 
-## Learn More
+Project Link: [https://github.com/EAexist/subscription-killer-api](https://github.com/EAexist/subscription-killer-api)
 
-To learn more about Next.js, take a look at the following resources:
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* [Ui icons created by Andrejs Kirma - Flaticon](https://www.flaticon.com/free-icons/ui)
+* [Best-README-Template](https://github.com/EAexist/Best-README-Template)
+* [md-badges](https://github.com/inttter/md-badges)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[React]: https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB
+[React-url]: https://react.dev
+[Next.js]: https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white
+[Next.js-url]: https://nextjs.org
+[shadcn/ui]: https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff
+[shadcn/ui-url]: https://ui.shadcn.com/

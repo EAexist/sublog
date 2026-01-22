@@ -65,7 +65,9 @@ export default async function RootLayout({ children, params }: Props) {
                 <ApiProvisioningTrigger />
                 <NextIntlClientProvider>
                     <Navbar />
-                    {children}
+                    <main>
+                        {children}
+                    </main>
                     <Footer />
                 </NextIntlClientProvider>
             </body>

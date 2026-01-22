@@ -1,9 +1,9 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react"
 
 const sectionVariants = cva(
-    "w-full px-0 flex flex-col",
+    "w-full px-0 flex flex-col max-w-3xl mx-auto",
     {
         variants: {
             // size: {
@@ -25,7 +25,7 @@ const sectionVariants = cva(
 
 export interface SectionProps
     extends React.HTMLAttributes<HTMLElement>,
-        VariantProps<typeof sectionVariants> {}
+    VariantProps<typeof sectionVariants> { }
 
 const Section = React.forwardRef<HTMLElement, SectionProps>(
     ({ className, ...props }: SectionProps, ref) => {
@@ -41,3 +41,4 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
 Section.displayName = "Section"
 
 export { Section }
+

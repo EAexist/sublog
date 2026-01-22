@@ -5,9 +5,9 @@ export const Footer = () => {
     // const t = useTranslations("Footer");
 
     return (
-        <footer className="pb-16 pt-0">
+        <footer className="pb-16 pt-0 mx-auto">
             <div className="flex flex-col items-center text-center">
-                <div className="flex w-full items-center justify-between gap-y-2 border-t pt-3 text-sm text-muted-foreground max-md:flex-col">
+                <div className="flex w-full justify-center gap-y-2 border-t pt-3 text-sm text-muted-foreground max-md:flex-col">
                     {/* <ul className="flex gap-x-4 font-medium [&_a:hover]:opacity-100 [&_a]:opacity-60">
             <>
               <li>
@@ -18,7 +18,7 @@ export const Footer = () => {
               </li>
             </>
           </ul> */}
-                    <div>
+                    <div className="max-w-3xl">
                         {`© Copyright ${new Date().getFullYear()} ${AppConfig.name}`}
                     </div>
                 </div>

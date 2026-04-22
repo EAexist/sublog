@@ -8,7 +8,14 @@ export function ApiProvisioningTrigger() {
 
     useEffect(() => {
         if (!hasTriggered.current) {
-            triggerProvisioning().catch(error => console.error(error))
+            triggerProvisioning().catch(error => {
+                if (error.status === 401) {
+                    console.log('Unauthorized')
+                }
+                else {
+                    console.error(error)
+                }
+            })
             hasTriggered.current = true
         }
     }, [])

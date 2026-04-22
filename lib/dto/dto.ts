@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 
 export const GoogleAccountSchema = z.object({
@@ -21,12 +21,13 @@ export const ServiceProviderSchema = z.object({
 })
 
 export const SubscriptionSchema = z.object({
-    id: z.string().nullish(),
+    id: z.string(),
     serviceProvider: ServiceProviderSchema,
     registeredSince: z.coerce.date().nullish(),
     hasSubscribedNewsletterOrAd: z.boolean(),
     subscribedSince: z.coerce.date().nullish(),
     isNotSureIfSubscriptionIsOngoing: z.boolean(),
+    nextPaymentDate: z.coerce.date().nullish(),
 })
 
 export const AccountReportSchema = z.object({
@@ -36,7 +37,7 @@ export const AccountReportSchema = z.object({
 
 export const SubscriptionReportSchema = z.object({
     accountReports: z.array(AccountReportSchema),
-    analyzedAt: z.coerce.date().nullish()
+    reportUpdateAvailableSince: z.coerce.date()
 });
 
 export const ReportUpdateEligibilitySchema = z.object({

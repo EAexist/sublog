@@ -15,7 +15,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { guestLogin } from "@/lib/api";
 import { CustomError } from "@/lib/error";
-import { PlayCircle } from "lucide-react";
+import { Ghost } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Dialog } from "../ui/dialog";
@@ -30,7 +30,7 @@ export const GuestLoginButton = () => {
             const response = await guestLogin()
 
             if (response.status === 200) {
-                router.push('/report');
+                router.push('/dashboard');
             } else {
                 if (response.error) {
                     throw new CustomError("API ERROR", response.status, t("title"))
@@ -45,7 +45,7 @@ export const GuestLoginButton = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button size={"fullW"} variant={"outline"}>
-                    <PlayCircle />
+                    <Ghost />
                     {t("title")}
                 </Button>
             </DialogTrigger>

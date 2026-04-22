@@ -11,25 +11,26 @@ type Props = {
     params: Promise<{ locale: string }>;
 };
 
-const ReportNavigateButton = async () => {
-    const t = await getTranslations("home.components.ReportNavigateButton");
-    return <Button size={"fullW"}><Link href={"/report"}>{t("title")}</Link>
+const DashboardNavigateButton = async () => {
+    const t = await getTranslations("home.components.DashboardNavigateButton");
+    return <Button size={"fullW"}><Link href={"/dashboard"}>{t("title")}</Link>
     </Button>;
 }
 
 const MainActionButton = async () => {
     const sessionCookie = await getSessionCookie()
-    return (sessionCookie !== undefined) ? <ReportNavigateButton /> : <LoginButtonGroup />
+    return (sessionCookie !== undefined) ? <DashboardNavigateButton /> : <LoginButtonGroup />
 }
 
 const IndexPage = async ({ params }: Props) => {
     const isAuthenticated = true;
     const t = await getTranslations("home");
+    const commonT = await getTranslations("common")
     return (
         <Section className={"grow"}>
             <div className={"py-20"}>
                 <CenteredHero
-                    title={t.rich("title", {
+                    title={commonT.rich("title", {
                         important: (chunks) => (
                             <span
                                 className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -38,7 +39,7 @@ const IndexPage = async ({ params }: Props) => {
                         ),
                     })}
                     description={t("description")}
-                    buttons={<Suspense fallback={<ReportNavigateButton />}><MainActionButton /></Suspense>}
+                    buttons={<Suspense fallback={<DashboardNavigateButton />}><MainActionButton /></Suspense>}
                 />
             </div>
         </Section>

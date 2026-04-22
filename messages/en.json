@@ -1,0 +1,217 @@
+{
+    "common": {
+        "title": "Sublog"
+    },
+    "metadata": {
+        "title": "Manage Your Subscriptions",
+        "description": "Find hidden subscription fees. View and organize your recurring payments all in one place."
+    },
+    "home": {
+        "title": "Manage Your Subscriptions",
+        "description": "Hidden subscription fees\nSubscriptions you've forgotten about\nSafely check with just email connection",
+        "components": {
+            "DashboardNavigateButton": {
+                "title": "View My Subscriptions"
+            }
+        }
+    },
+    "login": {
+        "title": "My Subscriptions",
+        "description": "Connect Gmail and organize your subscriptions"
+    },
+    "settings": {
+        "title": "Settings",
+        "account": {
+            "title": "Account",
+            "language": "Language",
+            "email": "Email",
+            "notifications": "Notifications"
+        },
+        "googleAccounts": {
+            "title": "Connected Google Accounts",
+            "description": "Google accounts connected to your subscription analysis",
+            "connected": "Connected",
+            "disconnect": "Disconnect",
+            "noAccounts": "No Google accounts connected",
+            "connectPrompt": "Connect your Google account to analyze subscriptions",
+            "disconnectDialog": {
+                "title": "Disconnect Google Account",
+                "description": "Are you sure you want to disconnect \"{name}\" ({email})?\nThis will remove access to their subscription data and cannot be undone.",
+                "cancel": "Cancel",
+                "disconnect": "Disconnect Account",
+                "disconnecting": "Disconnecting..."
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Subscription History",
+        "subscribedServices": "Subscribed Services",
+        "registeredOnlyServices": "Registered Only Services",
+        "months": "months",
+        "emptySubscriptions": {
+            "title": "No Active Subscriptions",
+            "description": "You don't have any active subscriptions. Connect your email accounts to discover your subscription services."
+        },
+        "components": {
+            "SubscriptionDrawerContent": {
+                "active": "Active",
+                "uncertain": "Uncertain",
+                "registeredOnly": "Registered Only",
+                "newsletterAd": "Newsletter/Ad",
+                "subscribed": "Subscribed",
+                "months": "months",
+                "registered": "Registered",
+                "registeredEmail": "Registered Email",
+                "website": "Website",
+                "unsubscribe": "Unsubscribe",
+                "noExternalLinks": "No external links available"
+            },
+            "ShowEmailToggle": {
+                "show": "Show Accounts",
+                "hide": "Hide Accounts"
+            },
+            "AnalyzedAtAlert": {
+                "title": "Last Analysis"
+            },
+            "AvailableSinceAlert": {
+                "title": "Next Analysis Available"
+            },
+            "ReportUpdateButton": {
+                "title": "Find New Subscriptions",
+                "dialog": {
+                    "title": "Find New Subscriptions",
+                    "analyzedAtTitle": "Last Analysis",
+                    "availableSinceTitle": "Next Analysis Available",
+                    "enabled": {
+                        "run": "Analyze Again",
+                        "cancel": "Close"
+                    },
+                    "disabled": {
+                        "run": "Analyze Again",
+                        "cancel": "OK"
+                    }
+                }
+            },
+            "ReportUpdateTracker": {
+                "steps": {
+                    "STARTED": {
+                        "title": "Reading Emails",
+                        "description": "Checking email list"
+                    },
+                    "EMAIL_FETCHED": {
+                        "title": "Analyzing Subscriptions",
+                        "description": "Analyzing subscription history"
+                    },
+                    "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+                        "title": "Organizing Results",
+                        "description": "Organizing results, please wait"
+                    },
+                    "COMPLETED": {
+                        "title": "Analysis Complete",
+                        "description": "Moving to results page"
+                    }
+                }
+            }
+        },
+        "analysis": {
+            "components": {
+                "AnalysisTracker": {
+                    "steps": {
+                        "STARTED": {
+                            "title": "Reading Emails",
+                            "description": "Checking email list"
+                        },
+                        "EMAIL_FETCHED": {
+                            "title": "Analyzing Subscriptions",
+                            "description": "Analyzing subscription history"
+                        },
+                        "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+                            "title": "Organizing Results",
+                            "description": "Organizing results, please wait"
+                        },
+                        "COMPLETED": {
+                            "title": "Analysis Complete",
+                            "description": "Moving to results page"
+                        }
+                    }
+                }
+            }
+        },
+        "new": {
+            "title": "Find Hidden Subscriptions",
+            "new": {
+                "title": "Find Hidden Subscriptions",
+                "components": {
+                    "UpdateStartButton": {
+                        "run": "Start"
+                    }
+                }
+            },
+            "update": {
+                "title": "Find New Subscriptions",
+                "components": {
+                    "UpdateStartButton": {
+                        "run": "Start"
+                    }
+                },
+                "lastReportTitle": "Last Analysis"
+            }
+        },
+        "update": {
+            "title": "Find Hidden Subscriptions",
+            "waitQuotaTitle": "Please Try Again Later",
+            "waitQuotaDescription": "You can analyze again after some time",
+            "reportNavigateButton": "OK",
+            "lastReport_title": "Last Organization Result",
+            "analyzedAt_title": "Organization Date",
+            "googleAccounts_title": "Gmail List",
+            "subscriptions_title": "Result Summary",
+            "updateButton": "Start",
+            "components": {
+                "AnalysisUpdateButton": {
+                    "run": "Start Organization",
+                    "runAgain": "Update"
+                }
+            }
+        }
+    },
+    "report": {
+        "subscribedServices": "Subscribed Services",
+        "registeredOnlyServices": "Registered Only Services",
+        "active": "Active",
+        "uncertain": "Uncertain",
+        "registeredOnly": "Registered Only",
+        "newsletterAd": "Newsletter/Ad",
+        "subscribed": "Subscribed",
+        "months": "months",
+        "registered": "Registered",
+        "registeredEmail": "Registered Email",
+        "website": "Website",
+        "manage": "Manage",
+        "noExternalLinks": "No external links available"
+    },
+    "components": {
+        "GoogleLoginButton": {
+            "title": "Continue with Google Account"
+        },
+        "GuestLoginButton": {
+            "title": "Browse",
+            "dialog": {
+                "title": "Browse",
+                "description": "Try the app without login using a guest account. Connected with 100+ sample emails.",
+                "confirm": "Start",
+                "cancel": "Close"
+            }
+        },
+        "Navbar": {
+            "home": "Service Introduction",
+            "dashboard": "Subscription History",
+            "logout": "Logout"
+        },
+        "ErrorEmpty": {
+            "title": "Service Unavailable",
+            "description": "Service is currently unavailable.\nPlease try again later.",
+            "homeNavigateButton": "OK"
+        }
+    }
+}

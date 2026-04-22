@@ -5,7 +5,7 @@ export const Footer = () => {
     // const t = useTranslations("Footer");
 
     return (
-        <footer className="pb-16 pt-0 mx-auto">
+        <footer className="pb-16 pt-0 w-full mx-auto bg-muted">
             <div className="flex flex-col items-center text-center">
                 <div className="flex w-full justify-center gap-y-2 border-t pt-3 text-sm text-muted-foreground max-md:flex-col">
                     {/* <ul className="flex gap-x-4 font-medium [&_a:hover]:opacity-100 [&_a]:opacity-60">

@@ -1,8 +1,8 @@
-import emailGif from "@/public/assets/images/gifs/email.gif";
-import searchGif from "@/public/assets/images/gifs/search.gif";
-import notesGif from "@/public/assets/images/gifs/notes.gif";
+import { ServiceProvider } from "@/lib/dto/dto";
 import doubleCheckGif from "@/public/assets/images/gifs/double-check.gif";
-import {ServiceProvider} from "@/lib/dto/dto";
+import emailGif from "@/public/assets/images/gifs/email.gif";
+import notesGif from "@/public/assets/images/gifs/notes.gif";
+import searchGif from "@/public/assets/images/gifs/search.gif";
 
 // import emailGif from "@/public/assets/images/gifs/email.gif";
 
@@ -13,6 +13,7 @@ export const PROGRESS_UPDATE_TYPE = {
 export type ProgressUpdateType = typeof PROGRESS_UPDATE_TYPE[keyof typeof PROGRESS_UPDATE_TYPE]
 
 export const APP_USER_ANALYSIS_PROGRESS_STATUS = {
+    ERROR: 'ERROR',
     STARTED: 'STARTED',
     EMAIL_FETCHED: 'EMAIL_FETCHED',
     EMAIL_ACCOUNT_ANALYSIS_COMPLETED: 'EMAIL_ACCOUNT_ANALYSIS_COMPLETED',

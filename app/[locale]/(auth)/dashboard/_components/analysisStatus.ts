@@ -40,6 +40,9 @@ export interface ServiceProviderAnalysisProgressUpdate {
 
 
 export const ANALYSIS_PROGRESS_STATUS_CONFIG = {
+    [APP_USER_ANALYSIS_PROGRESS_STATUS.ERROR]: {
+        icon: searchGif,
+    },
     [APP_USER_ANALYSIS_PROGRESS_STATUS.STARTED]: {
         icon: emailGif,
     },

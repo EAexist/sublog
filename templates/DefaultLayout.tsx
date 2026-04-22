@@ -2,11 +2,11 @@ interface LayoutProps {
     children: React.ReactNode
 }
 
-export const DefaultLayout = ({children}: LayoutProps) => {
+export const DefaultLayout = ({ children }: LayoutProps) => {
 
     return (
-        <div>
-            <div className={"h-14"}/>
+        <div className="min-h-screen flex flex-col">
+            <div className={"h-14"} />
             {children}
         </div>
     );

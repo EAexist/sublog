@@ -3,6 +3,7 @@ import { routing } from "@/il8n/routing";
 
 import { ApiProvisioningTrigger } from "@/app/[locale]/ApiProvisioningTrigger";
 import { Navbar } from "@/app/[locale]/Navbar";
+import { MSWProvider } from '@/components/MSWProvider';
 import { Footer } from "@/components/shared/Footer";
 import { pretendard } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -10,13 +11,14 @@ import { AllLocales } from "@/utils/AppConfig";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: Props) {
     const { locale } = await params;
 
     const t = await getTranslations({
         locale: locale,
-        namespace: "Metadata",
+        namespace: "metadata",
     });
 
     return {
@@ -62,14 +64,16 @@ export default async function RootLayout({ children, params }: Props) {
                 className="bg-background text-foreground antialiased w-full h-full min-w-xs"
                 suppressHydrationWarning
             >
-                <ApiProvisioningTrigger />
-                <NextIntlClientProvider>
-                    <Navbar />
-                    <main>
-                        {children}
-                    </main>
-                    <Footer />
-                </NextIntlClientProvider>
+                <MSWProvider>
+                    <ApiProvisioningTrigger />
+                    <NextIntlClientProvider>
+                        <Navbar />
+                        <main className="min-h-screen">
+                            {children}
+                        </main>
+                        <Footer />
+                    </NextIntlClientProvider>
+                </MSWProvider>
             </body>
         </html>
     );

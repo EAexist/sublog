@@ -1,40 +1,32 @@
 "use client"
 
-import {
-    ANALYSIS_PROGRESS_STATUS_CONFIG,
-    APP_USER_ANALYSIS_PROGRESS_STATUS,
-    AppUserAnalysisProgressStatus,
-    AppUserAnalysisProgressUpdate,
-    PROGRESS_UPDATE_TYPE,
-    ProgressUpdateType,
-    SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS,
-    ServiceProviderAnalysisProgressUpdate
-} from "@/app/[locale]/(auth)/report/analysis/analysisStatus";
 import { BrandAvatar } from "@/components/shared/BrandAvatar";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, } from "@/components/ui/empty";
 import { Item } from "@/components/ui/item";
 import { Progress } from "@/components/ui/progress";
-import { Spinner } from "@/components/ui/spinner";
-import { CustomError } from "@/lib/error";
 import { useTranslations } from "next-intl";
 import Image from 'next/image';
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
-
-const reportUpdateEventApiPath = `/api/reports/updates`
-// const reportUpdateEventApiPath = '/mock-api/reports/updates'
+import {
+    ANALYSIS_PROGRESS_STATUS_CONFIG,
+    APP_USER_ANALYSIS_PROGRESS_STATUS,
+    AppUserAnalysisProgressStatus,
+    SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS,
+    ServiceProviderAnalysisProgressUpdate
+} from "../analysisStatus";
 
 const STATUS_WEIGHTS: Record<string, number> = {
     'COMPLETED': 0,
     'STARTED': 1,
 };
 
-const AnalysisTracker = () => {
-    const t = useTranslations("report.analysis.components.AnalysisTracker");
-    const router = useRouter();
-    // const [isAnalysisPending, setTsAnalysisPending] = useState(false);
-    const [currentStep, setCurrentStep] = useState<AppUserAnalysisProgressStatus>(APP_USER_ANALYSIS_PROGRESS_STATUS.STARTED);
-    const [serviceProviders, setServiceProviders] = useState<Record<string, ServiceProviderAnalysisProgressUpdate>>({});
+interface ReportUpdateTrackerProps {
+    currentStep: AppUserAnalysisProgressStatus;
+    serviceProviders: Record<string, ServiceProviderAnalysisProgressUpdate>;
+}
+
+const ReportUpdateTracker = ({ currentStep, serviceProviders }: ReportUpdateTrackerProps) => {
+    const t = useTranslations("dashboard.components.ReportUpdateTracker");
     const maxServiceProviderCount = 18
     const displayedServiceProviders: ServiceProviderAnalysisProgressUpdate[] =
         // Array(5).fill(
@@ -58,78 +50,9 @@ const AnalysisTracker = () => {
         [APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED]: 100,
     };
 
-    const [error, setError] = useState<Error | null>(null);
-
-    if (error) throw error;
-
-    useEffect(() => {
-        let eventSource: EventSource | null = null;
-
-        let isMounted = true;
-
-        const initConnection = async () => {
-
-            const response = await fetch(`${reportUpdateEventApiPath}`)
-
-            if (!isMounted) return;
-
-            if (response.status != 200) {
-                setError(new CustomError("API ERROR", response.status));
-            }
-
-            eventSource = new EventSource(reportUpdateEventApiPath, {
-                withCredentials: true
-            });
-
-            eventSource.addEventListener('progress-update', (event) => {
-                try {
-                    const update: {
-                        type: ProgressUpdateType,
-                    } & (AppUserAnalysisProgressUpdate | ServiceProviderAnalysisProgressUpdate) = JSON.parse(event.data);
-                    console.log(`🚀 [EventSource] ${event.type} ${JSON.stringify(update)}`);
-                    if (update.type === PROGRESS_UPDATE_TYPE.APP_USER) {
-                        const data = update as AppUserAnalysisProgressUpdate
-                        setCurrentStep(data.status)
-                        if (data.status === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
-                            console.log("🚀 [EventSource] Closing EventSource: Task Completed");
-                            eventSource?.close();
-                        }
-                    } else if (update.type === PROGRESS_UPDATE_TYPE.SERVICE_PROVIDER) {
-                        const data = update as ServiceProviderAnalysisProgressUpdate
-                        setServiceProviders(prev => ({
-                            ...prev,
-                            [data.serviceProvider.id]: data
-                        }));
-                    }
-                } catch (err) {
-                    setError(new CustomError("API ERROR", response.status));
-                }
-            });
-            eventSource.onerror = (error) => {
-                if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
-                    eventSource?.close();
-                    return;
-                }
-                console.error(`🚀 [EventSource] Error. ReadyState: ${eventSource?.readyState}`);
-                console.error("🚀 Error details:", error);
-                setError(new CustomError("API ERROR"));
-            };
-        }
-        initConnection();
-
-        return () => {
-            eventSource?.close();
-            isMounted = false
-        };
-
-    }, [router]);
-
     useEffect(() => {
         setProgress(STATUS_PROGRESS_MAP[currentStep])
-        if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
-            router.push('/report');
-        }
-    }, [currentStep, router]);
+    }, [currentStep]);
 
     return (
         <Item variant={"outline"}>
@@ -179,13 +102,13 @@ const AnalysisTracker = () => {
                             className={`col-span-2 w-10 h-10 ${isRowOfFour && indexInCycle === 5 ? "col-start-2" : ""}`}>
                             <div className="relative w-fit">
                                 <BrandAvatar className={"h-10 w-10"} serviceProvider={serviceProvider} />
-                                {
+                                {/* {
                                     status !== SERVICE_PROVIDER_ANALYSIS_PROGRESS_STATUS.COMPLETED &&
                                     <div
                                         className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full">
                                         <Spinner className="h-6 w-6 text-white" />
                                     </div>
-                                }
+                                } */}
                             </div>
                         </li>
                     }
@@ -196,4 +119,4 @@ const AnalysisTracker = () => {
     );
 };
 
-export default AnalysisTracker;
+export default ReportUpdateTracker;

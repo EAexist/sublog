@@ -8,6 +8,11 @@ import { NextResponse } from "next/dist/server/web/spec-extension/response";
 const nextIntlMiddleware = createMiddleware(routing);
 
 export default function proxy(request: NextRequest) {
+
+    if (process.env.NEXT_PUBLIC_MSW_ENABLED === 'true') {
+        return nextIntlMiddleware(request)
+    }
+
     const { pathname } = request.nextUrl
 
     if (pathname.startsWith('/api') || pathname.startsWith('/_next')) {
@@ -28,11 +33,21 @@ export default function proxy(request: NextRequest) {
 
     // 1. If user IS authenticated and trying to access (unauth) routes
     if (sessionCookie && (pathWithoutLocale === '/login' || pathWithoutLocale === '/login/')) {
-        return NextResponse.redirect(new URL(`/${locale}/report`, request.url))
+        return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url))
+    }
+
+    // 3. First visit redirect logic - redirect authenticated users to dashboard on first visit
+    if (sessionCookie && pathWithoutLocale === '/') {
+        const referer = request.headers.get('referer');
+        const isExternalReferer = !referer || !referer.includes(request.nextUrl.host);
+
+        if (isExternalReferer) {
+            return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
+        }
     }
 
     // 2. If user is NOT authenticated and trying to access (auth) routes
-    if (!sessionCookie && pathWithoutLocale.startsWith('/report')) {
+    if (!sessionCookie && (pathWithoutLocale.startsWith('/dashboard') || pathWithoutLocale.startsWith('/settings'))) {
         const loginUrl = new URL(`/${locale}/login`, request.url);
         // Optional: remove search params to break RSC loops
         loginUrl.search = '';

@@ -1,25 +1,25 @@
-import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@/components/ui/empty";
-import {Button} from "@/components/ui/button";
-import {CircleSlash} from "lucide-react";
-import {getTranslations} from "next-intl/server";
+import { Button } from "@/components/ui/button";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { CircleSlash } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 // import * as http from "node:http";
 import http from 'http';
 
-interface SubscriptionReportErrorProps {
+interface SubscriptionDashboardErrorProps {
     error: string;
     status: number
 }
 
-export async function SubscriptionReportError({error, status}: SubscriptionReportErrorProps) {
-    const t = await getTranslations("report.SubscriptionReportError")
+export async function SubscriptionDashboardError({ error, status }: SubscriptionDashboardErrorProps) {
+    const t = await getTranslations("dashboard.SubscriptionDashboardError")
 
     const statusText = `${status} ${http.STATUS_CODES[status] || 'Unknown Error'}`;
     return (
         <Empty>
             <EmptyHeader>
                 <EmptyMedia variant="icon">
-                    <CircleSlash/>
+                    <CircleSlash />
                 </EmptyMedia>
                 <EmptyTitle><h1>{statusText}</h1></EmptyTitle>
                 <EmptyDescription>

@@ -1,23 +1,22 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react"
 
 const containerVariants = cva(
-    "w-full px-5 py-8 flex flex-col",
+    "w-full px-5 py-4 flex flex-col",
     {
         variants: {
-            // size: {
-            //     default: "py-36",
-            //     sm: "py-12",
-            //     lg: "py-48",
-            // },
+            size: {
+                default: "py-4",
+                sm: "py-4",
+            },
             // variant: {
             //     default: "bg-background",
             //     muted: "bg-muted/50",
             // }
         },
         defaultVariants: {
-            // size: "default",
+            size: "default",
             // variant: "default",
         },
     }
@@ -25,7 +24,7 @@ const containerVariants = cva(
 
 export interface ContainerProps
     extends React.HTMLAttributes<HTMLElement>,
-        VariantProps<typeof containerVariants> {}
+    VariantProps<typeof containerVariants> { }
 
 const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
     ({ className, ...props }: ContainerProps, ref) => {
@@ -41,3 +40,4 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
 Container.displayName = "Container"
 
 export { Container }
+

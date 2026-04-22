@@ -11,17 +11,24 @@ import { LogoutButton } from "./LogoutButton";
 import { LogoutSheetTrigger } from "./LogoutSheetTrigger";
 
 export const Navbar = async () => {
+    const commonT = await getTranslations("common");
     const t = await getTranslations("components.Navbar");
 
     const isAuthenticated = await getIsAuthenticated()
 
     const NAV_LINKS = [
+        { name: t("dashboard"), href: "/dashboard" },
+        ...(isAuthenticated ? [{ name: t("settings"), href: "/settings" }] : []),
         { name: t("home"), href: "/" },
-        { name: t("report"), href: "/report" },
     ];
+
     return (
         <header
-            className={"fixed top-0 left-0 right-0 z-60 h-14 w-full border-b bg-background/80 backdrop-blur-md px-4 md:px-6 mx-auto flex"}>
+            className={"fixed top-0 left-0 right-0 z-60 h-14 w-full border-b bg-background/80 backdrop-blur-md px-4 md:px-6 mx-auto flex"}
+        >
+            <div className="flex items-center">
+                <a href="/" className="text-lg font-semibold tracking-tight hover:text-primary transition-colors duration-200">{commonT("title")}</a>
+            </div>
             <div className="w-full flex items-center justify-end md:hidden">
                 <Sheet modal={false}>
                     <div />

@@ -123,9 +123,19 @@
         @apply bg-background text-foreground;
     }
 
-    ul, ol {
+    ul,
+    ol {
         list-style: none;
         margin: 0;
         padding: 0;
     }
+}
+
+/* Drawer */
+[data-vaul-drawer] {
+    pointer-events: none;
+}
+
+[data-vaul-drawer]>* {
+    pointer-events: auto;
 }

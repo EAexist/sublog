@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/container";
+import Image from "next/image";
 
 export const CenteredHero = (props: {
     banner?: React.ReactNode;
@@ -6,20 +7,38 @@ export const CenteredHero = (props: {
     description: string;
     buttons?: React.ReactNode;
 }) => (
-    <Container>
-        <div className="text-center">{props.banner}</div>
+    <div className="flex flex-col items-center">
+        {/* Hero Image */}
+        <div className="relative w-full max-w-2xl mx-auto">
+            <Image
+                src="/assets/images/hero.png"
+                alt="Hero illustration"
+                width={800}
+                height={400}
+                className="object-cover"
+                priority
+            />
+        </div>
+        <Container>
+            {/* Banner */}
+            <div className="text-center">{props.banner}</div>
 
-        <div className="mt-3 text-center text-3xl font-bold tracking-tight">
-            {props.title}
-        </div>
+            {/* Title */}
+            <h1 className="text-center text-5xl font-bold tracking-tight">
+                {props.title}
+            </h1>
 
-        <div className="mx-auto mt-5 text-center text-xl text-muted-foreground">
-            <p className="whitespace-pre-line font-semibold text-base">
-                {props.description}
-            </p>
-        </div>
-        <div className="mt-8 flex justify-center items-center gap-x-5 gap-y-3 max-sm:flex-col">
-            {props.buttons}
-        </div>
-    </Container>
+            {/* Description */}
+            <div className="mx-auto text-center text-xl text-muted-foreground max-w-2xl p-4">
+                <p className="whitespace-pre-line font-semibold text-base">
+                    {props.description}
+                </p>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex justify-center items-center gap-x-5 gap-y-3 max-sm:flex-col py-8">
+                {props.buttons}
+            </div>
+        </Container>
+    </div>
 );

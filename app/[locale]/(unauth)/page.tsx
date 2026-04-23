@@ -27,8 +27,8 @@ const IndexPage = async ({ params }: Props) => {
     const t = await getTranslations("home");
     const commonT = await getTranslations("common")
     return (
-        <Section className={"grow"}>
-            <div className={"py-20"}>
+        <Section className={"my-auto"}>
+            <div className={"py-20 grow"}>
                 <CenteredHero
                     title={commonT.rich("title", {
                         important: (chunks) => (

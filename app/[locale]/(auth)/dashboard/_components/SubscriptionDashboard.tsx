@@ -3,9 +3,9 @@
 import { BrandAvatar } from "@/components/shared/BrandAvatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import { Item, ItemContent } from "@/components/ui/item";
 import { Section } from "@/components/ui/section";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
@@ -151,7 +151,7 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
                     }
                 </div>
             </div> */}
-                <Section className={""}>
+                <Section className={"md:py-8"}>
                     <div className="pb-4">
                         <div className="flex items-center gap-2">
                             <h2 className="font-regular text-base">{t('subscribedServices')}</h2>
@@ -187,7 +187,7 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
                 <Separator className="my-6" />
                 {
                     notSubscribedServices.length > 0 &&
-                    <Section className={""}>
+                    <Section className={"md:py-8"}>
                         <div className="pb-4">
                             <div className="flex items-center gap-2">
                                 <h2 className="font-regular text-base">{t('registeredOnlyServices')}</h2>
@@ -207,7 +207,7 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
                 }
                 {/* {
                 notSureServices.length > 0 &&
-                <Section className={""}>
+                <Section className={"md:py-8"}>
                     <div className="flex items-center gap-2 pb-4">
                         <h2 className="font-regular text-base">구독을 유지 중인지 확실하지 않아요</h2>
                         <CircleQuestionMark strokeWidth={1.5} className="size-5" />
@@ -225,7 +225,7 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
             }
             {
                 cannotAnalyzeServices.length > 0 &&
-                <Section className={""}>
+                <Section className={"md:py-8"}>
                     <div className="flex items-center gap-2 pb-4">
                         <h2 className="font-regular text-base">구독 여부를 확인할 수 없어요</h2>
                         <CircleX strokeWidth={1} className="size-5" />
@@ -421,8 +421,7 @@ const ServiceProviderItem = ({
     const t = useTranslations('dashboard')
     return (
         <DrawerTrigger asChild>
-            <Item
-                variant={"outline"}
+            <Card
                 onClick={(e) => {
                     console.log("Clicked")
                     // e.preventDefault(); // Prevent DrawerTrigger's default toggle behavior
@@ -430,11 +429,11 @@ const ServiceProviderItem = ({
                 }}
                 className="cursor-pointer hover:bg-muted/50 transition-colors px-4 py-3 bg-background border-0"
             >
-                <ItemContent>
-                    <div className="flex flex-col items-start gap-2">
-                        <BrandAvatar serviceProvider={serviceProvider} className="size-10" />
+                <CardContent className="p-0">
+                    <div className="flex flex-col items-start gap-2 md:flex-row md:min-h-16 md:items-center md:gap-4">
+                        <BrandAvatar serviceProvider={serviceProvider} className="size-10 md:size-12" />
                         <div>
-                            <h3 className="font-semibold text-lg truncate w-full max-w-[140px]">
+                            <h3 className="font-semibold text-lg truncate w-full max-w-[140px] md:max-w-80">
                                 {serviceProvider.displayName}
                             </h3>
                             {nextPaymentDate && (
@@ -445,8 +444,8 @@ const ServiceProviderItem = ({
                             )}
                         </div>
                     </div>
-                </ItemContent>
-            </Item>
+                </CardContent>
+            </Card>
         </DrawerTrigger>
     );
 };

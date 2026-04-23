@@ -24,66 +24,78 @@ export const Navbar = async () => {
 
     return (
         <header
-            className={"fixed top-0 left-0 right-0 z-60 h-14 w-full border-b bg-background/80 backdrop-blur-md px-4 md:px-6 mx-auto flex"}
+            className={"fixed top-0 left-0 right-0 z-60 h-14 w-full border-b bg-background/80 backdrop-blur-md"}
         >
-            <div className="flex items-center">
-                <a href="/" className="text-lg font-semibold tracking-tight hover:text-primary transition-colors duration-200">{commonT("title")}</a>
-            </div>
-            <div className="w-full flex items-center justify-end md:hidden">
-                <Sheet modal={false}>
-                    <div />
-                    <div>
-                        <SheetTrigger asChild className={"data-[state=open]:hidden"}>
-                            <Button variant={"outline"} size={"icon"}>
-                                <Menu />
-                            </Button>
-                        </SheetTrigger>
-                        <SheetTrigger asChild className={"data-[state=closed]:hidden"}>
-                            <Button variant={"outline"} size={"icon"}>
-                                <X />
-                            </Button>
-                        </SheetTrigger>
+            <div className={"max-w-4xl w-full h-full pr-4 mx-auto flex md:px-6 justify-between"}>
+                <div className={"flex"}>
+                    <div className="flex items-center">
+                        <Button size={"default"} variant={"ghost"} asChild className="min-w-0 text-lg font-semibold tracking-tight md:min-w-28">
+                            <Link href="/" className={""}>
+                                {commonT("title")}
+                            </Link>
+                        </Button>
                     </div>
-                    {/*<div className={"h-14"}/>*/}
-                    <SheetContent side={"top"} className={"gap-0"}>
-                        <SheetHeader className={"hidden"}>
-                            <SheetTitle>Navigation Menu</SheetTitle>
-                        </SheetHeader>
-                        <div className={"h-14"} />
-                        <ul className={"flex flex-col"}
-                        >
+                    <div className="hidden md:flex">
+                        <ul className="flex items-center justify-between">
                             {NAV_LINKS.map(({ href, name }) => {
-                                return <li key={href} className={"flex"}><SheetTrigger asChild><Link href={href}
-                                    className={"w-full p-5"}>{name}</Link>
-                                </SheetTrigger>
+                                return <li key={href} className={"flex"}>
+                                    <Button size={"lg"} variant={"ghost"} asChild className="min-w-28">
+                                        <Link href={href}
+                                            className={""}>
+                                            {name}
+                                        </Link>
+                                    </Button>
                                 </li>
                             })}
                         </ul>
-                        {
-                            isAuthenticated &&
-                            <>
-                                <Separator className="my-2" />
-                                <LogoutSheetTrigger />
-                            </>
-                        }
-                    </SheetContent>
-                </Sheet>
-            </div>
-            <div className="hidden md:flex w-full">
-                <div className="flex items-center justify-between w-full max-w-3xl mx-auto px-8">
-                    <ul className={"flex gap-16"}
-                    >
-                        {NAV_LINKS.map(({ href, name }) => {
-                            return <li key={href} className={"flex"}><Link href={href}
-                                className={""}>{name}</Link>
-                            </li>
-                        })}
-                    </ul>
-                    {
-                        isAuthenticated &&
-                        <LogoutButton />
-                    }
+                    </div>
                 </div>
+                <div className="flex items-center md:hidden">
+                    <Sheet modal={false}>
+                        <div />
+                        <div>
+                            <SheetTrigger asChild className={"data-[state=open]:hidden"}>
+                                <Button variant={"outline"} size={"icon"}>
+                                    <Menu />
+                                </Button>
+                            </SheetTrigger>
+                            <SheetTrigger asChild className={"data-[state=closed]:hidden"}>
+                                <Button variant={"outline"} size={"icon"}>
+                                    <X />
+                                </Button>
+                            </SheetTrigger>
+                        </div>
+                        {/*<div className={"h-14"}/>*/}
+                        <SheetContent side={"top"} className={"gap-0"}>
+                            <SheetHeader className={"hidden"}>
+                                <SheetTitle>Navigation Menu</SheetTitle>
+                            </SheetHeader>
+                            <div className={"h-14"} />
+                            <ul className={"flex flex-col"}
+                            >
+                                {NAV_LINKS.map(({ href, name }) => {
+                                    return <li key={href} className={"flex"}><SheetTrigger asChild><Link href={href}
+                                        className={"w-full p-5"}>{name}</Link>
+                                    </SheetTrigger>
+                                    </li>
+                                })}
+                            </ul>
+                            {
+                                isAuthenticated &&
+                                <>
+                                    <Separator className="my-2" />
+                                    <LogoutSheetTrigger />
+                                </>
+                            }
+                        </SheetContent>
+                    </Sheet>
+                </div>
+                {
+                    // isAuthenticated &&
+                    <div className="hidden md:flex items-center">
+                        <LogoutButton />
+                    </div>
+                }
             </div>
         </header>
     )

@@ -68,7 +68,7 @@ export default async function RootLayout({ children, params }: Props) {
                     <ApiProvisioningTrigger />
                     <NextIntlClientProvider>
                         <Navbar />
-                        <main className="min-h-screen">
+                        <main className="min-h-dvh flex flex-col">
                             {children}
                         </main>
                         <Footer />

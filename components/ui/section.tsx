@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
 const sectionVariants = cva(
-    "w-full px-0 flex flex-col max-w-3xl mx-auto",
+    "w-full px-0 flex flex-col max-w-4xl mx-auto",
     {
         variants: {
             // size: {

@@ -1,6 +1,23 @@
 import { SubscriptionReport as SubscriptionReportType } from "@/lib/dto/dto";
 import { subMonths } from "date-fns";
 
+// Helper function to calculate next payment date
+// Finds the closest date after today with the same day value as subscribedSince
+const calculateNextPaymentDate = (subscribedSince: Date): Date => {
+    const today = new Date();
+    const subscribedDay = subscribedSince.getDate();
+
+    // Start with current month
+    let nextPayment = new Date(today.getFullYear(), today.getMonth(), subscribedDay);
+
+    // If this date is in the past or today, move to next month
+    if (nextPayment <= today) {
+        nextPayment = new Date(today.getFullYear(), today.getMonth() + 1, subscribedDay);
+    }
+
+    return nextPayment;
+};
+
 export const sampleReport: SubscriptionReportType = {
     reportUpdateAvailableSince: new Date(),
     accountReports:
@@ -18,7 +35,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 7),
-                isNotSureIfSubscriptionIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 7))
             }, {
                 id: "naver-plus-sub-1",
                 serviceProvider: {
@@ -32,7 +50,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "disney-plus-sub-1",
                 serviceProvider: {
@@ -46,7 +65,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "watcha-sub-1",
                 serviceProvider: {
@@ -60,7 +80,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: true
+                isNotSureIfSubscriptionIsOngoing: true,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "tving-sub-1",
                 serviceProvider: {
@@ -89,7 +110,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: true
+                isNotSureIfSubscriptionIsOngoing: true,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "sketchfab-sub-1",
                 serviceProvider: {
@@ -152,7 +174,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: false
+                isNotSureIfSubscriptionIsOngoing: false,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "chatgpt-sub-2",
                 serviceProvider: {
@@ -166,7 +189,8 @@ export const sampleReport: SubscriptionReportType = {
                 registeredSince: subMonths(Date.now(), 12),
                 hasSubscribedNewsletterOrAd: false,
                 subscribedSince: subMonths(Date.now(), 8),
-                isNotSureIfSubscriptionIsOngoing: true
+                isNotSureIfSubscriptionIsOngoing: true,
+                nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 8))
             }, {
                 id: "figma-sub-2",
                 serviceProvider: {

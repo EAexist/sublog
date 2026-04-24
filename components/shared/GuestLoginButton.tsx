@@ -31,6 +31,7 @@ export const GuestLoginButton = () => {
 
             if (response.status === 200) {
                 router.push('/dashboard');
+                router.refresh();
             } else {
                 if (response.error) {
                     throw new CustomError("API ERROR", response.status, t("title"))

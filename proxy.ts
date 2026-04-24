@@ -15,7 +15,7 @@ export default function proxy(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
-    if (pathname.startsWith('/api') || pathname.startsWith('/_next')) {
+    if (pathname.startsWith('/api') || pathname.startsWith('/actuator') || pathname.startsWith('/oauth2') || pathname.startsWith('/_next')) {
         return NextResponse.next();
     }
 
@@ -61,5 +61,5 @@ export const config = {
     // Match all pathnames except for
     // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
     // - … the ones containing a dot (e.g. `favicon.ico`)
-    matcher: "/((?!api|trpc|_next|_vercel|mock-api|.*\\..*).*)",
+    matcher: "/((?!api|actuator|oauth2|trpc|_next|_vercel|mock-api|.*\\..*).*)",
 };

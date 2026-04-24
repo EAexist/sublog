@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { fetchApi } from "@/lib/api";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -13,16 +14,16 @@ export const GoogleLoginButton = () => {
         setIsLoading(true);
 
         try {
-            const healthResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actuator/health`, {
+            const healthResponse = await fetchApi(`actuator/health`, {
                 method: 'GET',
                 cache: 'no-store',
-                signal: AbortSignal.timeout(3000) // 3 seconds timeout
+                signal: AbortSignal.timeout(3000)
             });
 
-            if (!healthResponse.ok) {
+            if (healthResponse.status !== 200) {
                 throw new Error('Backend unavailable');
             }
-            window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`;
+            window.location.href = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`;
             // window.location.href = `/api/auth/google`;
         } catch (error) {
             console.error('Backend health check failed:', error);

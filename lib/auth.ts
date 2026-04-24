@@ -16,6 +16,7 @@ export async function clearSession() {
     const cookieStore = await cookies()
     cookieStore.delete(SESSION_COOKIE_KEY)
 }
+
 export async function logout() {
     await clearSession()
     redirect('/')

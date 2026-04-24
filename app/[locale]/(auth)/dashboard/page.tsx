@@ -34,7 +34,7 @@ const DashboardPage = async ({ params }: Props) => {
 
     return (
         <DefaultLayout>
-            <div className="bg-muted flex flex-col flex-1">
+            <div className="flex flex-col flex-1">
                 {/* <div className={"flex justify-between items-end pb-4"}>
                         <div className={"flex items-end gap-2"}>
                             <h1 className={"font-semibold text-xl"}>{t("title")}</h1>
@@ -43,7 +43,7 @@ const DashboardPage = async ({ params }: Props) => {
                 <Suspense>
                     {
                         report &&
-                        <Container className="flex-1 max-w-4xl mx-auto">
+                        <Container className="bg-muted flex-1 max-w-4xl mx-auto">
                             <SubscriptionDashboard report={report} />
                         </Container>
                     }

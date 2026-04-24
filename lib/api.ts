@@ -24,11 +24,17 @@ export const getSessionCookie = async () => {
     const cookieStore = await cookies();
     return cookieStore.get('SESSION');
 }
-export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
 
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+export async function fetchApi<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
 
-    const url = `${baseUrl}/api/v1/${path}`;
+    let url: string;
+    if (isServer) {
+        // On server, hit the backend directly (bypass proxy)
+        url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
+    } else {
+        // On client, use the relative path to trigger the Next.js Rewrite (Proxy)
+        url = `/${path}`;
+    }
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');
@@ -82,48 +88,52 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
     }
 }
 
+const fetchApiV1 = async (path: string, options: RequestInit = {}) => {
+    return await fetchApi(`api/v1/${path}`, options)
+}
+
 export const triggerProvisioning = async () => {
     const apiPath = 'provisioning'
-    return await apiFetch(apiPath, {
+    return await fetchApiV1(apiPath, {
         method: "POST"
     })
 };
 
 export const getReport = async () => {
     const apiPath = 'reports'
-    return await apiFetch(apiPath)
+    return await fetchApiV1(apiPath)
 };
 
 export const getReportUpdate = async () => {
     const apiPath = 'reports/updates'
-    return await apiFetch(apiPath)
+    return await fetchApiV1(apiPath)
 };
 
 export const updateReport = async () => {
     const apiPath = 'reports/updates'
-    return await apiFetch(apiPath, {
+    return await fetchApiV1(apiPath, {
         method: "POST"
     })
 };
 
 export const getReportUpdateEligibility = async () => {
     const apiPath = 'reports/updates/eligibility'
-    return await apiFetch(apiPath)
+    return await fetchApiV1(apiPath)
 };
 
 export const guestLogin = async () => {
     const apiPath = 'guest'
-    return await apiFetch(apiPath)
+    return await fetchApiV1(apiPath)
 };
 
 export const getAppUser = async () => {
     const apiPath = 'appUsers'
-    return await apiFetch(apiPath)
+    return await fetchApiV1(apiPath)
 };
 
 export const deleteGoogleAccount = async (googleSubject: string) => {
     const apiPath = `/googleAccounts/${googleSubject}`
-    return await apiFetch(apiPath, {
+    return await fetchApiV1(apiPath, {
         method: "DELETE"
     })
 };
@@ -146,13 +156,14 @@ export interface EventSourceHandlers<T> {
 
 export async function apiEventSource<T>(path: string, handlers: EventSourceHandlers<T> = {}): Promise<EventSourceResponse<EventSource>> {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    const url = `${baseUrl}/api/v1/${path}`;
+    // const url = `${baseUrl}/api/v1/${path}`;
+    const url = `/api/v1/${path}`;
 
     try {
         console.log(`🚀 [EventSource] Connecting to ${url}`);
 
         // Check connection first
-        const response = await apiFetch(path);
+        const response = await fetchApiV1(path);
 
         if (response.status != 200) {
             console.log(`🚀 [EventSource] Connection failed ${response.status}`);

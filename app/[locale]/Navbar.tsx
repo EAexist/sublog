@@ -91,7 +91,7 @@ export const Navbar = async () => {
                     </Sheet>
                 </div>
                 {
-                    // isAuthenticated &&
+                    isAuthenticated &&
                     <div className="hidden md:flex items-center">
                         <LogoutButton />
                     </div>

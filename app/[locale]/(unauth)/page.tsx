@@ -23,7 +23,6 @@ const MainActionButton = async () => {
 }
 
 const IndexPage = async ({ params }: Props) => {
-    const isAuthenticated = true;
     const t = await getTranslations("home");
     const commonT = await getTranslations("common")
     return (

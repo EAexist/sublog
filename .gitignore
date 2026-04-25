@@ -46,6 +46,6 @@ package-lock.json
 
 # secrets
 *.pem
-certificates/
+.certs/*
 
 .deprecated

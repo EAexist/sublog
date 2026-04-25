@@ -4,7 +4,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const REWRITES = [
     { source: '/api/:path*', destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` },
     { source: '/actuator/:path*', destination: `${process.env.NEXT_PUBLIC_API_URL}/actuator/:path*` },
-    // { source: `/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`, destination: `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}` },
+    { source: `/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`, destination: `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}` },
+    { source: `/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_REDIRECT_URI}`, destination: `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_REDIRECT_URI}` },
 ];
 
 const nextConfig: NextConfig = {

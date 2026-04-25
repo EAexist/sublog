@@ -3,9 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "cross-env NEXT_PUBLIC_MSW_ENABLED=true dotenv -e .env -- next dev --experimental-https",
-        "dev:be-local": "dotenv -e .env -- next dev --experimental-https",
+        "dev": "concurrently \"npm:dev:next\" \"npm:dev:caddy\"",
+        "dev:be-local": "concurrently \"npm:dev:be-local:next\" \"npm:dev:caddy\"",
+        "dev:next": "cross-env NEXT_PUBLIC_MSW_ENABLED=true NODE_EXTRA_CA_CERTS='./.certs/root.crt' dotenv -e .env -- next dev",
+        "dev:be-local:next": "cross-env NODE_EXTRA_CA_CERTS='./.certs/root.crt' dotenv -e .env -- next dev -p 3001",
         "dev:prod": "dotenv -e .env.production next dev",
+        "dev:caddy": "caddy run --config ./Caddyfile",
         "build": "next build",
         "start": "next start",
         "lint": "eslint"
@@ -39,6 +42,7 @@
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
+        "concurrently": "^9.2.1",
         "cross-env": "^7.0.3",
         "dotenv-cli": "^11.0.0",
         "eslint": "^9",

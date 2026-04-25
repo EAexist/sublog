@@ -23,7 +23,7 @@ export const GoogleLoginButton = () => {
             if (healthResponse.status !== 200) {
                 throw new Error('Backend unavailable');
             }
-            window.location.href = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`;
+            window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_GOOGLE_AUTH_PATH}`;
             // window.location.href = `/api/auth/google`;
         } catch (error) {
             console.error('Backend health check failed:', error);

@@ -34,9 +34,9 @@ export const GuestLoginButton = () => {
                 router.refresh();
             } else {
                 if (response.error) {
-                    throw new CustomError("API ERROR", response.status, t("title"))
+                    throw new CustomError("Api Error", response.status, t("title"))
                 } else {
-                    throw new CustomError("API ERROR", undefined, t("title"))
+                    throw new CustomError("Api Error", undefined, t("title"))
                 }
             }
         });

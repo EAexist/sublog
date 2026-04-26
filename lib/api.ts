@@ -88,6 +88,77 @@ export async function fetchApi<T>(path: string, options: RequestInit = {}): Prom
     }
 }
 
+export async function fetchApiWithStream(path: string, options: RequestInit = {}): Promise<ApiResponse<ReadableStream<Uint8Array<ArrayBuffer>>>> {
+
+    let url: string;
+    if (isServer) {
+        // On server, hit the backend directly (bypass proxy)
+        url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
+    } else {
+        // On client, use the relative path to trigger the Next.js Rewrite (Proxy)
+        url = `/${path}`;
+    }
+
+    const headers = new Headers(options.headers);
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'text/event-stream');
+
+    // Session Cookie
+    if (isServer) {
+        const sessionCookie = await getSessionCookie()
+        if (sessionCookie) {
+            headers.set('Cookie', `SESSION=${sessionCookie.value}`);
+        }
+    } else {
+        options.credentials = options.credentials || 'include';
+    }
+
+    try {
+        console.log(`🚀 [API] Fetching ${options.method || 'GET'} ${url}`);
+
+        const response = await fetch(url, {
+            ...options,
+            headers: headers,
+        });
+
+        const data = response.body
+
+        console.log(`🚀 [API] ${options.method || 'GET'} ${url} responded with\n${response.status} ${response.statusText}`);
+        // console.dir(data, { depth: null });
+
+        if (!response.ok || data === null) {
+            if (response.status === 401) {
+                logout()
+            }
+            return {
+                data: null,
+                error: 'API_ERROR',
+                status: response.status,
+            };
+        }
+
+        if (!(data instanceof ReadableStream)) {
+            return {
+                data: null,
+                error: 'API_ERROR',
+                status: 500,
+            };
+        }
+
+        return { data: data, error: null, status: response.status };
+
+    } catch (e: unknown) {
+        const err = e as Error & { code?: string; cause?: { code?: string } };
+        console.log(`[API] Error: ${err.message}`)
+        const isNetworkDown = (err.cause?.code === 'ECONNREFUSED') || (err.code === 'ECONNREFUSED');
+        return {
+            data: null,
+            status: isNetworkDown ? 503 : 500,
+            error: isNetworkDown ? 'Service Unavailable' : 'Internal Server Error'
+        }
+    }
+}
+
 const fetchApiV1 = async (path: string, options: RequestInit = {}) => {
     return await fetchApi(`api/v1/${path}`, options)
 }
@@ -135,6 +206,13 @@ export const deleteGoogleAccount = async (googleSubject: string) => {
     const apiPath = `/googleAccounts/${googleSubject}`
     return await fetchApiV1(apiPath, {
         method: "DELETE"
+    })
+};
+
+export const updateReportAndGetStream = async () => {
+    const apiPath = 'reports/updates/stream'
+    return await fetchApiWithStream(`api/v1/${apiPath}`, {
+        method: "POST"
     })
 };
 

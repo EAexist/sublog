@@ -6,6 +6,7 @@ import { CustomError } from "@/lib/error";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from 'react';
+import { refreshDashboard } from "../../actions";
 import {
     APP_USER_ANALYSIS_PROGRESS_STATUS,
     AppUserAnalysisProgressStatus,
@@ -205,7 +206,8 @@ const ReportUpdateManager = ({ showUpdateTracker = true }: ReportUpdateManagerPr
         if (currentStep === APP_USER_ANALYSIS_PROGRESS_STATUS.COMPLETED) {
             console.log("🚀 [Progress Update] Task Completed");
             setTimeout(() => {
-                router.refresh()
+                refreshDashboard()
+                // router.refresh()
             }, delay);
         }
     }, [currentStep]);

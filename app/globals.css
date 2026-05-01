@@ -139,3 +139,8 @@
 [data-vaul-drawer]>* {
     pointer-events: auto;
 }
+
+/* Prevents scrollbar gutter disappearing and content shift at drawer open */
+html {
+    scrollbar-gutter: stable;
+}

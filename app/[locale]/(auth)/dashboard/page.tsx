@@ -43,9 +43,11 @@ const DashboardPage = async ({ params }: Props) => {
                 <Suspense>
                     {
                         report &&
-                        <Container className="bg-muted flex-1 max-w-4xl mx-auto">
-                            <SubscriptionDashboard report={report} />
-                        </Container>
+                        <div className="bg-muted flex-1">
+                            <Container className="flex-1 max-w-4xl mx-auto">
+                                <SubscriptionDashboard key={report.reportUpdateAvailableSince?.getTime()} report={report} />
+                            </Container>
+                        </div>
                     }
                 </Suspense>
                 <ReportUpdateManager showUpdateTracker={report === null} />

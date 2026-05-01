@@ -11,8 +11,8 @@ const LoginPage = async ({ }: LoginPageProps) => {
     const t = await getTranslations("login")
 
     return (
-        <Section className={"grow"}>
-            <div className={"py-20"}>
+        <Section className={"my-auto"}>
+            <div className={"py-20 grow"}>
                 <CenteredHero
                     title={t.rich("title", {
                         important: (chunks) => (

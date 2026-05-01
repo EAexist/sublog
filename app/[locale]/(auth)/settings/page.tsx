@@ -38,11 +38,11 @@ const SettingsPage = async ({ params }: Props) => {
 
     return (
         <DefaultLayout>
-            <h1 className="text-xl font-semibold px-5 pt-4">{t("title")}</h1>
             <Container>
+                <h1 className="text-xl font-semibold pt-4">{t("title")}</h1>
                 {/* Page Header */}
 
-                {/* <Separator className="my-8" /> */}
+                <Separator className="my-4" />
 
                 {/* User Profile Section */}
                 {/* <div className="space-y-6">
@@ -84,7 +84,7 @@ const SettingsPage = async ({ params }: Props) => {
 
                         <Separator className="my-8" /> */}
 
-                <Separator className="my-2" />
+                {/* <Separator className="my-2" /> */}
                 {/* Google Accounts Section */}
                 <Section
                     className="py-4 gap-4"
@@ -92,7 +92,7 @@ const SettingsPage = async ({ params }: Props) => {
                     <h2 className="text-lg font-medium">{t("googleAccounts.title")}</h2>
 
                     {appUser?.googleAccounts && appUser.googleAccounts.length > 0 ? (
-                        <ul className="grid grid-cols-1 gap-4">
+                        <ul className="grid grid-cols-1 gap-4 max-w-sm">
                             {appUser.googleAccounts.map((account, index) => (
                                 <li key={index}>
                                     <GoogleAccountItem
@@ -121,7 +121,7 @@ const SettingsPage = async ({ params }: Props) => {
                     className="py-4 gap-4">
                     <div className="py-4 flex flex-col gap-4">
                         <h2 className="text-lg font-medium">{t("addAccount.title")}</h2>
-                        <div className="max-w-md">
+                        <div className="max-w-sm">
                             <GoogleLoginButton />
                         </div>
                     </div>

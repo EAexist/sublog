@@ -4,7 +4,7 @@ import { BrandAvatar } from "@/components/shared/BrandAvatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Section } from "@/components/ui/section";
 import { Separator } from "@/components/ui/separator";
@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useUI } from "./UIContext";
 
 const EmailBadge = ({ email }: { email: string }) => {
@@ -75,6 +75,9 @@ interface SubscriptionDashboardProps {
     subscriptionReport: SubscriptionReportType
 }
 
+const toDate = (d: string | null) => d ? new Date(d) : null
+const normalizeDate = (d?: Date | null) => d ?? null
+
 const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) => {
 
     const t = useTranslations("dashboard")
@@ -84,16 +87,22 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
     const hasMultipleGoogleAccounts = report.accountReports.length > 1
 
     const googleAccounts = report.accountReports.map(it => it.googleAccount)
+
     // const googleAccountToClassname = Object.fromEntries(googleAccounts.map((acc, idx) => [acc.email, `bg-chart-${(idx % 5) + 1}`]));
-    const subscriptions: SubscriptionItemProps[] = report.accountReports.flatMap((report) =>
-        report.subscriptions.filter(sub => sub.registeredSince != null).map((sub) => ({
-            ...sub,
-            email: report.googleAccount.email
-            // accountAvatarProps: {
-            //     bgClassName: googleAccountToClassname[dashboard.googleAccount.email],
-            //     name: dashboard.googleAccount.name
-            // }
-        })))
+    const subscriptions: SubscriptionItemProps[] = useMemo(() => {
+        return report.accountReports.flatMap((report) =>
+            report.subscriptions.filter(sub => sub.registeredSince != null).map((sub) => ({
+                ...sub,
+                email: report.googleAccount.email,
+                registeredSince: normalizeDate(sub.registeredSince),
+                subscribedSince: normalizeDate(sub.subscribedSince),
+                nextPaymentDate: normalizeDate(sub.nextPaymentDate)
+                // accountAvatarProps: {
+                //     bgClassName: googleAccountToClassname[dashboard.googleAccount.email],
+                //     name: dashboard.googleAccount.name
+                // }
+            })))
+    }, [report])
 
     const subscribed = subscriptions.filter(it => it.subscribedSince != null)
     const unsubscribed = subscriptions.filter(it => it.subscribedSince == null)
@@ -116,41 +125,11 @@ const SubscriptionDashboard = ({ report }: { report: SubscriptionReportType }) =
     // const notSureServices = subscriptions.filter(it => (it.subscribedSince !== null) && it.isNotSureIfSubscriptionIsOngoing)
     // const cannotAnalyzeServices = subscriptions.filter(it => !it.serviceProvider.canAnalyzeSubscription)
 
-    useEffect(() => {
-        const selectedSubscription = selectedSubscriptionId ? subscriptionMap.get(selectedSubscriptionId) : null;
-        console.log(selectedSubscription?.serviceProvider.displayName)
-    }, [selectedSubscriptionId])
-
     const selectedSubscription = selectedSubscriptionId ? subscriptionMap.get(selectedSubscriptionId) : null;
 
     return (
         <>
-            <Drawer
-            // open={!!selectedSubscriptionId}
-            // onOpenChange={(open) => {
-            //     console.log(open)
-            //     if (!open) {
-            //         // Only clear selection if drawer is closing due to outside click or close button
-            //         // Don't clear if we're switching to a new subscription
-            //         setTimeout(() => {
-            //             if (selectedSubscriptionId) {
-            //                 setSelectedSubscriptionId(null);
-            //             }
-            //         }, 50);
-            //     }
-            // }}
-            >
-                {/* <UIProvider showEmail={false}> */}
-                {/* <div className={"pb-8"}>
-                <ButtonGroup>
-                    <ShowEmailToggle />
-                </ButtonGroup>
-                <div className="flex flex-wrap gap-1 py-4">
-                    {
-                        googleAccounts.map(it => <EmailBadge key={it.email} email={it.email} />)
-                    }
-                </div>
-            </div> */}
+            <Drawer>
                 <Section className={"md:py-8"}>
                     <div className="pb-4">
                         <div className="flex items-center gap-2">
@@ -269,7 +248,7 @@ const SubscriptionDrawerContent = ({
     const paidMonths = subscribedSince ? getMonthsPassed(subscribedSince) : null
 
     return (
-        <DrawerContent>
+        <DrawerContent aria-describedby="">
             <div className="pointer-events-auto mx-auto w-full max-w-md relative">
                 <DrawerHeader className="px-8">
                     <div className="flex items-center justify-between">
@@ -293,6 +272,9 @@ const SubscriptionDrawerContent = ({
                         </DrawerClose> */}
                     </div>
                 </DrawerHeader>
+                <DrawerDescription className="hidden">
+                    Detail about your subscription with {serviceProvider.displayName}
+                </DrawerDescription>
 
                 <div className="px-8 pb-4 space-y-4">
                     <div className="space-y-2">
@@ -423,7 +405,6 @@ const ServiceProviderItem = ({
         <DrawerTrigger asChild>
             <Card
                 onClick={(e) => {
-                    console.log("Clicked")
                     // e.preventDefault(); // Prevent DrawerTrigger's default toggle behavior
                     onClick && onClick(); // Call our custom onClick handler
                 }}

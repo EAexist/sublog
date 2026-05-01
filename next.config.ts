@@ -14,9 +14,9 @@ const nextConfig: NextConfig = {
         return REWRITES;
     },
     compiler: {
-        // removeConsole: process.env.NODE_ENV === 'production'
-        //     ? { exclude: ['error', 'warn'] }
-        //     : false,
+        removeConsole: process.env.NODE_ENV === 'production'
+            ? { exclude: ['error', 'warn'] }
+            : false,
     },
 };
 

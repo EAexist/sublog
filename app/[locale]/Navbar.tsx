@@ -7,6 +7,7 @@ import { getIsAuthenticated } from "@/lib/auth";
 import { Menu, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { LogoutButton } from "./LogoutButton";
 import { LogoutSheetTrigger } from "./LogoutSheetTrigger";
 
@@ -71,6 +72,10 @@ export const Navbar = async () => {
                                 <SheetTitle>Navigation Menu</SheetTitle>
                             </SheetHeader>
                             <div className={"h-14"} />
+                            <div className="flex items-center justify-between p-4">
+                                <LocaleSwitcher />
+                            </div>
+                            <Separator />
                             <ul className={"flex flex-col"}
                             >
                                 {NAV_LINKS.map(({ href, name }) => {
@@ -90,12 +95,13 @@ export const Navbar = async () => {
                         </SheetContent>
                     </Sheet>
                 </div>
-                {
-                    isAuthenticated &&
-                    <div className="hidden md:flex items-center">
+                <div className="hidden md:flex items-center gap-2">
+                    <LocaleSwitcher />
+                    {
+                        isAuthenticated &&
                         <LogoutButton />
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </header>
     )

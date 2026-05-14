@@ -7,6 +7,7 @@ export const AppConfig = {
     name: "Sublog",
     locales: [
         { id: "ko", name: "한국어" },
+        { id: "jp", name: "日本語" },
         {
             id: "en",
             name: "English",

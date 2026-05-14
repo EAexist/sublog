@@ -3,21 +3,20 @@
         "title": "Sublog"
     },
     "metadata": {
-        "title": "Manage Your Subscriptions",
-        "description": "Find hidden subscription fees. View and organize your recurring payments all in one place."
+        "title": "Sublog",
+        "description": "Smart and secure subscription management"
     },
     "home": {
-        "title": "Manage Your Subscriptions",
-        "description": "Hidden subscription fees\nSubscriptions you've forgotten about\nSafely check with just email connection",
+        "description": "All your subscriptions at a glance\nSecurely, without linking financial data",
         "components": {
             "DashboardNavigateButton": {
-                "title": "View My Subscriptions"
+                "title": "View my subscriptions"
             }
         }
     },
     "login": {
-        "title": "My Subscriptions",
-        "description": "Connect Gmail and organize your subscriptions"
+        "title": "Subscription History",
+        "description": "Connect your Gmail account to\nmanage all your subscriptions effortlessly"
     },
     "settings": {
         "title": "Settings",
@@ -28,66 +27,70 @@
             "notifications": "Notifications"
         },
         "googleAccounts": {
-            "title": "Connected Google Accounts",
-            "description": "Google accounts connected to your subscription analysis",
+            "title": "Linked Gmail Accounts",
+            "description": "Gmail accounts used for subscription analysis",
             "connected": "Connected",
             "disconnect": "Disconnect",
-            "noAccounts": "No Google accounts connected",
-            "connectPrompt": "Connect your Google account to analyze subscriptions",
+            "noAccounts": "No accounts linked",
+            "connectPrompt": "Connect a Gmail account to start analysis",
             "disconnectDialog": {
-                "title": "Disconnect Google Account",
-                "description": "Are you sure you want to disconnect \"{name}\" ({email})?\nThis will remove access to their subscription data and cannot be undone.",
+                "title": "Disconnect Gmail Account",
+                "description": "Disconnect {email}?\nAccess to this account's data will be securely removed, and you will no longer see subscriptions from it.",
                 "cancel": "Cancel",
-                "disconnect": "Disconnect Account",
+                "disconnect": "Disconnect",
                 "disconnecting": "Disconnecting..."
             }
+        },
+        "addAccount": {
+            "title": "Add Gmail Account"
         }
     },
     "dashboard": {
-        "title": "Subscription History",
-        "subscribedServices": "Subscribed Services",
-        "registeredOnlyServices": "Registered Only Services",
-        "months": "months",
+        "title": "Subscriptions",
+        "subscribedServices": "Active",
+        "registeredOnlyServices": "Registered",
+        "months": "mo",
         "emptySubscriptions": {
-            "title": "No Active Subscriptions",
-            "description": "You don't have any active subscriptions. Connect your email accounts to discover your subscription services."
+            "title": "No subscriptions found",
+            "description": "We couldn't find any active subscriptions."
         },
         "components": {
             "SubscriptionDrawerContent": {
                 "active": "Active",
                 "uncertain": "Uncertain",
-                "registeredOnly": "Registered Only",
-                "newsletterAd": "Newsletter/Ad",
-                "subscribed": "Subscribed",
-                "months": "months",
-                "registered": "Registered",
-                "registeredEmail": "Registered Email",
-                "website": "Website",
+                "registeredOnly": "Account only",
+                "newsletterAd": "Newsletters/Ads",
+                "subscribed": "Subscribed since",
+                "months": "mo",
+                "registered": "Registered on",
+                "registeredEmail": "Registered email",
+                "nextPaymentDate": "Next payment",
+                "website": "Open",
                 "unsubscribe": "Unsubscribe",
-                "noExternalLinks": "No external links available"
+                "noExternalLinks": "No external links"
             },
             "ShowEmailToggle": {
-                "show": "Show Accounts",
-                "hide": "Hide Accounts"
+                "show": "Show email",
+                "hide": "Hide email"
             },
             "AnalyzedAtAlert": {
-                "title": "Last Analysis"
+                "title": "Last updated"
             },
             "AvailableSinceAlert": {
-                "title": "Next Analysis Available"
+                "title": "Next update available"
             },
             "ReportUpdateButton": {
-                "title": "Find New Subscriptions",
+                "title": "Find new subscriptions",
                 "dialog": {
-                    "title": "Find New Subscriptions",
-                    "analyzedAtTitle": "Last Analysis",
-                    "availableSinceTitle": "Next Analysis Available",
+                    "title": "Find new subscriptions",
+                    "analyzedAtTitle": "Last updated",
+                    "availableSinceTitle": "Next update available",
                     "enabled": {
-                        "run": "Analyze Again",
+                        "run": "Scan again",
                         "cancel": "Close"
                     },
                     "disabled": {
-                        "run": "Analyze Again",
+                        "run": "Scan again",
                         "cancel": "OK"
                     }
                 }
@@ -95,20 +98,20 @@
             "ReportUpdateTracker": {
                 "steps": {
                     "STARTED": {
-                        "title": "Reading Emails",
-                        "description": "Checking email list"
+                        "title": "Reading emails",
+                        "description": "Checking your email list"
                     },
                     "EMAIL_FETCHED": {
-                        "title": "Analyzing Subscriptions",
-                        "description": "Analyzing subscription history"
+                        "title": "Analyzing subscriptions",
+                        "description": "Identifying your subscriptions"
                     },
                     "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
-                        "title": "Organizing Results",
-                        "description": "Organizing results, please wait"
+                        "title": "Finalizing",
+                        "description": "Organizing your results"
                     },
                     "COMPLETED": {
-                        "title": "Analysis Complete",
-                        "description": "Moving to results page"
+                        "title": "Analysis complete",
+                        "description": "Your subscription list is ready"
                     }
                 }
             }
@@ -118,29 +121,29 @@
                 "AnalysisTracker": {
                     "steps": {
                         "STARTED": {
-                            "title": "Reading Emails",
-                            "description": "Checking email list"
+                            "title": "Reading emails",
+                            "description": "Checking your email list"
                         },
                         "EMAIL_FETCHED": {
-                            "title": "Analyzing Subscriptions",
-                            "description": "Analyzing subscription history"
+                            "title": "Analyzing",
+                            "description": "Looking for subscriptions"
                         },
                         "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
-                            "title": "Organizing Results",
-                            "description": "Organizing results, please wait"
+                            "title": "Finalizing",
+                            "description": "Almost done, organizing results"
                         },
                         "COMPLETED": {
-                            "title": "Analysis Complete",
-                            "description": "Moving to results page"
+                            "title": "Complete",
+                            "description": "Heading to your dashboard"
                         }
                     }
                 }
             }
         },
         "new": {
-            "title": "Find Hidden Subscriptions",
+            "title": "Find hidden subscriptions",
             "new": {
-                "title": "Find Hidden Subscriptions",
+                "title": "Find hidden subscriptions",
                 "components": {
                     "UpdateStartButton": {
                         "run": "Start"
@@ -148,69 +151,55 @@
                 }
             },
             "update": {
-                "title": "Find New Subscriptions",
+                "title": "Find new subscriptions",
                 "components": {
                     "UpdateStartButton": {
                         "run": "Start"
                     }
                 },
-                "lastReportTitle": "Last Analysis"
+                "lastReportTitle": "Last updated"
             }
         },
         "update": {
-            "title": "Find Hidden Subscriptions",
-            "waitQuotaTitle": "Please Try Again Later",
-            "waitQuotaDescription": "You can analyze again after some time",
-            "reportNavigateButton": "OK",
-            "lastReport_title": "Last Organization Result",
-            "analyzedAt_title": "Organization Date",
-            "googleAccounts_title": "Gmail List",
-            "subscriptions_title": "Result Summary",
+            "title": "Find hidden subscriptions",
+            "waitQuotaTitle": "Please wait",
+            "waitQuotaDescription": "You can scan again soon",
+            "reportNavigateButton": "View",
+            "lastReport_title": "Last scan",
+            "analyzedAt_title": "Scan date",
+            "googleAccounts_title": "Gmail accounts",
+            "subscriptions_title": "Summary",
             "updateButton": "Start",
             "components": {
                 "AnalysisUpdateButton": {
-                    "run": "Start Organization",
+                    "run": "Start Scan",
                     "runAgain": "Update"
                 }
             }
         }
     },
-    "report": {
-        "subscribedServices": "Subscribed Services",
-        "registeredOnlyServices": "Registered Only Services",
-        "active": "Active",
-        "uncertain": "Uncertain",
-        "registeredOnly": "Registered Only",
-        "newsletterAd": "Newsletter/Ad",
-        "subscribed": "Subscribed",
-        "months": "months",
-        "registered": "Registered",
-        "registeredEmail": "Registered Email",
-        "website": "Website",
-        "manage": "Manage",
-        "noExternalLinks": "No external links available"
-    },
     "components": {
         "GoogleLoginButton": {
-            "title": "Continue with Google Account"
+            "title": "Continue with Google"
         },
         "GuestLoginButton": {
-            "title": "Browse",
+            "title": "Guest Demo",
             "dialog": {
-                "title": "Browse",
-                "description": "Try the app without login using a guest account. Connected with 100+ sample emails.",
+                "title": "Guest Demo",
+                "description": "Try the app with a demo account. 70 sample emails are pre-linked.",
                 "confirm": "Start",
                 "cancel": "Close"
             }
         },
         "Navbar": {
-            "home": "Service Introduction",
-            "dashboard": "Subscription History",
+            "dashboard": "Dashboard",
+            "home": "Home",
+            "settings": "Settings",
             "logout": "Logout"
         },
         "ErrorEmpty": {
-            "title": "Service Unavailable",
-            "description": "Service is currently unavailable.\nPlease try again later.",
+            "title": "Service unavailable",
+            "description": "Something went wrong.\nPlease try again later.",
             "homeNavigateButton": "OK"
         }
     }

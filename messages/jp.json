@@ -1,0 +1,206 @@
+{
+    "common": {
+        "title": "サブログ"
+    },
+    "metadata": {
+        "title": "サブログ",
+        "description": "賢く、安全なサブスク管理"
+    },
+    "home": {
+        "description": "すべてのサブスクをひと目で\n金融情報の連携不要で安全に",
+        "components": {
+            "DashboardNavigateButton": {
+                "title": "サブスクを確認する"
+            }
+        }
+    },
+    "login": {
+        "title": "サブスク履歴",
+        "description": "Gmailアカウントを連携して\nサブスクを簡単に管理しましょう"
+    },
+    "settings": {
+        "title": "設定",
+        "account": {
+            "title": "アカウント",
+            "language": "言語",
+            "email": "メールアドレス",
+            "notifications": "通知"
+        },
+        "googleAccounts": {
+            "title": "連携済みのGmailアカウント",
+            "description": "分析に使用されているGmailアカウント",
+            "connected": "連携済み",
+            "disconnect": "解除",
+            "noAccounts": "連携中のアカウントはありません",
+            "connectPrompt": "分析のためにGmailを連携してください",
+            "disconnectDialog": {
+                "title": "Gmailの連携解除",
+                "description": "{email} の連携を解除しますか？\nデータへのアクセス権限が削除され、このアカウントで登録したサービスを確認できなくなります。",
+                "cancel": "キャンセル",
+                "disconnect": "連携解除",
+                "disconnecting": "解除中..."
+            }
+        },
+        "addAccount": {
+            "title": "Gmailアカウントを追加"
+        }
+    },
+    "dashboard": {
+        "title": "サブスク履歴",
+        "subscribedServices": "利用中",
+        "registeredOnlyServices": "登録済みサービス",
+        "months": "ヶ月",
+        "emptySubscriptions": {
+            "title": "サブスクが見つかりません",
+            "description": "現在、利用中のサブスクはありません。"
+        },
+        "components": {
+            "SubscriptionDrawerContent": {
+                "active": "利用中",
+                "uncertain": "要確認",
+                "registeredOnly": "登録のみ",
+                "newsletterAd": "メルマガ・広告",
+                "subscribed": "開始日",
+                "months": "ヶ月",
+                "registered": "登録日",
+                "registeredEmail": "登録メール",
+                "nextPaymentDate": "次回決済日",
+                "website": "開く",
+                "unsubscribe": "解約する",
+                "noExternalLinks": "外部リンクがありません"
+            },
+            "ShowEmailToggle": {
+                "show": "アカウント表示",
+                "hide": "アカウント隠す"
+            },
+            "AnalyzedAtAlert": {
+                "title": "最終更新"
+            },
+            "AvailableSinceAlert": {
+                "title": "次回の更新可能時間"
+            },
+            "ReportUpdateButton": {
+                "title": "新しいサブスクを探す",
+                "dialog": {
+                    "title": "新しいサブスクを探す",
+                    "analyzedAtTitle": "最終更新",
+                    "availableSinceTitle": "次回の更新可能時間",
+                    "enabled": {
+                        "run": "再読み込み",
+                        "cancel": "閉じる"
+                    },
+                    "disabled": {
+                        "run": "再読み込み",
+                        "cancel": "確認"
+                    }
+                }
+            },
+            "ReportUpdateTracker": {
+                "steps": {
+                    "STARTED": {
+                        "title": "メール読み込み中",
+                        "description": "メール一覧を確認しています"
+                    },
+                    "EMAIL_FETCHED": {
+                        "title": "サブスク分析中",
+                        "description": "内容を分析しています"
+                    },
+                    "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+                        "title": "結果を整理中",
+                        "description": "データをまとめています"
+                    },
+                    "COMPLETED": {
+                        "title": "分析完了",
+                        "description": "準備が整いました"
+                    }
+                }
+            }
+        },
+        "analysis": {
+            "components": {
+                "AnalysisTracker": {
+                    "steps": {
+                        "STARTED": {
+                            "title": "メール読み込み中",
+                            "description": "メール一覧を確認しています"
+                        },
+                        "EMAIL_FETCHED": {
+                            "title": "サブスク分析中",
+                            "description": "内容を分析しています"
+                        },
+                        "EMAIL_ACCOUNT_ANALYSIS_COMPLETED": {
+                            "title": "結果を整理中",
+                            "description": "整理しています。少々お待ちください"
+                        },
+                        "COMPLETED": {
+                            "title": "分析完了",
+                            "description": "結果ページへ移動します"
+                        }
+                    }
+                }
+            }
+        },
+        "new": {
+            "title": "隠れたサブスク探し",
+            "new": {
+                "title": "隠れたサブスク探し",
+                "components": {
+                    "UpdateStartButton": {
+                        "run": "開始"
+                    }
+                }
+            },
+            "update": {
+                "title": "新しいサブスクを探す",
+                "components": {
+                    "UpdateStartButton": {
+                        "run": "開始"
+                    }
+                },
+                "lastReportTitle": "最終更新"
+            }
+        },
+        "update": {
+            "title": "隠れたサブスク探し",
+            "waitQuotaTitle": "時間をおいてお試しください",
+            "waitQuotaDescription": "一定時間後に再分析が可能です",
+            "reportNavigateButton": "確認",
+            "lastReport_title": "前回の結果",
+            "analyzedAt_title": "分析日",
+            "googleAccounts_title": "Gmailリスト",
+            "subscriptions_title": "結果サマリー",
+            "updateButton": "開始",
+            "components": {
+                "AnalysisUpdateButton": {
+                    "run": "整理を開始",
+                    "runAgain": "更新"
+                }
+            }
+        }
+    },
+    "components": {
+        "GoogleLoginButton": {
+            "title": "Googleで続ける"
+        },
+        "GuestLoginButton": {
+            "title": "ゲスト体験",
+            "dialog": {
+                "title": "ゲスト体験",
+                "description": "ログインなしでデモアカウントを試せます。70件のサンプルメールが連携されています。",
+                "confirm": "開始",
+                "cancel": "閉じる"
+            }
+        },
+        "Navbar": {
+            "dashboard": "履歴",
+            "home": "ホーム",
+            "settings": "設定",
+            "logout": "ログアウト"
+        },
+        "ErrorEmpty": {
+            "title": "サービスを利用できません",
+            "description": "現在ご利用いただけません。\nしばらくしてから再度お試しください。",
+            "homeNavigateButton": "確認"
+        }
+    }
+}

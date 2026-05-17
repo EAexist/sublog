@@ -186,21 +186,107 @@
             "title": "ゲスト体験",
             "dialog": {
                 "title": "ゲスト体験",
-                "description": "ログインなしでデモアカウントを試せます。70件のサンプルメールが連携されています。",
+                "description": "デモアカウントでアプリをお試しください。70件のサンプルメールが連携されています。",
                 "confirm": "開始",
                 "cancel": "閉じる"
             }
         },
+        "TestAppGoogleLoginButton": {
+            "title": "ログイン",
+            "dialog": {
+                "title": "ベータユーザーとしてSublogを試す",
+                "description": "GoogleアカウントでSublogを試すには、ベータユーザーとして登録してください",
+                "submitLabel": "Gmailアドレスを登録",
+                "placeholder": "my-gmail-address",
+                "suffix": "@gmail.com",
+                "submitting": "送信中...",
+                "register": "登録",
+                "fieldDescription": "",
+                "continueToLogin": "確認メールを受け取りました",
+                "cancel": "キャンセル"
+            },
+            "loginDialog": {
+                "title": "ベータユーザーログイン",
+                "description": "登録されたGoogleアカウントでログインしてください",
+                "close": "閉じる"
+            },
+            "successDialog": {
+                "title": "リクエスト送信済み",
+                "description": "ベータユーザーとして登録していただきありがとうございます。",
+                "instruction": "24時間以内に確認メールを送信します。メール受信トレイでGoogle Cloudから送信された<span>Sublogのテストへの招待</span>という件名のメールを確認してください。アクセスを有効にするには承認をクリックする必要があります。",
+                "ok": "OK"
+            }
+        },
         "Navbar": {
-            "dashboard": "履歴",
+            "dashboard": "ダッシュボード",
             "home": "ホーム",
             "settings": "設定",
             "logout": "ログアウト"
         },
         "ErrorEmpty": {
-            "title": "サービスを利用できません",
-            "description": "現在ご利用いただけません。\nしばらくしてから再度お試しください。",
-            "homeNavigateButton": "確認"
+            "title": "サービス利用不可",
+            "description": "エラーが発生しました。\n後でもう一度お試しください。",
+            "homeNavigateButton": "OK"
+        },
+        "Footer": {
+            "privacy_policy": "プライバシーポリシー",
+            "terms_of_service": "利用規約"
+        }
+    },
+    "privacy": {
+        "title": "プライバシーポリシー",
+        "last_updated": "最終更新: {date}",
+        "sections": {
+            "data_collection": {
+                "title": "データ収集",
+                "content": "メールアドレスやアカウント認証情報など、ユーザーが直接提供する情報を収集します。また、ユーザーの承認を得て、Gmailアカウントからサブスクリプション情報を分析するためのデータを収集します。"
+            },
+            "data_usage": {
+                "title": "データ使用",
+                "content": "ユーザーのデータはサブスクリプション管理サービスの提供と改善のみに使用されます。個人情報を第三者に販売することはありません。"
+            },
+            "data_security": {
+                "title": "データセキュリティ",
+                "content": "データを保護するために業界標準のセキュリティ対策を実装しています。すべての通信は暗号化され、データ保存とアクセス制御のベストプラクティスに従います。"
+            },
+            "user_rights": {
+                "title": "ユーザーの権利",
+                "content": "いつでも個人データにアクセス、変更、削除する権利があります。Googleアカウント設定を通じてGmailアカウントへのアクセス権を取り消すこともできます。"
+            },
+            "contact": {
+                "title": "お問い合わせ",
+                "content": "プライバシーポリシーやデータ処理方法について質問がある場合は、サポートチャネルを通じてお問い合わせください。"
+            }
+        }
+    },
+    "terms": {
+        "title": "利用規約",
+        "last_updated": "最終更新: {date}",
+        "sections": {
+            "acceptance": {
+                "title": "規約への同意",
+                "content": "サービスを使用することで、この利用規約に同意したものとみなされます。規約に同意されない場合は、サービスを使用しないでください。"
+            },
+            "user_obligations": {
+                "title": "ユーザーの義務",
+                "content": "アカウント認証情報の機密性を維持し、アカウントで行われるすべての活動について責任を負う必要があります。不正使用を直ちに通知するものとします。"
+            },
+            "service_modification": {
+                "title": "サービスの変更",
+                "content": "事前通知なしにいつでもサービスを変更または中止する権利を留保します。変更または中止について責任を負いません。"
+            },
+            "limitation": {
+                "title": "責任の制限",
+                "content": "法律で許される範囲で、サービスの使用に起因する間接的、付随的、特別、または結果的な損害について責任を負いません。"
+            },
+            "termination": {
+                "title": "契約終了",
+                "content": "規約違反またはその他の理由により、いつでもアカウントを終了または停止する権利を留保します。"
+            },
+            "governing_law": {
+                "title": "準拠法",
+                "content": "この規約は、サービスが運営される管轄区域の法律に従って解釈および適用されます。"
+            }
         }
     }
 }

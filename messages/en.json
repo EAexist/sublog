@@ -191,6 +191,32 @@
                 "cancel": "Close"
             }
         },
+        "TestAppGoogleLoginButton": {
+            "title": "Login",
+            "dialog": {
+                "title": "Try Sublog as Beta User",
+                "description": "Please register as beta user to try Sublog with your google account",
+                "submitLabel": "Register your gmail address",
+                "placeholder": "my-gmail-address",
+                "suffix": "@gmail.com",
+                "submitting": "Submitting...",
+                "register": "Register",
+                "fieldDescription": "",
+                "continueToLogin": "I Got Confirmation Email",
+                "cancel": "Cancel"
+            },
+            "loginDialog": {
+                "title": "Beta User Login",
+                "description": "Please login with your registered Google account",
+                "close": "Close"
+            },
+            "successDialog": {
+                "title": "Request Submitted",
+                "description": "Thank you for registering as beta user.",
+                "instruction": "We will send confirmation email within 24 hours. Please check email titled <span>Invitation to test Sublog</span> from Google Cloud in your email inbox. You must click accept to enable access.",
+                "ok": "Okay"
+            }
+        },
         "Navbar": {
             "dashboard": "Dashboard",
             "home": "Home",
@@ -201,6 +227,66 @@
             "title": "Service unavailable",
             "description": "Something went wrong.\nPlease try again later.",
             "homeNavigateButton": "OK"
+        },
+        "Footer": {
+            "privacy_policy": "Privacy Policy",
+            "terms_of_service": "Terms of Service"
+        }
+    },
+    "privacy": {
+        "title": "Privacy Policy",
+        "last_updated": "Last updated: {date}",
+        "sections": {
+            "data_collection": {
+                "title": "Data Collection",
+                "content": "We collect information you provide directly, such as your email address and account credentials. We also collect data from your Gmail account to analyze subscription information, subject to your authorization."
+            },
+            "data_usage": {
+                "title": "Data Usage",
+                "content": "Your data is used solely to provide and improve our subscription management services. We do not sell your personal information to third parties."
+            },
+            "data_security": {
+                "title": "Data Security",
+                "content": "We implement industry-standard security measures to protect your data. All communications are encrypted, and we follow best practices for data storage and access control."
+            },
+            "user_rights": {
+                "title": "Your Rights",
+                "content": "You have the right to access, modify, or delete your personal data at any time. You can also revoke authorization for Gmail account access through your Google account settings."
+            },
+            "contact": {
+                "title": "Contact Us",
+                "content": "If you have questions about this privacy policy or our data practices, please contact us through our support channels."
+            }
+        }
+    },
+    "terms": {
+        "title": "Terms of Service",
+        "last_updated": "Last updated: {date}",
+        "sections": {
+            "acceptance": {
+                "title": "Acceptance of Terms",
+                "content": "By using our service, you agree to these terms of service. If you do not agree to these terms, please do not use our service."
+            },
+            "user_obligations": {
+                "title": "User Obligations",
+                "content": "You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use."
+            },
+            "service_modification": {
+                "title": "Service Modification",
+                "content": "We reserve the right to modify or discontinue the service at any time without prior notice. We shall not be liable to you or any third party for any modification or discontinuation."
+            },
+            "limitation": {
+                "title": "Limitation of Liability",
+                "content": "To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the service."
+            },
+            "termination": {
+                "title": "Termination",
+                "content": "We reserve the right to terminate or suspend your account at any time for violation of these terms or for any other reason at our sole discretion."
+            },
+            "governing_law": {
+                "title": "Governing Law",
+                "content": "These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which our service is operated."
+            }
         }
     }
 }

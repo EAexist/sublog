@@ -1,4 +1,4 @@
-import { GoogleLoginButton } from "@/components/shared/GoogleLoginButton";
+import { TestAppGoogleLoginButton } from "@/components/shared/TestAppGoogleLoginButton";
 import { Container } from "@/components/ui/container";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Section } from "@/components/ui/section";
@@ -122,7 +122,7 @@ const SettingsPage = async ({ params }: Props) => {
                     <div className="py-4 flex flex-col gap-4">
                         <h2 className="text-lg font-medium">{t("addAccount.title")}</h2>
                         <div className="max-w-sm">
-                            <GoogleLoginButton />
+                            <TestAppGoogleLoginButton />
                         </div>
                     </div>
                 </Section>

@@ -72,10 +72,6 @@ export const Navbar = async () => {
                                 <SheetTitle>Navigation Menu</SheetTitle>
                             </SheetHeader>
                             <div className={"h-14"} />
-                            <div className="flex items-center justify-between p-4">
-                                <LocaleSwitcher />
-                            </div>
-                            <Separator />
                             <ul className={"flex flex-col"}
                             >
                                 {NAV_LINKS.map(({ href, name }) => {
@@ -92,6 +88,10 @@ export const Navbar = async () => {
                                     <LogoutSheetTrigger />
                                 </>
                             }
+                            <Separator />
+                            <div className="flex items-center justify-between h-16 px-1">
+                                <LocaleSwitcher />
+                            </div>
                         </SheetContent>
                     </Sheet>
                 </div>

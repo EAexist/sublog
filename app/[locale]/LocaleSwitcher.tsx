@@ -29,11 +29,16 @@ export function LocaleSwitcher() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
+            <DropdownMenuTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="lg" className="gap-2 font-normal text-base">
                     <Globe className="h-4 w-4" />
-                    <span className="hidden sm:inline">{localeNames[currentLocale]}</span>
-                    <span className="sm:hidden">{currentLocale.toUpperCase()}</span>
+                    {localeNames[currentLocale]}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild className="hidden md:flex">
+                <Button variant="ghost" size="lg" className="gap-2">
+                    <Globe className="h-4 w-4" />
+                    {localeNames[currentLocale]}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px] z-[100]">

@@ -25,7 +25,7 @@ export const Navbar = async () => {
 
     return (
         <header
-            className={"fixed top-0 left-0 right-0 z-60 h-14 w-full border-b bg-background/80 backdrop-blur-md"}
+            className={"fixed top-0 left-0 right-0 z-40 h-14 w-full border-b bg-background/80 backdrop-blur-md"}
         >
             <div className={"max-w-4xl w-full h-full pr-4 mx-auto flex md:px-6 justify-between"}>
                 <div className={"flex"}>

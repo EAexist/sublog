@@ -319,7 +319,7 @@ const SubscriptionDrawerContent = ({
                             <div className="flex items-center justify-between py-2">
                                 <span className="text-sm text-muted-foreground">{t('subscribed')}</span>
                                 <div className="flex items-center gap-2">
-                                    {paidMonths && (
+                                    {paidMonths !== null && paidMonths > 0 && (
                                         <Badge variant="secondary" className="">
                                             {paidMonths} {t('months')}
                                         </Badge>
@@ -338,7 +338,7 @@ const SubscriptionDrawerContent = ({
                         </div>
                         <div className="flex items-center justify-between py-2">
                             <span className="text-sm text-muted-foreground">{t('registeredEmail')}</span>
-                            <span className="text-sm font-medium truncate max-w-[200px]">
+                            <span className="text-sm font-medium whitespace-normal break-words text-end max-w-[200px]">
                                 {email}
                             </span>
                         </div>
@@ -477,7 +477,10 @@ const UnsubscribedServiceProviderItem = ({ serviceProvider, registeredSince, sub
 const getMonthsPassed = (date: Date) => {
     const now = new Date()
     const diff = now.getTime() - date.getTime()
-    return Math.floor(diff / (1000 * 60 * 60 * 24 * 30))
+    return Math.max(
+        1,
+        Math.floor(diff / (1000 * 60 * 60 * 24 * 30))
+    )
 }
 
 const formatLocaleDate = (date: Date) => {

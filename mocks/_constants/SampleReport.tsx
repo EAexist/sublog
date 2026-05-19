@@ -34,7 +34,7 @@ export const sampleReport: SubscriptionReportType = {
                 },
                 registeredSince: subMonths(Date.now(), 8),
                 hasSubscribedNewsletterOrAd: false,
-                subscribedSince: subMonths(Date.now(), 7),
+                subscribedSince: subMonths(Date.now(), 0),
                 isNotSureIfSubscriptionIsOngoing: false,
                 nextPaymentDate: calculateNextPaymentDate(subMonths(Date.now(), 7))
             }, {
@@ -156,8 +156,8 @@ export const sampleReport: SubscriptionReportType = {
                 isNotSureIfSubscriptionIsOngoing: false
             },],
             googleAccount: {
-                name: "현",
-                email: "hyeon.expression@gmail.com"
+                name: "sample_google_account_name_A",
+                email: "sample_google_account_A@gmail.com"
             },
         },
         {
@@ -249,8 +249,8 @@ export const sampleReport: SubscriptionReportType = {
                 isNotSureIfSubscriptionIsOngoing: false
             }],
             googleAccount: {
-                name: "HYEON",
-                email: "very long email address abcdefghijkelmopqrstuvwxyz@gmail.com"
+                name: "sample_google_account_name_B",
+                email: "sample_google_account_B@gmail.com"
             },
         }
         ]
